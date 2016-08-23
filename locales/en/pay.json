@@ -35,6 +35,7 @@
     },
     "dayOfMonthToPay": {
       "label": "Day of month to pay",
+      "hint": "A day of the month, between 1 and 31",
       "errors": {
         "presence": "Must include a day to pay",
         "custom": "Must be a number between 1 and 31"
@@ -42,7 +43,6 @@
     },
     "numberOfPayments": {
       "label": "Number of payments",
-      "hint": "A day of the month, between 1 and 31",
       "errors": {
         "presence": "Must include the number of payments"
       }
