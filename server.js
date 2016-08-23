@@ -66,7 +66,7 @@ app.use('/confirmation', require('./src/pages/confirmation'));
 
 // Error pages
 app.use(require('./src/pages/404'));
-// app.use(require('./src/pages/500'));
+app.use(require('./src/pages/500'));
 
 // Listen!
 app.listen(port, err => {

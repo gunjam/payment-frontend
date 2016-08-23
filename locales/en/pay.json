@@ -6,34 +6,46 @@
       "label1": "First two digits of sort code",
       "label2": "Second two digits of sort code",
       "label3": "Third two digits of sort code",
-      "errorBlank": "Cannot be blank",
-      "errorInvalid": "Invalid sort code"
+      "errors": {
+        "presence": "Must include a sort code",
+        "format": "Must be 6 digits in the format 11 22 33"
+      }
     },
     "accountNumber": {
       "label": "Account number",
-      "errorBlank": "Cannot be blank",
-      "errorInvalid": "Must be a number"
+      "errors": {
+        "presence": "Must include an account number",
+        "format": "Account number must be 8 digits"
+      }
     },
     "initialAmount": {
       "label": "Initial amount",
-      "errorBlank": "Cannot be blank",
-      "errorInvalid": "Must be a number"
+      "errors": {
+        "presence": "Must include an initial amount"
+      }
     },
     "dateOfPayment": {
       "legend": "Date of payment",
       "hint": "For example, 31 3 1980",
-      "errorEmpty": "Need a date of payment",
-      "errorInvalid": "Date is invalid, check the format"
+      "errors": {
+        "presence": "Need a date of payment",
+        "format": "Date needs to be in the format 31 3 1980",
+        "custom": "Date needs to in the future"
+      }
     },
     "dayOfMonthToPay": {
       "label": "Day of month to pay",
-      "errorBlank": "Cannot be blank",
-      "errorInvalid": "Must be a number between 1 and 31"
+      "errors": {
+        "presence": "Must include a day to pay",
+        "custom": "Must be a number between 1 and 31"
+      }
     },
     "numberOfPayments": {
       "label": "Number of payments",
-      "errorBlank": "Cannot be blank",
-      "errorInvalid": "Must be a number"
+      "hint": "A day of the month, between 1 and 31",
+      "errors": {
+        "presence": "Must include the number of payments"
+      }
     }
   },
   "submit": "Set up payment"
