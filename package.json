@@ -8,7 +8,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
-    "cheerio": "^0.20.0",
+    "cheerio": "^0.22.0",
     "compression": "^1.6.2",
     "connect-redis": "^3.1.0",
     "csurf": "^1.9.0",
@@ -16,7 +16,7 @@
     "dwp-marko-components": "gunjam/dwp-marko-components",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
-    "govuk-elements-sass": "^1.2.1",
+    "govuk-elements-sass": "^2.0.0",
     "govuk-template-marko": "gunjam/govuk-template-marko",
     "helmet": "^2.1.2",
     "i18next": "^3.3.1",
