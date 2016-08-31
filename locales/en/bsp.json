@@ -1,7 +1,7 @@
 {
   "heading": "Make a BSP payment",
   "form": {
-    "nationalInsuranceNumber": {
+    "nino": {
       "label": "National Insurance number",
       "hint": "For example, QQ 12 34 56 C",
       "errors": {
@@ -50,15 +50,15 @@
         "custom": "Date cannot be in the future"
       }
     },
-    "rateOfPayment": {
+    "rate": {
       "legend": "What rate of payment are they eligible for?",
       "labelHigher": "Higher",
-      "labelLower": "Lower",
+      "labelStandard": "Standard",
       "errors": {
         "presence": "You need to pick a rate"
       }
     },
-    "statePensionAge": {
+    "pensionAge": {
       "legend": "Will they be state pension age on their next birthday?",
       "labelYes": "Yes",
       "labelNo": "No",

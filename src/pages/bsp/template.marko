@@ -13,9 +13,9 @@
 
     <form action="/make-a-bsp-payment" method="post">
 
-      <dwp-input name="nationalInsuranceNumber" label=i18n('bsp:form.nationalInsuranceNumber.label')
-        hint=i18n('bsp:form.nationalInsuranceNumber.hint') error=data.errors.nationalInsuranceNumber
-        value=data.values.nationalInsuranceNumber/>
+      <dwp-input name="nino" label=i18n('bsp:form.nino.label')
+        hint=i18n('bsp:form.nino.hint') error=data.errors.nino
+        value=data.values.nino/>
 
       <pay-sort-code-input error=data.errors.sortCode value=data.values/>
 
@@ -30,16 +30,16 @@
         hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
         value=data.values.dateOfDeath/>
 
-      <dwp-radios legend=i18n('bsp:form.rateOfPayment.legend') name="rateOfPayment"
-        error=data.errors.rateOfPayment value=data.values.rateOfPayment>
-        <dwp-radios:radio label=i18n('bsp:form.rateOfPayment.labelHigher') value="higher"/>
-        <dwp-radios:radio label=i18n('bsp:form.rateOfPayment.labelLower') value="lower"/>
+      <dwp-radios legend=i18n('bsp:form.rate.legend') name="rate"
+        error=data.errors.rate value=data.values.rate>
+        <dwp-radios:radio label=i18n('bsp:form.rate.labelStandard') value="standard"/>
+        <dwp-radios:radio label=i18n('bsp:form.rate.labelHigher') value="higher"/>
       </dwp-radios>
 
-      <dwp-radios legend=i18n('bsp:form.statePensionAge.legend') name="statePensionAge"
-        error=data.errors.statePensionAge value=data.values.statePensionAge>
-        <dwp-radios:radio label=i18n('bsp:form.statePensionAge.labelYes') value="yes"/>
-        <dwp-radios:radio label=i18n('bsp:form.statePensionAge.labelNo') value="no"/>
+      <dwp-radios legend=i18n('bsp:form.pensionAge.legend') name="pensionAge"
+        error=data.errors.pensionAge value=data.values.pensionAge>
+        <dwp-radios:radio label=i18n('bsp:form.pensionAge.labelYes') value="yes"/>
+        <dwp-radios:radio label=i18n('bsp:form.pensionAge.labelNo') value="no"/>
       </dwp-radios>
 
       <pay-csrf-token/>

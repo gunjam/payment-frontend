@@ -2,18 +2,52 @@
 <layout-use("../../common/layout.marko")>
 
   <layout-put into="page-title">
-    Payment made
+    <i18n-message key="confirmation:heading"/>
   </layout-put>
 
   <layout-put into="content">
 
     <h1 class="heading-xlarge">
-      Payment made
+      <i18n-message key="confirmation:heading"/>
     </h1>
 
-    <p class="lede">
-      They'll get paid.
-    </p>
+    <h2 class="heading-medium">
+      <i18n-message key="confirmation:customerDetails"/>
+    </h2>
+    <dl>
+      <dt><i18n-message key="confirmation:nino"/></dt>
+      <dd>${data.values.nationalInsuranceNumber}</dd>
+      <dt><i18n-message key="confirmation:sortCode"/></dt>
+      <dd>${data.values.sortCode}</dd>
+      <dt><i18n-message key="confirmation:accountNumber"/></dt>
+      <dd>${data.values.accountNumber}</dd>
+    </dl>
+
+    <h2 class="heading-medium">
+      <i18n-message key="confirmation:paymentSchedule"/>
+    </h2>
+    <table class="form-group">
+      <thead>
+        <tr>
+          <th><i18n-message key="confirmation:date"/></th>
+          <th><i18n-message key="confirmation:amount"/></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr for(payment in data.values.paymentSchedule)>
+          <td>${payment.date}</td>
+          <td>${payment.amount}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form action="/confirmation" method="post">
+      <pay-csrf-token/>
+
+      <button type="submit" class="button">
+        <i18n-message key="confirmation:confirm"/>
+      </button>
+    </form>
 
   </layout-put>
 
