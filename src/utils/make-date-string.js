@@ -8,7 +8,7 @@ module.exports = function (dateObj) {
   if (oneToTwoDigits.test(day) &&
       oneToTwoDigits.test(month) &&
       fourDigits.test(year)) {
-    return `${day}-${month}-${year}`;
+    return new Date(`${year}-${month}-${day}`);
   }
   return undefined;
 };

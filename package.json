@@ -27,6 +27,7 @@
     "marko": "^3.7.1",
     "marko-layout": "^2.0.2",
     "mocha": "^3.0.2",
+    "moment": "^2.14.1",
     "request": "^2.74.0",
     "request-promise": "^4.1.1"
   },

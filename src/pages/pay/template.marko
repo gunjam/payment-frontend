@@ -13,6 +13,10 @@
 
     <form action="/make-a-payment" method="post">
 
+      <dwp-input name="nationalInsuranceNumber" label=i18n('pay:form.nationalInsuranceNumber.label')
+        hint=i18n('pay:form.nationalInsuranceNumber.hint') error=data.errors.nationalInsuranceNumber
+        value=data.values.nationalInsuranceNumber/>
+
       <pay-sort-code-input error=data.errors['sortCode'] value=data.values/>
 
       <dwp-input name="accountNumber" label=i18n('pay:form.accountNumber.label')

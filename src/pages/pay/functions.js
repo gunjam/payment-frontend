@@ -23,6 +23,7 @@ module.exports = {
 
     paymentPUT.body = removeEmpties(values);
     paymentPUT.body.monthlyPayment = 1;
+    paymentPUT.body.nationalInsuranceNumber = paymentPUT.body.nationalInsuranceNumber.replace(/\s/g, '').toUpperCase();
     paymentPUT.body.sortCode = `${sortCode1}${sortCode2}${sortCode3}`;
     paymentPUT.body.dateOfPayment = makeDateString(dateOfPayment);
 

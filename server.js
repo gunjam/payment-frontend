@@ -62,6 +62,7 @@ app.use((req, res, next) => {
 
 // Page routes
 app.use('/make-a-payment', require('./src/pages/pay'));
+app.use('/make-a-bsp-payment', require('./src/pages/bsp'));
 app.use('/confirmation', require('./src/pages/confirmation'));
 
 // Error pages

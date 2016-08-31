@@ -1,5 +1,5 @@
 {
-  "heading": "Make a payment",
+  "heading": "Make a BSP payment",
   "form": {
     "nationalInsuranceNumber": {
       "label": "National Insurance number",
@@ -32,27 +32,38 @@
         "presence": "Must include an initial amount"
       }
     },
-    "dateOfPayment": {
-      "legend": "Date of payment",
-      "hint": "For example, 31 3 1980",
+    "dateOfDeath": {
+      "legend": "Date of death",
+      "hint": "For example, 20 3 2016",
       "errors": {
-        "presence": "Need a date of payment",
-        "format": "Date needs to be in the format 31 3 1980",
-        "custom": "Date needs to in the future"
+        "presence": "Need a date of death",
+        "format": "Date needs to be in the format 20 3 2016",
+        "custom": "Date cannot be in the future"
       }
     },
-    "dayOfMonthToPay": {
-      "label": "Day of month to pay",
-      "hint": "A day of the month, between 1 and 31",
+    "dateOfClaim": {
+      "legend": "Date of claim",
+      "hint": "For example, 20 3 2016",
       "errors": {
-        "presence": "Must include a day to pay",
-        "custom": "Must be a number between 1 and 31"
+        "presence": "Need a date of claim",
+        "format": "Date needs to be in the format 20 3 2016",
+        "custom": "Date cannot be in the future"
       }
     },
-    "numberOfPayments": {
-      "label": "Number of payments",
+    "rateOfPayment": {
+      "legend": "What rate of payment are they eligible for?",
+      "labelHigher": "Higher",
+      "labelLower": "Lower",
       "errors": {
-        "presence": "Must include the number of payments"
+        "presence": "You need to pick a rate"
+      }
+    },
+    "statePensionAge": {
+      "legend": "Will they be state pension age on their next birthday?",
+      "labelYes": "Yes",
+      "labelNo": "No",
+      "errors": {
+        "presence": "You need to pick yes or no"
       }
     }
   },
