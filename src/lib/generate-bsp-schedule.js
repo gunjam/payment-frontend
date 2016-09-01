@@ -1,47 +1,53 @@
 'use strict';
 
-const moment = require('moment');
-
-const maxMonthlyPayments = 17;
-const dateFormat = 'YYYY-MM-DD';
-
-module.exports = function (dateOfClaim, dateOfDeath, dateOfPensionAge, rate) {
-  const schedule = [];
+function getPayableDates(dateOfClaim, dateOfDeath, dateOfPensionAge, rate) {
   const initialAmount = (rate === 'higher') ? 5000 : 2500;
   const monthlyAmount = (rate === 'higher') ? 500 : 100;
 
-  const payDate = moment(dateOfClaim).add(1, 'months').set('date', dateOfDeath.getDate());
-  const monthsTillPensionable = moment(dateOfPensionAge).diff(dateOfClaim, 'months');
-  const monthsSinceDeath = moment(dateOfClaim).diff(dateOfDeath, 'months');
+  const monthsTillPensionable = monthsBetween(dateOfClaim, dateOfPensionAge);
+  const monthsSinceDeath = monthsBetween(dateOfDeath, dateOfClaim);
+  const numberOfPayments = Math.min(17 - monthsSinceDeath, monthsTillPensionable - 2);
+  const dayOfDeath = dateOfDeath.getDate();
+  const schedule = [];
 
-  const numberOfPayments = Math.min(maxMonthlyPayments - monthsSinceDeath, monthsTillPensionable - 2);
+  const payableDate = dateOfClaim;
 
   if (monthsSinceDeath < 12) {
-    schedulePayment(schedule, initialAmount, payDate);
+    addPayment(schedule, payableDate, dayOfDeath, initialAmount);
   }
 
   if (monthsTillPensionable > 1) {
-    const firstMonthlyPayment = monthsSinceDeath < 1 ? monthlyAmount :
-      monthlyAmount * Math.min(monthsSinceDeath + 1, 3);
-    schedulePayment(schedule, firstMonthlyPayment, payDate);
+    const firstPayment = firstMonthlyPayment(monthlyAmount, monthsSinceDeath);
+    addPayment(schedule, payableDate, dayOfDeath, firstPayment);
   }
 
   for (let i = 0; i < numberOfPayments; i++) {
-    schedulePayment(schedule, monthlyAmount, payDate);
+    addPayment(schedule, payableDate, dayOfDeath, monthlyAmount);
   }
-  return schedule;
-};
 
-function schedulePayment(schedule, amount, moment) {
-  schedule.push({
-    amount,
-    date: moment.format(dateFormat)
-  });
-  moment.add(1, 'months');
+  return schedule;
+}
+
+function nextClosestPayDate(date, payDay) {
+  const nextDate = new Date(date.getFullYear(), date.getMonth(), payDay);
+  if (nextDate.getMonth() !== date.getMonth()) {
+    return nextClosestPayDate(date, payDay - 1);
+  }
+  date.setUTCDate(payDay);
+  date.setUTCMonth(date.getMonth() + 1);
+}
+
+function addPayment(schedule, payDate, payDay, amount) {
+  nextClosestPayDate(payDate, payDay);
+  schedule.push({amount, date: new Date(payDate)});
+}
+
+function firstMonthlyPayment(monthlyAmount, monthsSinceDeath) {
+  return monthsSinceDeath < 1 ? monthlyAmount : monthlyAmount * Math.min(monthsSinceDeath + 1, 3);
 }
 
 function monthsBetween(date1, date2) {
   return date2.getMonth() - date1.getMonth() + ((date2.getFullYear() - date1.getFullYear()) * 12);
 }
 
-// function getPayDat
+module.exports = getPayableDates;

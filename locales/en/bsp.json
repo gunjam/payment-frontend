@@ -32,15 +32,6 @@
         "presence": "Must include an initial amount"
       }
     },
-    "dateOfDeath": {
-      "legend": "Date of death",
-      "hint": "For example, 20 3 2016",
-      "errors": {
-        "presence": "Need a date of death",
-        "format": "Date needs to be in the format 20 3 2016",
-        "custom": "Date cannot be in the future"
-      }
-    },
     "dateOfClaim": {
       "legend": "Date of claim",
       "hint": "For example, 20 3 2016",
@@ -50,20 +41,38 @@
         "custom": "Date cannot be in the future"
       }
     },
+    "dateOfDeath": {
+      "legend": "Partner date of death",
+      "hint": "For example, 20 3 2016",
+      "errors": {
+        "presence": "Need a date of death",
+        "format": "Date needs to be in the format 20 3 2016",
+        "custom": "Date cannot be in the future"
+      }
+    },
+    "dateOfBirth": {
+      "legend": "Claimant date of birth",
+      "hint": "For example, 20 3 2016",
+      "errors": {
+        "presence": "Need a date of birth",
+        "format": "Date needs to be in the format 20 3 2016",
+        "custom": "Date cannot be in the future"
+      }
+    },
+    "sex": {
+      "legend": "What is the sex of the claimant?",
+      "labelFemale": "Female",
+      "labelMale": "Male",
+      "errors": {
+        "presence": "You need to pick a sex"
+      }
+    },
     "rate": {
       "legend": "What rate of payment are they eligible for?",
       "labelHigher": "Higher",
       "labelStandard": "Standard",
       "errors": {
         "presence": "You need to pick a rate"
-      }
-    },
-    "pensionAge": {
-      "legend": "Will they be state pension age on their next birthday?",
-      "labelYes": "Yes",
-      "labelNo": "No",
-      "errors": {
-        "presence": "You need to pick yes or no"
       }
     }
   },
