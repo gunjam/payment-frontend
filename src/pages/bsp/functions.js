@@ -3,10 +3,10 @@
 const rp = require('request-promise');
 const isEmpty = require('../../utils/is-empty');
 const isValidNino = require('../../utils/is-valid-nino');
-const makeDateString = require('../../utils/make-date-string');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidDateObject = require('../../utils/is-valid-date-object');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
+const getDateFromDateObject = require('../../utils/get-date-from-date-object');
 const generateBSPSchedule = require('../../lib/generate-bsp-schedule');
 const template = require('./template.marko');
 
@@ -85,7 +85,7 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({errors, values}, res);
     } else {
-      const birthDate = makeDateString(dateOfBirth);
+      const birthDate = getDateFromDateObject(dateOfBirth);
       rp({
         method: 'GET',
         uri: `https://www.gov.uk/state-pension-age/y/age/${birthDate}/${sex}`,
@@ -93,8 +93,8 @@ module.exports = {
       })
       .then(body => {
         const dateOfPensionAge = new Date(body.match(pensionDate)[1]);
-        const claimDate = makeDateString(dateOfClaim);
-        const deathDate = makeDateString(dateOfDeath);
+        const claimDate = getDateFromDateObject(dateOfClaim);
+        const deathDate = getDateFromDateObject(dateOfDeath);
         const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, rate);
         const data = {nationalInsuranceNumber: nino, sortCode, accountNumber, paymentSchedule};
         res.setSessionAndRedirect('confirmation', data, '/confirmation');
