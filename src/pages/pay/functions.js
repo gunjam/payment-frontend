@@ -2,7 +2,7 @@
 
 const rp = require('request-promise');
 const getErrorMessages = require('../../utils/get-error-messages');
-const makeDateString = require('../../utils/make-date-string');
+const getDateFromDateObject = require('../../utils/get-date-from-date-object');
 const removeEmpties = require('../../utils/remove-empties');
 const template = require('./template.marko');
 
@@ -25,7 +25,7 @@ module.exports = {
     paymentPUT.body.monthlyPayment = 1;
     paymentPUT.body.nationalInsuranceNumber = paymentPUT.body.nationalInsuranceNumber.replace(/\s/g, '').toUpperCase();
     paymentPUT.body.sortCode = `${sortCode1}${sortCode2}${sortCode3}`;
-    paymentPUT.body.dateOfPayment = makeDateString(dateOfPayment);
+    paymentPUT.body.dateOfPayment = getDateFromDateObject(dateOfPayment);
 
     rp(paymentPUT)
       .then(() => res.redirect('/confirmation'))
