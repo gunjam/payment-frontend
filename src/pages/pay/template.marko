@@ -13,27 +13,27 @@
 
     <form action="/make-a-payment" method="post">
 
-      <dwp-input name="nationalInsuranceNumber" label=i18n('pay:form.nationalInsuranceNumber.label')
+      <gov-input name="nationalInsuranceNumber" label=i18n('pay:form.nationalInsuranceNumber.label')
         hint=i18n('pay:form.nationalInsuranceNumber.hint') error=data.errors.nationalInsuranceNumber
         value=data.values.nationalInsuranceNumber/>
 
       <pay-sort-code-input error=data.errors['sortCode'] value=data.values/>
 
-      <dwp-input name="accountNumber" label=i18n('pay:form.accountNumber.label')
+      <gov-input name="accountNumber" label=i18n('pay:form.accountNumber.label')
         error=data.errors.accountNumber value=data.values.accountNumber/>
 
-      <dwp-input name="initialAmount" label=i18n('pay:form.initialAmount.label')
+      <gov-input name="initialAmount" label=i18n('pay:form.initialAmount.label')
         error=data.errors.initialAmount value=data.values.initialAmount/>
 
-      <dwp-date-input name="dateOfPayment" legend=i18n('pay:form.dateOfPayment.legend')
+      <gov-date-input name="dateOfPayment" legend=i18n('pay:form.dateOfPayment.legend')
         hint=i18n('pay:form.dateOfPayment.hint') error=data.errors.dateOfPayment
         value=data.values.dateOfPayment/>
 
-      <dwp-input name="dayOfMonthToPay" label=i18n('pay:form.dayOfMonthToPay.label')
+      <gov-input name="dayOfMonthToPay" label=i18n('pay:form.dayOfMonthToPay.label')
         hint=i18n('pay:form.dayOfMonthToPay.hint') error=data.errors.dayOfMonthToPay
         value=data.values.dayOfMonthToPay/>
 
-      <dwp-input name="numberOfPayments" label=i18n('pay:form.numberOfPayments.label')
+      <gov-input name="numberOfPayments" label=i18n('pay:form.numberOfPayments.label')
         error=data.errors.numberOfPayments value=data.values.numberOfPayments/>
 
       <pay-csrf-token/>

@@ -13,38 +13,38 @@
 
     <form action="/make-a-bsp-payment" method="post">
 
-      <dwp-input name="nino" label=i18n('bsp:form.nino.label')
+      <gov-input name="nino" label=i18n('bsp:form.nino.label')
         hint=i18n('bsp:form.nino.hint') error=data.errors.nino
         value=data.values.nino/>
 
       <pay-sort-code-input error=data.errors.sortCode value=data.values/>
 
-      <dwp-input name="accountNumber" label=i18n('bsp:form.accountNumber.label')
+      <gov-input name="accountNumber" label=i18n('bsp:form.accountNumber.label')
         error=data.errors.accountNumber value=data.values.accountNumber/>
 
-      <dwp-date-input name="dateOfClaim" legend=i18n('bsp:form.dateOfClaim.legend')
+      <gov-date-input name="dateOfClaim" legend=i18n('bsp:form.dateOfClaim.legend')
         hint=i18n('bsp:form.dateOfClaim.hint') error=data.errors.dateOfClaim
         value=data.values.dateOfClaim/>
 
-      <dwp-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
+      <gov-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
         hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
         value=data.values.dateOfDeath/>
 
-      <dwp-date-input name="dateOfBirth" legend=i18n('bsp:form.dateOfBirth.legend')
+      <gov-date-input name="dateOfBirth" legend=i18n('bsp:form.dateOfBirth.legend')
         hint=i18n('bsp:form.dateOfBirth.hint') error=data.errors.dateOfBirth
         value=data.values.dateOfBirth/>
 
-      <dwp-radios legend=i18n('bsp:form.sex.legend') name="sex"
+      <gov-radios legend=i18n('bsp:form.sex.legend') name="sex"
         error=data.errors.sex value=data.values.sex>
-        <dwp-radios:radio label=i18n('bsp:form.sex.labelFemale') value="female"/>
-        <dwp-radios:radio label=i18n('bsp:form.sex.labelMale') value="male"/>
-      </dwp-radios>
+        <gov-radios:radio label=i18n('bsp:form.sex.labelFemale') value="female"/>
+        <gov-radios:radio label=i18n('bsp:form.sex.labelMale') value="male"/>
+      </gov-radios>
 
-      <dwp-radios legend=i18n('bsp:form.rate.legend') name="rate"
+      <gov-radios legend=i18n('bsp:form.rate.legend') name="rate"
         error=data.errors.rate value=data.values.rate>
-        <dwp-radios:radio label=i18n('bsp:form.rate.labelStandard') value="standard"/>
-        <dwp-radios:radio label=i18n('bsp:form.rate.labelHigher') value="higher"/>
-      </dwp-radios>
+        <gov-radios:radio label=i18n('bsp:form.rate.labelStandard') value="standard"/>
+        <gov-radios:radio label=i18n('bsp:form.rate.labelHigher') value="higher"/>
+      </gov-radios>
 
       <pay-csrf-token/>
 
