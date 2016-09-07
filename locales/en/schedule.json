@@ -1,0 +1,9 @@
+{
+  "customerDetails": "Customer details",
+  "nino": "National Insurance number",
+  "sortCode": "Sort code",
+  "accountNumber": "Account number",
+  "paymentSchedule": "Payment schedule",
+  "date": "Date",
+  "amount": "Amount"
+}

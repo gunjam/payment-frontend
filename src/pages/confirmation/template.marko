@@ -11,43 +11,7 @@
       <i18n-message key="confirmation:heading"/>
     </h1>
 
-    <h2 class="heading-medium">
-      <i18n-message key="confirmation:customerDetails"/>
-    </h2>
-    <dl>
-      <dt><i18n-message key="confirmation:nino"/></dt>
-      <dd>${data.values.nationalInsuranceNumber}</dd>
-      <dt><i18n-message key="confirmation:sortCode"/></dt>
-      <dd>${data.values.sortCode}</dd>
-      <dt><i18n-message key="confirmation:accountNumber"/></dt>
-      <dd>${data.values.accountNumber}</dd>
-    </dl>
-
-    <h2 class="heading-medium">
-      <i18n-message key="confirmation:paymentSchedule"/>
-    </h2>
-    <table class="form-group">
-      <thead>
-        <tr>
-          <th scope="col">
-            <i18n-message key="confirmation:date"/>
-          </th>
-          <th class="numeric" scope="col">
-            <i18n-message key="confirmation:amount"/>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr for(payment in data.values.paymentSchedule)>
-          <td>
-            <pay-date date=payment.date/>
-          </td>
-          <td class="numeric">
-            ${payment.amount}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <pay-schedule schedule=data.values/>
 
     <form action="/confirmation" method="post">
       <pay-csrf-token/>

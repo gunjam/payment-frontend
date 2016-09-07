@@ -1,0 +1,6 @@
+{
+  "@schedule": {
+    "required": true,
+    "type": "object"
+  }
+}

@@ -1,0 +1,37 @@
+<h2 class="heading-medium">
+  <i18n-message key="schedule:customerDetails"/>
+</h2>
+<dl>
+  <dt><i18n-message key="schedule:nino"/></dt>
+  <dd>${data.schedule.nationalInsuranceNumber}</dd>
+  <dt><i18n-message key="schedule:sortCode"/></dt>
+  <dd>${data.schedule.sortCode}</dd>
+  <dt><i18n-message key="schedule:accountNumber"/></dt>
+  <dd>${data.schedule.accountNumber}</dd>
+</dl>
+
+<h2 class="heading-medium">
+  <i18n-message key="schedule:paymentSchedule"/>
+</h2>
+<table class="form-group">
+  <thead>
+    <tr>
+      <th scope="col">
+        <i18n-message key="schedule:date"/>
+      </th>
+      <th class="numeric" scope="col">
+        <i18n-message key="schedule:amount"/>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr for(payment in data.schedule.paymentSchedule)>
+      <td>
+        <pay-date date=payment.date/>
+      </td>
+      <td class="numeric">
+        ${payment.amount}
+      </td>
+    </tr>
+  </tbody>
+</table>

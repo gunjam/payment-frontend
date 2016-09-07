@@ -1,0 +1,51 @@
+<i18n-var/>
+<layout-use("../../common/layout.marko") errors=data.errors>
+
+  <layout-put into="page-title">
+    Find a schedule
+  </layout-put>
+
+  <layout-put into="content">
+
+    <h1 class="heading-xlarge">
+      Find a schedule
+    </h1>
+
+    <form action="/search" method="get">
+
+      <div class="form-group search ${(data.errors ? 'error' : '')}">
+        <label for="search-box" class="form-label">
+          <span>
+            Customer National Insurance number
+          </span>
+          <span if(data.errors) class="error-message">
+            ${data.errors.search.msg}
+          </span>
+        </label>
+        <input type="search" class="form-control search-box" id="search-box"
+          name="nino" value=data.nino autocomplete="off"/>
+        <button class="button search-button" type="submit">
+          Search
+        </button>
+      </div>
+
+      <await(searchResults from data.searchResultsPromise) if(data.searched)>
+        <await-error>
+          <p class="lede">
+            An error occurred!
+          </p>
+        </await-error>
+
+        <for(schedule in searchResults) if(searchResults.length > 0)>
+          <pay-schedule schedule=schedule/>
+        </for>
+        <p else class="lede">
+          No results!
+        </p>
+      </await>
+
+    </form>
+
+  </layout-put>
+
+</layout-use>
