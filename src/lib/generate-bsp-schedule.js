@@ -1,7 +1,5 @@
 'use strict';
 
-const tomorrow = require('./tomorrow');
-
 const monthsToGetInitalPayment = 12;
 const initialHigher = 5000;
 const initialStandard = 2500;
@@ -10,25 +8,34 @@ const monthlyStandard = 100;
 const maxMonthlyPayments = 18;
 const maxMonthsBackDated = 3;
 
-function getPayableDates(dateOfClaim, dateOfDeath, dateOfPensionAge, rateOfPayment) {
-  const initialAmount = rateOfPayment === 'higher' ? initialHigher : initialStandard;
-  const monthlyAmount = rateOfPayment === 'higher' ? monthlyHigher : monthlyStandard;
+function getPaymentSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, higherRate, startDate = dateOfClaim) {
+  const initialAmount = higherRate ? initialHigher : initialStandard;
+  const monthlyAmount = higherRate ? monthlyHigher : monthlyStandard;
 
-  const nextDay = tomorrow();
-  const firstPayDate = nextClosestPayDate(dateOfClaim, dateOfDeath.getDate());
+  const firstPayDate = nextClosestPayDate(startDate, dateOfDeath.getDate());
   const monthsSinceDeath = monthsBetween(dateOfDeath, dateOfClaim);
-  const eligibleMonths = Math.min(maxMonthlyPayments, monthsBetween(dateOfDeath, dateOfPensionAge));
 
-  const numberOfPayments = eligibleMonths - monthsSinceDeath;
-  const initialPayment = monthsSinceDeath < monthsToGetInitalPayment ? [{amount: initialAmount, date: nextDay}] : [];
-  const backDatedPayments = monthsSinceDeath > 0 && monthsSinceDeath < maxMonthlyPayments + maxMonthsBackDated ? [{amount: getBackDatedPayments(monthlyAmount, monthsSinceDeath), date: nextDay}] : [];
-  const monthlyPayments = getMonthlyPayments(firstPayDate, monthlyAmount, numberOfPayments);
-
-  return [...initialPayment, ...backDatedPayments, ...monthlyPayments];
+  return [
+    ...getInitialPayment(monthsSinceDeath, initialAmount, startDate),
+    ...getBackDatedPayments(monthsSinceDeath, monthlyAmount, startDate),
+    ...getMonthlyPayments(
+        firstPayDate, monthlyAmount,
+        getNumberOfPayments(dateOfDeath, dateOfPensionAge, monthsSinceDeath)
+      )
+  ];
 }
 
-function getBackDatedPayments(monthlyAmount, monthsSinceDeath) {
-  return monthlyAmount * (monthsSinceDeath < maxMonthlyPayments ? Math.min(monthsSinceDeath, maxMonthsBackDated) : maxMonthsBackDated - (monthsSinceDeath - maxMonthlyPayments));
+function getNumberOfPayments(dateOfDeath, dateOfPensionAge, monthsSinceDeath) {
+  return Math.min(maxMonthlyPayments, monthsBetween(dateOfDeath, dateOfPensionAge)) - monthsSinceDeath;
+}
+
+function getInitialPayment(monthsSinceDeath, amount, date) {
+  return monthsSinceDeath < monthsToGetInitalPayment ? [{amount, date}] : [];
+}
+
+function getBackDatedPayments(monthsSinceDeath, monthlyAmount, date) {
+  const amount = monthlyAmount * (monthsSinceDeath < maxMonthlyPayments ? Math.min(monthsSinceDeath, maxMonthsBackDated) : maxMonthsBackDated - (monthsSinceDeath - maxMonthlyPayments));
+  return monthsSinceDeath > 0 && monthsSinceDeath < maxMonthlyPayments + maxMonthsBackDated ? [{amount, date}] : [];
 }
 
 function getMonthlyPayments(date, amount, numberOfPayments, ...payments) {
@@ -41,8 +48,7 @@ function monthsBetween(date1, date2) {
 
 function nextClosestPayDate(date, payDay = date.getDate()) {
   const nextMonth = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, payDay));
-  return nextMonth.getDate() === payDay ? nextMonth :
-    nextClosestPayDate(new Date(Date.UTC(date.getFullYear(), date.getMonth(), payDay - 1)));
+  return nextMonth.getDate() === payDay ? nextMonth : nextClosestPayDate(new Date(Date.UTC(date.getFullYear(), date.getMonth(), payDay - 1)));
 }
 
-module.exports = getPayableDates;
+module.exports = getPaymentSchedule;

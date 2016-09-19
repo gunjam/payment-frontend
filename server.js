@@ -61,11 +61,13 @@ app.use((req, res, next) => {
 });
 
 // Page routes
-app.use('/', require('./src/pages/bsp'));
+app.get('/', (req, res) => res.redirect('/make-a-bsp-payment'));
+app.use('/make-a-bsp-payment', require('./src/pages/bsp'));
 app.use('/make-a-payment', require('./src/pages/pay'));
 app.use('/confirmation', require('./src/pages/confirmation'));
 app.use('/done', require('./src/pages/done'));
 app.use('/search', require('./src/pages/search'));
+app.use('/bookings', require('./src/pages/bookings'));
 
 // Error pages
 app.use(require('./src/pages/404'));

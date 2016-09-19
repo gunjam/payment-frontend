@@ -1,6 +1,7 @@
 'use strict';
 
 const rp = require('request-promise');
+const tomorrow = require('../../lib/tomorrow');
 const isEmpty = require('../../utils/is-empty');
 const isValidNino = require('../../utils/is-valid-nino');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
@@ -95,7 +96,9 @@ module.exports = {
         const dateOfPensionAge = new Date(body.match(pensionDate)[1]);
         const claimDate = getDateFromDateObject(dateOfClaim);
         const deathDate = getDateFromDateObject(dateOfDeath);
-        const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, rate);
+        const higherRate = rate === 'higher';
+        const startDate = tomorrow();
+        const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
         const data = {nationalInsuranceNumber: nino, sortCode, accountNumber, paymentSchedule};
         res.setSessionAndRedirect('confirmation', data, '/confirmation');
       })
