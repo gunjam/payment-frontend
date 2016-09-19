@@ -67,7 +67,6 @@ app.use('/make-a-payment', require('./src/pages/pay'));
 app.use('/confirmation', require('./src/pages/confirmation'));
 app.use('/done', require('./src/pages/done'));
 app.use('/search', require('./src/pages/search'));
-app.use('/bookings', require('./src/pages/bookings'));
 
 // Error pages
 app.use(require('./src/pages/404'));
