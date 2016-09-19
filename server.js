@@ -23,7 +23,7 @@ i18next
   .init(require('./config/i18next'));
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // Enable compression
 app.use(compression());
