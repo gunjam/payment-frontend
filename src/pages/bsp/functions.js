@@ -9,6 +9,7 @@ const isValidDateObject = require('../../utils/is-valid-date-object');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
 const getDateFromDateObject = require('../../utils/get-date-from-date-object');
 const generateBSPSchedule = require('../../lib/generate-bsp-schedule');
+const sanitiseNino = require('../../utils/sanitise-nino');
 const template = require('./template.marko');
 
 const pensionDate = /You’ll reach State Pension age on +(\d{1,2} \w{3,9} \d{4})/;
@@ -93,13 +94,14 @@ module.exports = {
         headers: {'user-agent': 'Mozilla/5.0'}
       })
       .then(body => {
+        const nationalInsuranceNumber = sanitiseNino(nino);
         const dateOfPensionAge = new Date(body.match(pensionDate)[1]);
         const claimDate = getDateFromDateObject(dateOfClaim);
         const deathDate = getDateFromDateObject(dateOfDeath);
         const higherRate = rate === 'higher';
         const startDate = tomorrow();
         const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
-        const data = {nationalInsuranceNumber: nino, sortCode, accountNumber, paymentSchedule};
+        const data = {nationalInsuranceNumber, sortCode, accountNumber, paymentSchedule};
         res.setSessionAndRedirect('confirmation', data, '/confirmation');
       })
       .catch(err => next(err));
