@@ -36,6 +36,18 @@
           <a href="/" id="proposition-name">
             <i18n-message key="app:serviceName"/>
           </a>
+          <ul id="proposition-links">
+            <li>
+              <a href="/make-a-bsp-payment" class=(data.page === 'bsp' ? 'active' : '')>
+                <i18n-message key="app:navigation.bsp"/>
+              </a>
+            </li>
+            <li>
+              <a href="/search" class=(data.page === 'search' ? 'active' : '')>
+                <i18n-message key="app:navigation.search"/>
+              </a>
+            </li>
+          </ul>
         </nav>
       </div>
     </div>
@@ -48,11 +60,8 @@
       <gov-error-summary heading=i18n('app:errorSummaryHeading')
          summary=i18n('app:errorSummaryDetail') errors=data.errors/>
 
-      <div class="grid-row">
-        <div class="column-two-thirds">
-          <layout-placeholder name="content"/>
-        </div>
-      </div>
+      <layout-placeholder name="content"/>
+
     </main>
   </layout-put>
 

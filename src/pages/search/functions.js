@@ -1,21 +1,31 @@
 'use strict';
 
 const rp = require('request-promise');
-const isEmpty = require('../../utils/is-empty');
+const config = require('../../../config/app');
 const sanitiseNino = require('../../utils/sanitise-nino');
+const isValidNino = require('../../utils/is-valid-nino');
+const isEmpty = require('../../utils/is-empty');
 const template = require('./template.marko');
-
-const schedulesApi = 'http://localhost:3000/api/Schedules/';
 
 module.exports = {
   get(req, res) {
-    const sanitisedNino = sanitiseNino(req.query.nino);
-    const uri = schedulesApi + '?filter[where][nationalInsuranceNumber]=' +
-      encodeURIComponent(sanitisedNino);
+    if (isEmpty(req.query.nino)) {
+      template.render({}, res);
+    } else {
+      const sanitisedNino = sanitiseNino(req.query.nino);
 
-    template.render({
-      searchResultsPromise: rp({uri, transform: JSON.parse}).promise(),
-      searched: !isEmpty(sanitisedNino)
-    }, res);
+      if (isValidNino(sanitisedNino)) {
+        const uri = config.apiUrl + '?filter[where][nationalInsuranceNumber]=' +
+          encodeURIComponent(sanitisedNino);
+
+        template.render({
+          searchResultsPromise: rp({uri, transform: JSON.parse}).promise()
+        }, res);
+      } else {
+        template.render({
+          errors: {search: 'Enter a valid National Insurance number'}
+        }, res);
+      }
+    }
   }
 };

@@ -1,50 +1,59 @@
-<i18n-var/>
-<layout-use("../../common/layout.marko") errors=data.errors>
+<layout-use("../../common/layout.marko") errors=data.errors page="search">
 
   <layout-put into="page-title">
-    Find a schedule
+    <i18n-message key="search:heading"/>
   </layout-put>
 
   <layout-put into="content">
 
-    <h1 class="heading-xlarge">
-      Find a schedule
-    </h1>
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+          <i18n-message key="search:heading"/>
+        </h1>
 
-    <form action="/search" method="get">
+        <form action="/search" method="get">
 
-      <div class="form-group search ${(data.errors ? 'error' : '')}">
-        <label for="search-box" class="form-label">
-          <span>
-            Customer National Insurance number
-          </span>
-          <span if(data.errors) class="error-message">
-            ${data.errors.search.msg}
-          </span>
-        </label>
-        <input type="search" class="form-control search-box" id="search-box"
-          name="nino" value=data.nino autocomplete="off"/>
-        <button class="button search-button" type="submit">
-          Search
-        </button>
-      </div>
+          <div class="form-group search ${(data.errors ? 'error' : '')}">
+            <label for="search-box" class="form-label">
+              <span>
+                <i18n-message key="search:form.search.label"/>
+              </span>
+              <span if(data.errors) class="error-message">
+                ${data.errors.search}
+              </span>
+            </label>
+            <input type="search" class="form-control search-box" id="search-box"
+              name="nino" value=data.nino autocomplete="off"/>
+            <button class="button search-button" type="submit">
+              <i18n-message key="search:form.submit"/>
+            </button>
+          </div>
 
-      <await(searchResults from data.searchResultsPromise) if(data.searched)>
-        <await-error>
-          <p class="lede">
-            An error occurred!
+        </form>
+
+        <await(searchResults from data.searchResultsPromise) if(data.searchResultsPromise)>
+          <await-error>
+            <p class="lede">
+              <i18n-message key="search:await.error"/>
+            </p>
+          </await-error>
+
+          <ul if(searchResults.length > 0)>
+            <li for(schedule in searchResults)>
+              <a href="/schedule/${schedule.id}">
+                <pay-date date=schedule.paymentSchedule[0].date/>
+                →
+                <pay-date date=schedule.paymentSchedule[schedule.paymentSchedule.length - 1].date/>
+              </a>
+            </li>
+          </ul>
+          <p else class="lede">
+            <i18n-message key="search:await.noResults"/>
           </p>
-        </await-error>
-
-        <for(schedule in searchResults) if(searchResults.length > 0)>
-          <pay-schedule schedule=schedule/>
-        </for>
-        <p else class="lede">
-          No results!
-        </p>
-      </await>
-
-    </form>
+        </await>
+      </div>
+    </div>
 
   </layout-put>
 

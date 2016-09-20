@@ -1,0 +1,14 @@
+{
+  "heading": "Find a payment schedule",
+  "form": {
+    "search": {
+      "label": "Enter the customers NINO or schedule ID"
+    },
+    "submit": "Search"
+  },
+  "await": {
+    "error": "An error occurred while requesting search results.",
+    "timeout": "Request for search results timed out.",
+    "noResults": "No results!"
+  }
+}

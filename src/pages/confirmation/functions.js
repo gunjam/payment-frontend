@@ -7,10 +7,7 @@ const template = require('./template');
 module.exports = {
   get(req, res) {
     if (req.session.confirmation) {
-      template.render({
-        errors: false,
-        values: req.getSession('confirmation')
-      }, res);
+      template.render(req.getSession('confirmation'), res);
     } else {
       req.session.destroy();
       res.redirect('/');

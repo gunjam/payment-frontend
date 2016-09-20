@@ -1,5 +1,5 @@
 <i18n-var/>
-<layout-use("../../common/layout.marko") errors=data.errors>
+<layout-use("../../common/layout.marko") errors=data.errors page="bsp">
 
   <layout-put into="page-title">
     <i18n-message key="bsp:heading"/>
@@ -7,52 +7,58 @@
 
   <layout-put into="content">
 
-    <h1 class="heading-xlarge">
-      <i18n-message key="bsp:heading"/>
-    </h1>
+    <div class="grid-row">
+      <div class="column-two-thirds">
 
-    <form action="/make-a-bsp-payment" method="post">
+        <h1 class="heading-xlarge">
+          <i18n-message key="bsp:heading"/>
+        </h1>
 
-      <gov-input name="nino" label=i18n('bsp:form.nino.label')
-        hint=i18n('bsp:form.nino.hint') error=data.errors.nino
-        value=data.values.nino/>
+        <form action="/make-a-bsp-payment" method="post">
 
-      <pay-sort-code-input error=data.errors.sortCode value=data.values/>
+          <gov-input name="nino" label=i18n('bsp:form.nino.label')
+            hint=i18n('bsp:form.nino.hint') error=data.errors.nino
+            value=data.values.nino/>
 
-      <gov-input name="accountNumber" label=i18n('bsp:form.accountNumber.label')
-        error=data.errors.accountNumber value=data.values.accountNumber/>
+          <pay-sort-code-input error=data.errors.sortCode value=data.values/>
 
-      <gov-date-input name="dateOfClaim" legend=i18n('bsp:form.dateOfClaim.legend')
-        hint=i18n('bsp:form.dateOfClaim.hint') error=data.errors.dateOfClaim
-        value=data.values.dateOfClaim/>
+          <gov-input name="accountNumber" label=i18n('bsp:form.accountNumber.label')
+            error=data.errors.accountNumber value=data.values.accountNumber/>
 
-      <gov-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
-        hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
-        value=data.values.dateOfDeath/>
+          <gov-date-input name="dateOfClaim" legend=i18n('bsp:form.dateOfClaim.legend')
+            hint=i18n('bsp:form.dateOfClaim.hint') error=data.errors.dateOfClaim
+            value=data.values.dateOfClaim/>
 
-      <gov-date-input name="dateOfBirth" legend=i18n('bsp:form.dateOfBirth.legend')
-        hint=i18n('bsp:form.dateOfBirth.hint') error=data.errors.dateOfBirth
-        value=data.values.dateOfBirth/>
+          <gov-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
+            hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
+            value=data.values.dateOfDeath/>
 
-      <gov-radios legend=i18n('bsp:form.sex.legend') name="sex"
-        error=data.errors.sex value=data.values.sex>
-        <gov-radios:radio label=i18n('bsp:form.sex.labelFemale') value="female"/>
-        <gov-radios:radio label=i18n('bsp:form.sex.labelMale') value="male"/>
-      </gov-radios>
+          <gov-date-input name="dateOfBirth" legend=i18n('bsp:form.dateOfBirth.legend')
+            hint=i18n('bsp:form.dateOfBirth.hint') error=data.errors.dateOfBirth
+            value=data.values.dateOfBirth/>
 
-      <gov-radios legend=i18n('bsp:form.rate.legend') name="rate"
-        error=data.errors.rate value=data.values.rate>
-        <gov-radios:radio label=i18n('bsp:form.rate.labelStandard') value="standard"/>
-        <gov-radios:radio label=i18n('bsp:form.rate.labelHigher') value="higher"/>
-      </gov-radios>
+          <gov-radios legend=i18n('bsp:form.sex.legend') name="sex"
+            error=data.errors.sex value=data.values.sex>
+            <gov-radios:radio label=i18n('bsp:form.sex.labelFemale') value="female"/>
+            <gov-radios:radio label=i18n('bsp:form.sex.labelMale') value="male"/>
+          </gov-radios>
 
-      <pay-csrf-token/>
+          <gov-radios legend=i18n('bsp:form.rate.legend') name="rate"
+            error=data.errors.rate value=data.values.rate>
+            <gov-radios:radio label=i18n('bsp:form.rate.labelStandard') value="standard"/>
+            <gov-radios:radio label=i18n('bsp:form.rate.labelHigher') value="higher"/>
+          </gov-radios>
 
-      <button type="submit" class="button">
-        <i18n-message key="bsp:submit"/>
-      </button>
+          <pay-csrf-token/>
 
-    </form>
+          <button type="submit" class="button">
+            <i18n-message key="bsp:submit"/>
+          </button>
+
+        </form>
+
+      </div>
+    </div>
 
   </layout-put>
 

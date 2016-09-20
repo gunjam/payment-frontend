@@ -41,3 +41,25 @@ input[type="search"] {
   border-left: 4px solid #B10E1E;
   box-sizing: padding-box;
 }
+
+// Payment schedule
+.schedule {
+	border-top: 1px solid #bfc1c3;
+  margin-bottom: 1.57894736842105em;
+}
+.payment {
+	padding: 0.6315789474em 1.0526315789em 0.4736842105em 0;
+	border-bottom: 1px solid #bfc1c3;
+	position: relative;
+}
+.amount {
+	font-weight: 700;
+  display: block;
+}
+.type {
+	color: #999;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin-top: -0.5em;
+}

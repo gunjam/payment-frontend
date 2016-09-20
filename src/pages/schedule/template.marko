@@ -1,0 +1,57 @@
+<script marko-init>
+  const splitSchedule = require("../../lib/split-schedule");
+</script>
+
+<layout-use("../../common/layout.marko") errors=data.errors>
+
+  <layout-put into="page-title">
+    <i18n-message key="schedule:heading"/>
+  </layout-put>
+
+  <layout-put into="content">
+
+    <a href="/search" class="link-back">
+      <i18n-message key="schedule:backLink"/>
+    </a>
+
+    <await(schedule from data.schedulePromise)>
+      <await-error>
+        <p class="lede">
+
+        </p>
+      </await-error>
+
+      <h1 class="heading-xlarge">
+        ${schedule.nationalInsuranceNumber}
+        <span class="heading-secondary">
+          <i18n-message key="schedule:paymentSchedule"/>
+        </span>
+      </h1>
+
+      <var split=splitSchedule(schedule.paymentSchedule)/>
+
+      <div class="grid-row">
+        <div class="column-one-half">
+          <h2 class="heading-medium">
+            <i18n-message key="schedule:pastPayments"/>
+          </h2>
+          <pay-schedule if(split[0].length) schedule=split[0]/>
+          <p else>
+            <i18n-message key="schedule:noPaymentsMade"/>
+          </p>
+        </div>
+        <div class="column-one-half">
+          <h2 class="heading-medium">
+            <i18n-message key="schedule:futurePayments"/>
+          </h2>
+          <pay-schedule if(split[1].length) schedule=split[1]/>
+          <p else>
+            <i18n-message key="schedule:allPaymentsMade"/>
+          </p>
+        </div>
+      </div>
+    </await>
+
+  </layout-put>
+
+</layout-use>

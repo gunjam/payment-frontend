@@ -7,19 +7,53 @@
 
   <layout-put into="content">
 
-    <h1 class="heading-xlarge">
-      <i18n-message key="confirmation:heading"/>
-    </h1>
+    <div class="grid-row">
+      <div class="column-two-thirds">
 
-    <pay-schedule schedule=data.values/>
+        <h1 class="heading-xlarge">
+          <i18n-message key="confirmation:heading"/>
+        </h1>
 
-    <form action="/confirmation" method="post">
-      <pay-csrf-token/>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">
+                <i18n-message key="confirmation:customerDetails"/>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i18n-message key="confirmation:nino"/></td>
+              <td>${data.nationalInsuranceNumber}</td>
+            </tr>
+            <tr>
+              <td><i18n-message key="confirmation:sortCode"/></td>
+              <td>${data.sortCode}</td>
+            </tr>
+            <tr>
+              <td><i18n-message key="confirmation:accountNumber"/></td>
+              <td>${data.accountNumber}</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <button type="submit" class="button">
-        <i18n-message key="confirmation:confirm"/>
-      </button>
-    </form>
+        <h2 class="heading-medium">
+          <i18n-message key="confirmation:paymentSchedule"/>
+        </h2>
+
+        <pay-schedule schedule=data.paymentSchedule/>
+
+        <form action="/confirmation" method="post">
+          <pay-csrf-token/>
+
+          <button type="submit" class="button">
+            <i18n-message key="confirmation:confirm"/>
+          </button>
+        </form>
+
+      </div>
+    </div>
 
   </layout-put>
 
