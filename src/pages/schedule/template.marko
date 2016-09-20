@@ -17,9 +17,14 @@
     <await(schedule from data.schedulePromise)>
       <await-error>
         <p class="lede">
-
+          <i18n-message key="schedule:await.error"/>
         </p>
       </await-error>
+      <await-timeout>
+        <p class="lede">
+          <i18n-message key="schedule:await.timeout"/>
+        </p>
+      </await-timeout>
 
       <h1 class="heading-xlarge">
         ${schedule.nationalInsuranceNumber}
