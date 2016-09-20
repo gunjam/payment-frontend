@@ -2,6 +2,7 @@
 
 const rp = require('request-promise');
 const renderForm = require('../../lib/render-form');
+const config = require('../../../config/app');
 
 module.exports = {
   get: renderForm('confirmation'),
@@ -10,11 +11,11 @@ module.exports = {
     const data = req.getSession('confirmation');
     rp({
       method: 'PUT',
-      uri: 'http://localhost:3000/api/Schedules',
+      uri: config.apiUrl,
       json: true,
       body: data
     }).then(() => {
-      delete req.session.confirmation;
+      req.session.destroy();
       res.redirect('/done');
     }).catch(err => next(err));
   }
