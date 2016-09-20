@@ -1,11 +1,21 @@
 'use strict';
 
 const rp = require('request-promise');
-const renderForm = require('../../lib/render-form');
 const config = require('../../../config/app');
+const template = require('./template');
 
 module.exports = {
-  get: renderForm('confirmation'),
+  get(req, res) {
+    if (req.session.confirmation) {
+      template.render({
+        errors: false,
+        values: req.getSession('confirmation')
+      }, res);
+    } else {
+      req.session.destroy();
+      res.redirect('/');
+    }
+  },
 
   post(req, res, next) {
     const data = req.getSession('confirmation');
