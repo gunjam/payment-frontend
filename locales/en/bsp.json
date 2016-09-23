@@ -9,6 +9,12 @@
         "format": "Not recognised, please double check"
       }
     },
+    "nameOnAccount": {
+      "label": "Name on account",
+      "errors": {
+        "presence": "Must include name on account"
+      }
+    },
     "sortCode": {
       "legend": "Sort code",
       "label1": "First two digits of sort code",

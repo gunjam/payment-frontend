@@ -21,7 +21,7 @@ module.exports = {
 
   post(req, res, next) {
     const values = req.body;
-    const {nino, accountNumber, sortCode1, sortCode2, sortCode3, rate, sex} = values;
+    const {nino, nameOnAccount, accountNumber, sortCode1, sortCode2, sortCode3, rate, sex} = values;
     const errors = {};
     const sortCode = `${sortCode1}-${sortCode2}-${sortCode3}`;
     const dateOfClaim = values.dateOfClaim || {};
@@ -33,6 +33,11 @@ module.exports = {
       errors.nino = req.t('bsp:form.nino.errors.presence');
     } else if (!isValidNino(nino)) {
       errors.nino = req.t('bsp:form.nino.errors.format');
+    }
+
+    // Validate nameOnAccount
+    if (isEmpty(nameOnAccount)) {
+      errors.nameOnAccount = req.t('bsp:form.nameOnAccount.errors.presence');
     }
 
     // Validate sortCode
@@ -101,7 +106,11 @@ module.exports = {
         const higherRate = rate === 'higher';
         const startDate = tomorrow();
         const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
-        const data = {nationalInsuranceNumber, sortCode, accountNumber, paymentSchedule};
+        const data = {
+          nationalInsuranceNumber,
+          account: {nameOnAccount, sortCode, accountNumber},
+          paymentSchedule
+        };
         res.setSessionAndRedirect('confirmation', data, '/confirmation');
       })
       .catch(err => next(err));
