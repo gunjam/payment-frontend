@@ -63,3 +63,21 @@ input[type="search"] {
 	top: 50%;
 	margin-top: -0.5em;
 }
+.stopped-label {
+	border-top: 1px solid #BFC1C3;
+	padding-top: 0.5em;
+	margin-bottom: 0.5em
+}
+.button-red {
+  background-color: #B10E1E;
+  box-shadow: 0 2px 0 #790000;
+  &:hover {
+    background-color: #B41020;
+  }
+  &:visited {
+    background-color: #B10E1E;
+  }
+  &:active {
+    background-color: #B10E1E;
+  }
+}

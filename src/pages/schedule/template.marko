@@ -1,6 +1,7 @@
 <i18n-var/>
 <script marko-init>
   const splitSchedule = require("../../lib/split-schedule");
+  const formatDate = require("../../lib/format-date");
 </script>
 
 <layout-use("../../common/layout.marko") errors=data.errors>
@@ -27,15 +28,23 @@
         </p>
       </await-timeout>
 
-      <var currentStatus=schedule.status.pop()/>
+      <var currentStatus=schedule.statuses.pop()/>
 
       <h1 class="heading-xlarge">
         ${schedule.nationalInsuranceNumber}
         <span class="heading-secondary">
           <i18n-message key="schedule:paymentSchedule"
-            status=i18n("schedule:status.${currentStatus.status}")/>
+            status=i18n("schedule:status.${currentStatus.name}")/>
         </span>
       </h1>
+
+      <ul>
+        <li if(currentStatus.name !== 'stopped')>
+          <a href="/stop-schedule/${schedule.id}" class="button button-red">
+            <i18n-message key="schedule:form.stop"/>
+          </a>
+        </li>
+      </ul>
 
       <var split=splitSchedule(schedule.paymentSchedule)/>
 
@@ -44,15 +53,30 @@
           <h2 class="heading-medium">
             <i18n-message key="schedule:pastPayments"/>
           </h2>
+
           <pay-schedule if(split[0].length) schedule=split[0]/>
           <p else>
             <i18n-message key="schedule:noPaymentsMade"/>
           </p>
         </div>
         <div class="column-one-half">
-          <h2 class="heading-medium">
-            <i18n-message key="schedule:futurePayments"/>
-          </h2>
+          <if(currentStatus.name === 'stopped')>
+            <h2 class="heading-medium">
+              <i18n-message key="schedule:paymentsStopped"/>
+            </h2>
+            <p class="stopped-label">
+              <var stoppedDate=(new Date(currentStatus.startDate))/>
+              <i18n-message key="schedule:paymentsStoppedMsg"
+                timeStart='<time datetime="${stoppedDate.toISOString()}">'
+                date=formatDate(stoppedDate) timeStop="</time>"/>
+            </p>
+          </if>
+          <else>
+            <h2 class="heading-medium">
+              <i18n-message key="schedule:futurePayments"/>
+            </h2>
+          </else>
+
           <pay-schedule if(split[1].length) schedule=split[1]/>
           <p else>
             <i18n-message key="schedule:allPaymentsMade"/>

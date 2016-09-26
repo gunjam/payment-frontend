@@ -1,0 +1,12 @@
+{
+  "heading": "Why are you stopping this payment schedule?",
+  "backLink": "Payment schedule",
+  "form": {
+    "reason": {
+      "errors": {
+        "presence": "Provide a reason for stopping the schedule"
+      }
+    },
+    "submit": "Stop payments"
+  }
+}

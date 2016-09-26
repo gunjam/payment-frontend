@@ -68,6 +68,7 @@ app.use('/confirmation', require('./src/pages/confirmation'));
 app.use('/done', require('./src/pages/done'));
 app.use('/search', require('./src/pages/search'));
 app.use('/schedule', require('./src/pages/schedule'));
+app.use('/stop-schedule', require('./src/pages/stop-schedule'));
 
 // Error pages
 app.use(require('./src/pages/404'));

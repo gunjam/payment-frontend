@@ -6,8 +6,13 @@
     "started": "active",
     "stopped": "stopped"
   },
-  "pastPayments": "Past payments",
-  "futurePayments": "Future payments",
+  "form": {
+    "stop": "Stop payments"
+  },
+  "pastPayments": "Payments made",
+  "futurePayments": "Payments due",
+  "paymentsStopped": "Payments prevented",
+  "paymentsStoppedMsg": "Payments stopped {{-timeStart}}{{date}}{{-timeStop}}",
   "noPaymentsMade": "No payments made.",
   "allPaymentsMade": "All payments made.",
   "await": {

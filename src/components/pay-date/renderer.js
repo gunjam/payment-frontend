@@ -1,25 +1,12 @@
 'use strict';
 
-const months = {
-  en: [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ],
-  cy: [
-    'Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf',
-    'Awst', 'Medi', 'Hydref', 'Tachwedd', 'Rhagfyr'
-  ]
-};
+const formatDate = require('../../lib/format-date');
 
 exports.renderer = function (input, out) {
   const reqLang = (out.stream.req || {}).language;
   const dateLang = (reqLang === 'cy') ? 'cy' : 'en';
   const date = input.date ? new Date(input.date) : new Date();
-  const monthId = date.getMonth();
+  const dateString = formatDate(date, dateLang);
 
-  out.write(
-    `<time datetime="${date.toISOString()}">` +
-      `${date.getDate()} ${months[dateLang][monthId]} ${date.getFullYear()}` +
-    `</time>`
-  );
+  out.write(`<time datetime="${date.toISOString()}">${dateString}</time>`);
 };
