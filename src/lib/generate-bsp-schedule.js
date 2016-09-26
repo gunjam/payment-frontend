@@ -7,6 +7,9 @@ const monthlyHigher = 500;
 const monthlyStandard = 100;
 const maxMonthlyPayments = 18;
 const maxMonthsBackDated = 3;
+const initial = 'initial';
+const backDated = 'backDated';
+const monthly = 'monthly';
 
 function getPaymentSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, higherRate, startDate = dateOfClaim) {
   const initialAmount = higherRate ? initialHigher : initialStandard;
@@ -30,16 +33,16 @@ function getNumberOfPayments(dateOfDeath, dateOfPensionAge, monthsSinceDeath) {
 }
 
 function getInitialPayment(monthsSinceDeath, amount, date) {
-  return monthsSinceDeath < monthsToGetInitalPayment ? [{amount, date}] : [];
+  return monthsSinceDeath < monthsToGetInitalPayment ? [{amount, date, type: initial}] : [];
 }
 
 function getBackDatedPayments(monthsSinceDeath, monthlyAmount, date) {
   const amount = monthlyAmount * (monthsSinceDeath < maxMonthlyPayments ? Math.min(monthsSinceDeath, maxMonthsBackDated) : maxMonthsBackDated - (monthsSinceDeath - maxMonthlyPayments));
-  return monthsSinceDeath > 0 && monthsSinceDeath < maxMonthlyPayments + maxMonthsBackDated ? [{amount, date}] : [];
+  return monthsSinceDeath > 0 && monthsSinceDeath < maxMonthlyPayments + maxMonthsBackDated ? [{amount, date, type: backDated}] : [];
 }
 
 function getMonthlyPayments(date, amount, numberOfPayments, ...payments) {
-  return numberOfPayments < 1 ? payments : getMonthlyPayments(nextClosestPayDate(date), amount, numberOfPayments - 1, ...payments, {amount, date});
+  return numberOfPayments < 1 ? payments : getMonthlyPayments(nextClosestPayDate(date), amount, numberOfPayments - 1, ...payments, {amount, date, type: monthly});
 }
 
 function monthsBetween(date1, date2) {

@@ -5,7 +5,7 @@
       £${payment.amount}
     </strong>
     <span if(payment.type && payment.type !== 'monthly') class="type ${payment.type}">
-      <i18n-message key="schedule:${payment.type}"/>
+      <i18n-message key="schedule:type.${payment.type}"/>
     </span>
   </li>
 </ul>
