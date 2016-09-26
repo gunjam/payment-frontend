@@ -1,7 +1,11 @@
 {
   "heading": "Find a payment schedule",
   "backLink": "Search",
-  "paymentSchedule": "Payment schedule",
+  "paymentSchedule": "Payment schedule ({{status}})",
+  "status": {
+    "started": "active",
+    "stopped": "stopped"
+  },
   "pastPayments": "Past payments",
   "futurePayments": "Future payments",
   "noPaymentsMade": "No payments made.",

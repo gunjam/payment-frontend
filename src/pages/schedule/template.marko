@@ -1,3 +1,4 @@
+<i18n-var/>
 <script marko-init>
   const splitSchedule = require("../../lib/split-schedule");
 </script>
@@ -26,10 +27,13 @@
         </p>
       </await-timeout>
 
+      <var currentStatus=schedule.status.pop()/>
+
       <h1 class="heading-xlarge">
         ${schedule.nationalInsuranceNumber}
         <span class="heading-secondary">
-          <i18n-message key="schedule:paymentSchedule"/>
+          <i18n-message key="schedule:paymentSchedule"
+            status=i18n("schedule:status.${currentStatus.status}")/>
         </span>
       </h1>
 
