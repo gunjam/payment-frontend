@@ -1,7 +1,7 @@
 'use strict';
 
 const rp = require('request-promise');
-const config = require('../../../config/app');
+const {schedulesApi} = require('../../../config/app');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const isValidNino = require('../../utils/is-valid-nino');
 const isEmpty = require('../../utils/is-empty');
@@ -15,8 +15,8 @@ module.exports = {
       const sanitisedNino = sanitiseNino(req.query.nino);
 
       if (isValidNino(sanitisedNino)) {
-        const uri = config.apiUrl + '?filter[where][nationalInsuranceNumber]=' +
-          encodeURIComponent(sanitisedNino);
+        const uri = schedulesApi + '?filter[include][paymentSchedule]' +
+          '&filter[where][nationalInsuranceNumber]=' + encodeURIComponent(sanitisedNino);
 
         template.render({
           searchResultsPromise: rp({uri, transform: JSON.parse}).promise()

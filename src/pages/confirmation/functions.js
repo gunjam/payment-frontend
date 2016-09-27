@@ -1,8 +1,12 @@
 'use strict';
 
 const rp = require('request-promise');
-const config = require('../../../config/app');
+const {bankAccountsApi, schedulesFullApi} = require('../../../config/app');
 const template = require('./template');
+
+const json = true;
+const PUT = 'PUT';
+const POST = 'POST';
 
 module.exports = {
   get(req, res) {
@@ -15,15 +19,21 @@ module.exports = {
   },
 
   post(req, res, next) {
-    const data = req.getSession('confirmation');
-    rp({
-      method: 'PUT',
-      uri: config.apiUrl,
-      json: true,
-      body: data
-    }).then(() => {
-      req.session.destroy();
-      res.redirect('/done');
-    }).catch(err => next(err));
+    const session = req.getSession('confirmation');
+    const {account, nationalInsuranceNumber, paymentSchedule} = session;
+
+    rp({method: PUT, uri: bankAccountsApi, json, body: account})
+      .then(body => {
+        const linkedSchedule = paymentSchedule.map(i => Object.assign(i, {bankAccountId: body.id}));
+        const data = {nationalInsuranceNumber, paymentSchedule: linkedSchedule};
+
+        rp({method: POST, uri: schedulesFullApi, json, body: data})
+          .then(() => {
+            req.session.destroy();
+            res.redirect('/done');
+          })
+          .catch(err => next(err));
+      })
+      .catch(err => next(err));
   }
 };

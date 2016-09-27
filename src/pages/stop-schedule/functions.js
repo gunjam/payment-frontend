@@ -1,7 +1,7 @@
 'use strict';
 
 const rp = require('request-promise');
-const config = require('../../../config/app');
+const {schedulesApi} = require('../../../config/app');
 const isEmpty = require('../../utils/is-empty');
 const template = require('./template.marko');
 
@@ -23,7 +23,7 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({id, errors, values: {reason}}, res);
     } else {
-      const addStatus = config.apiUrl + '/' + req.params.id + '/addStatus';
+      const addStatus = schedulesApi + '/' + req.params.id + '/addStatus';
       const schedulePage = '/schedule/' + req.params.id;
       const statusStopped = {name: 'stopped', reason};
 
