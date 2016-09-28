@@ -1,9 +1,9 @@
 'use strict';
 
 const monthsToGetInitalPayment = 12;
-const initialHigher = 5000;
+const initialHigher = 3500;
 const initialStandard = 2500;
-const monthlyHigher = 500;
+const monthlyHigher = 350;
 const monthlyStandard = 100;
 const maxMonthlyPayments = 18;
 const maxMonthsBackDated = 3;

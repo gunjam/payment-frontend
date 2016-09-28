@@ -46,7 +46,9 @@
           <i18n-message key="confirmation:paymentSchedule"/>
         </h2>
 
-        <pay-schedule schedule=data.paymentSchedule/>
+        <div class="form-group">
+          <pay-schedule schedule=data.paymentSchedule/>
+        </div>
 
         <form action="/confirmation" method="post">
           <pay-csrf-token/>

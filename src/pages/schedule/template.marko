@@ -1,5 +1,6 @@
 <i18n-var/>
 <script marko-init>
+  const numberOfBankAccounts = require("../../lib/number-of-bank-accounts");
   const splitSchedule = require("../../lib/split-schedule");
   const formatDate = require("../../lib/format-date");
 </script>
@@ -28,9 +29,14 @@
         </p>
       </await-timeout>
 
-      <var currentStatus=schedule.statuses.pop()/>
+      <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
+      <var hasMultipleBankAccounts=(numberOfBankAccounts(schedule.paymentSchedule) > 1)/>
+      <var split=splitSchedule(schedule.paymentSchedule)/>
+      <var paymentsPaid=split[0]/>
+      <var paymentsDue=split[1]/>
+      <var lastPayment=schedule.paymentSchedule[schedule.paymentSchedule.length - 1]/>
 
-      <h1 class="heading-xlarge">
+      <h1 class="heading-xlarge schedule-heading">
         ${schedule.nationalInsuranceNumber}
         <span class="heading-secondary">
           <i18n-message key="schedule:paymentSchedule"
@@ -38,50 +44,81 @@
         </span>
       </h1>
 
-      <ul>
-        <li if(currentStatus.name !== 'stopped')>
+      <ul if(currentStatus.name !== 'stopped') class="schedule-controls">
+        <li>
+          <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
+            <i18n-message key="schedule:editBankDetails"/>
+          </a>
+        </li>
+        <li>
           <a href="/stop-schedule/${schedule.id}" class="button button-red">
-            <i18n-message key="schedule:form.stop"/>
+            <i18n-message key="schedule:stop"/>
           </a>
         </li>
       </ul>
 
-      <var split=splitSchedule(schedule.paymentSchedule)/>
+      <div class="grid-row">
+        <div class="column-two-thirds">
+          <table>
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <i18n-message key="schedule:bankAccount"/>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i18n-message key="schedule:accountNumber"/></td>
+                <td>${lastPayment.bankAccount.accountNumber}</td>
+              </tr>
+              <tr>
+                <td><i18n-message key="schedule:sortCode"/></td>
+                <td>${lastPayment.bankAccount.sortCode}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <div class="grid-row">
+
         <div class="column-one-half">
           <h2 class="heading-medium">
             <i18n-message key="schedule:pastPayments"/>
           </h2>
 
-          <pay-schedule if(split[0].length) schedule=split[0]/>
-          <p else>
-            <i18n-message key="schedule:noPaymentsMade"/>
-          </p>
+          <pay-schedule-detail if(hasMultipleBankAccounts) schedule=paymentsPaid
+            is-empty-message-key="schedule:noPaymentsMade"
+            bank-label-message-key="schedule:inBank"/>
+          <pay-schedule else schedule=paymentsPaid/>
         </div>
+
         <div class="column-one-half">
           <if(currentStatus.name === 'stopped')>
             <h2 class="heading-medium">
               <i18n-message key="schedule:paymentsStopped"/>
             </h2>
-            <p class="stopped-label">
+            <p class="schedule-label">
               <var stoppedDate=(new Date(currentStatus.startDate))/>
               <i18n-message key="schedule:paymentsStoppedMsg"
                 timeStart='<time datetime="${stoppedDate.toISOString()}">'
-                date=formatDate(stoppedDate) timeStop="</time>"/>
+                date=formatDate(stoppedDate)
+                timeStop="</time>"/>
             </p>
+            <pay-schedule schedule=paymentsDue/>
           </if>
           <else>
             <h2 class="heading-medium">
               <i18n-message key="schedule:futurePayments"/>
             </h2>
+            <pay-schedule-detail if(hasMultipleBankAccounts) schedule=paymentsDue
+              is-empty-message-key="schedule:noPaymentsMade"
+              bank-label-message-key="schedule:toBank"/>
+            <pay-schedule else schedule=paymentsDue/>
           </else>
-
-          <pay-schedule if(split[1].length) schedule=split[1]/>
-          <p else>
-            <i18n-message key="schedule:allPaymentsMade"/>
-          </p>
         </div>
+
       </div>
     </await>
 

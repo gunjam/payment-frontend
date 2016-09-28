@@ -43,9 +43,12 @@ input[type="search"] {
 }
 
 // Payment schedule
+.schedule-heading {
+  margin-bottom: 0.5em;
+}
 .schedule {
 	border-top: 1px solid #bfc1c3;
-  margin-bottom: 1.57894736842105em;
+  margin-bottom: 0;
 }
 .payment {
 	padding: 0.6315789474em 1.0526315789em 0.4736842105em 0;
@@ -62,11 +65,23 @@ input[type="search"] {
 	right: 0;
 	top: 50%;
 	margin-top: -0.5em;
+
+  @media(max-width: 400px) {
+    position: static;
+    display: block;
+    margin-top: 5px;
+  }
 }
-.stopped-label {
-	border-top: 1px solid #BFC1C3;
-	padding-top: 0.5em;
-	margin-bottom: 0.5em
+.schedule-label {
+	margin: 0.5em 0;
+}
+.schedule-controls {
+  margin: 1.5em 0;
+
+  li {
+    display: inline-block;
+    margin-right: 5px;
+  }
 }
 .button-red {
   background-color: #B10E1E;
@@ -79,5 +94,18 @@ input[type="search"] {
   }
   &:active {
     background-color: #B10E1E;
+  }
+}
+.button-grey {
+  background-color: #666;
+  box-shadow: 0 2px 0 #333;
+  &:hover {
+    background-color: #666;
+  }
+  &:visited {
+    background-color: #666;
+  }
+  &:active {
+    background-color: #666;
   }
 }

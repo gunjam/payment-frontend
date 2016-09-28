@@ -20,8 +20,9 @@
     "pay",
     "confirmation",
     "schedule",
-    "stop",
     "search",
+    "stop",
+    "edit",
     "done",
     "404",
     "500"

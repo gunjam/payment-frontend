@@ -1,14 +1,18 @@
 {
-  "heading": "Find a payment schedule",
+  "heading": "View payment schedule",
   "backLink": "Search",
   "paymentSchedule": "Payment schedule ({{status}})",
   "status": {
     "started": "active",
     "stopped": "stopped"
   },
-  "form": {
-    "stop": "Stop payments"
-  },
+  "stop": "Stop payments",
+  "editBankDetails": "Edit bank details",
+  "bankAccount": "Bank account",
+  "accountNumber": "Account number",
+  "sortCode": "Sort code",
+  "inBank": "Payments were paid to account number {{accountNumber}}",
+  "toBank": "Payments will be paid to account number {{accountNumber}}",
   "pastPayments": "Payments made",
   "futurePayments": "Payments due",
   "paymentsStopped": "Payments prevented",
@@ -16,8 +20,8 @@
   "noPaymentsMade": "No payments made.",
   "allPaymentsMade": "All payments made.",
   "await": {
-    "error": "An error occurred while requesting search results.",
-    "timeout": "Request for search results timed out."
+    "error": "An error occurred while requesting schedule data.",
+    "timeout": "Request for schedule data timed out."
   },
   "type": {
     "initial": "Initital payment",

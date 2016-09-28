@@ -8,7 +8,7 @@
 
   <layout-put into="content">
 
-    <a href="/schedule/${data.id}" class="link-back">
+    <a href="/schedule/${data.scheduleId}" class="link-back">
       <i18n-message key="stop:backLink"/>
     </a>
 
@@ -16,7 +16,7 @@
       <i18n-message key="stop:heading"/>
     </h1>
 
-    <form method="post" action="/stop-schedule/${data.id}">
+    <form method="post" action="/stop-schedule/${data.scheduleId}">
       <div class="form-group${(data.errors.reason ? ' error' : '')}">
         <label for="textarea-reason">
           <span class="form-label" class="visuallyhidden">

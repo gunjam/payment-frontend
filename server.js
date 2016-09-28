@@ -69,6 +69,7 @@ app.use('/done', require('./src/pages/done'));
 app.use('/search', require('./src/pages/search'));
 app.use('/schedule', require('./src/pages/schedule'));
 app.use('/stop-schedule', require('./src/pages/stop-schedule'));
+app.use('/edit-bank-details', require('./src/pages/edit-bank-details'));
 
 // Error pages
 app.use(require('./src/pages/404'));

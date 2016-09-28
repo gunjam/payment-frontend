@@ -7,12 +7,12 @@ const template = require('./template.marko');
 
 module.exports = {
   get(req, res) {
-    const id = req.params.id;
-    template.render({id, errors: false, values: {}}, res);
+    const scheduleId = req.params.id;
+    template.render({scheduleId, errors: false, values: {}}, res);
   },
 
   post(req, res, next) {
-    const id = req.params.id;
+    const scheduleId = req.params.id;
     const reason = req.body.reason;
     const errors = {};
 
@@ -21,7 +21,7 @@ module.exports = {
     }
 
     if (Object.keys(errors).length > 0) {
-      template.render({id, errors, values: {reason}}, res);
+      template.render({scheduleId, errors, values: {reason}}, res);
     } else {
       const addStatus = schedulesApi + '/' + req.params.id + '/addStatus';
       const schedulePage = '/schedule/' + req.params.id;

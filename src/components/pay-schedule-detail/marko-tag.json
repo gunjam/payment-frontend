@@ -5,5 +5,9 @@
   },
   "@is-empty-message-key": {
     "type": "string"
+  },
+  "@bank-label-message-key": {
+    "required": true,
+    "type": "string"
   }
 }

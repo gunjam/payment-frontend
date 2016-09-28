@@ -1,0 +1,45 @@
+<i18n-var/>
+
+<layout-use("../../common/layout.marko") errors=data.errors>
+
+  <layout-put into="page-title">
+    <i18n-message key="edit:heading"/>
+  </layout-put>
+
+  <layout-put into="content">
+
+    <div class="grid-row">
+      <div class="column-two-thirds">
+
+        <a href="/schedule/${data.scheduleId}" class="link-back">
+          <i18n-message key="edit:backLink"/>
+        </a>
+
+        <h1 class="heading-xlarge">
+          <i18n-message key="edit:heading"/>
+        </h1>
+
+        <form method="post" action="/edit-bank-details/${data.scheduleId}">
+
+          <gov-input name="nameOnAccount" label=i18n('bsp:form.nameOnAccount.label')
+            error=data.errors.nameOnAccount value=data.values.nameOnAccount/>
+
+          <pay-sort-code-input error=data.errors.sortCode value=data.values/>
+
+          <gov-input name="accountNumber" label=i18n('bsp:form.accountNumber.label')
+            error=data.errors.accountNumber value=data.values.accountNumber/>
+
+          <pay-csrf-token/>
+
+          <button type="submit" class="button">
+            <i18n-message key="edit:form.submit"/>
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+
+  </layout-put>
+
+</layout-use>

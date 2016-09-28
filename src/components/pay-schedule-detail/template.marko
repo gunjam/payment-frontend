@@ -1,0 +1,18 @@
+<script marko-init>
+  const splitScheduleByBank = require("../../lib/split-schedule-by-bank");
+</script>
+
+<if(data.schedule.length)>
+  <var groupedSchedules=splitScheduleByBank(data.schedule)/>
+
+  <for(schedule in groupedSchedules)>
+    <p class="schedule-label">
+      <i18n-message key=data.bankLabelMessageKey
+        accountNumber=(schedule[0].bankAccount ? schedule[0].bankAccount.accountNumber : '')/>
+    </p>
+    <pay-schedule schedule=schedule/>
+  </for>
+</if>
+<p else-if(data.isEmptyMessageKey)>
+  <i18n-message key=data.isEmptyMessageKey/>
+</p>

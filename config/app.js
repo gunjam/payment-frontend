@@ -5,5 +5,6 @@ const apiUrl = process.env.API_URL || 'http://localhost:5000/api/';
 module.exports = {
   bankAccountsApi: apiUrl + 'BankAccounts',
   schedulesApi: apiUrl + 'Schedules',
-  schedulesFullApi: apiUrl + 'Schedules/saveFull'
+  schedulesFullApi: apiUrl + 'Schedules/saveFull',
+  updatePaymentsApi: apiUrl + 'Payments/update'
 };
