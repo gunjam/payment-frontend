@@ -13,6 +13,9 @@
   "await": {
     "error": "An error occurred while requesting search results.",
     "timeout": "Request for search results timed out.",
+    "results": "Results",
+    "resultLink": "Schedule {{number}} ({{status}})",
+    "resultMeta": "From {{start}} till {{end}}",
     "noResults": "No results!"
   }
 }

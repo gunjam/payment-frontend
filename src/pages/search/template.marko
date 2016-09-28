@@ -1,3 +1,8 @@
+<i18n-var/>
+<script marko-init>
+  const formatDate = require("../../lib/format-date");
+</script>
+
 <layout-use("../../common/layout.marko") errors=data.errors page="search">
 
   <layout-put into="page-title">
@@ -44,15 +49,25 @@
             </p>
           </await-timeout>
 
-          <ul if(searchResults.length > 0)>
-            <li for(schedule in searchResults)>
-              <a href="/schedule/${schedule.id}">
-                <pay-date date=schedule.paymentSchedule[0].date/>
-                →
-                <pay-date date=schedule.paymentSchedule[schedule.paymentSchedule.length - 1].date/>
-              </a>
-            </li>
-          </ul>
+          <if(searchResults.length > 0)>
+            <h2 class="heading-medium">
+              <i18n-message key="search:await.results"/>
+            </h2>
+            <ul class="search-results">
+              <li for(schedule in searchResults | status-var=loop) class="result">
+                <a href="/schedule/${schedule.id}" class="result-link">
+                  <i18n-message key="search:await.resultLink"
+                    number=(loop.getIndex() + 1)
+                    status=i18n("schedule:status.${schedule.statuses[schedule.statuses.length - 1].name}")/>
+                </a>
+                <span class="result-meta">
+                  <i18n-message key="search:await.resultMeta"
+                    start=formatDate(new Date(schedule.paymentSchedule[0].date))
+                    end=formatDate(new Date(schedule.paymentSchedule[schedule.paymentSchedule.length - 1].date))/>
+                </span>
+              </li>
+            </ul>
+          </if>
           <p else class="lede">
             <i18n-message key="search:await.noResults"/>
           </p>

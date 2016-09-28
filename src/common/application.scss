@@ -42,6 +42,33 @@ input[type="search"] {
   box-sizing: padding-box;
 }
 
+// Search results
+.search-results {
+  margin: 0 0 2em;
+}
+.result {
+  border-bottom: 1px solid #BFC1C3;
+  padding: 1em 0;
+  margin: 0;
+}
+.result-meta, .result-link {
+  display: block;
+}
+.result-link {
+  font-size: 1.3em;
+  font-weight: 700;
+}
+.result-meta {
+  font-size: 0.842105263157895em;
+}
+.result:first-child {
+  padding-top: 0;
+}
+.result:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
 // Payment schedule
 .schedule-heading {
   margin-bottom: 0.5em;
