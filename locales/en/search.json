@@ -2,7 +2,11 @@
   "heading": "Find a payment schedule",
   "form": {
     "search": {
-      "label": "Enter the customers NINO or schedule ID"
+      "label": "Enter the customers NINO or schedule ID",
+      "errors": {
+        "presence": "Enter a National Insurance number",
+        "format": "National Insurance number not valid"
+      }
     },
     "submit": "Search"
   },

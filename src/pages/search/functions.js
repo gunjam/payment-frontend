@@ -7,24 +7,25 @@ const isValidNino = require('../../utils/is-valid-nino');
 const isEmpty = require('../../utils/is-empty');
 const template = require('./template.marko');
 
+const apiFilter = '?filter[include][paymentSchedule]&filter[where][nationalInsuranceNumber]=';
+
 module.exports = {
   get(req, res) {
-    if (isEmpty(req.query.nino)) {
-      template.render({}, res);
+    const {nino} = req.query;
+
+    if (isEmpty(nino)) {
+      const errors = {search: req.t('search:form.search.errors.presence')};
+      template.render({errors}, res);
     } else {
-      const sanitisedNino = sanitiseNino(req.query.nino);
+      const sanitisedNino = sanitiseNino(nino);
 
       if (isValidNino(sanitisedNino)) {
-        const uri = schedulesApi + '?filter[include][paymentSchedule]' +
-          '&filter[where][nationalInsuranceNumber]=' + encodeURIComponent(sanitisedNino);
-
-        template.render({
-          searchResultsPromise: rp({uri, transform: JSON.parse}).promise()
-        }, res);
+        const uri = schedulesApi + apiFilter + encodeURIComponent(sanitisedNino);
+        const searchResultsPromise = rp({uri, transform: JSON.parse}).promise();
+        template.render({nino, searchResultsPromise}, res);
       } else {
-        template.render({
-          errors: {search: 'Enter a valid National Insurance number'}
-        }, res);
+        const errors = {search: req.t('search:form.search.errors.format')};
+        template.render({nino, errors}, res);
       }
     }
   }

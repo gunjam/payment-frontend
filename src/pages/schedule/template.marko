@@ -13,10 +13,6 @@
 
   <layout-put into="content">
 
-    <a href="/search" class="link-back">
-      <i18n-message key="schedule:backLink"/>
-    </a>
-
     <await(schedule from data.schedulePromise)>
       <await-error>
         <p class="lede">
@@ -35,6 +31,10 @@
       <var paymentsPaid=split[0]/>
       <var paymentsDue=split[1]/>
       <var lastPayment=schedule.paymentSchedule[schedule.paymentSchedule.length - 1]/>
+
+      <a href="/search?nino=${schedule.nationalInsuranceNumber}" class="link-back">
+        <i18n-message key="schedule:backLink"/>
+      </a>
 
       <h1 class="heading-xlarge schedule-heading">
         ${schedule.nationalInsuranceNumber}
