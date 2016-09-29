@@ -4,7 +4,6 @@ const rp = require('request-promise');
 const {schedulesApi} = require('../../../config/app');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const isValidNino = require('../../utils/is-valid-nino');
-const isEmpty = require('../../utils/is-empty');
 const template = require('./template.marko');
 
 const apiFilter = '?filter[include][paymentSchedule]&filter[where][nationalInsuranceNumber]=';
