@@ -13,7 +13,9 @@ module.exports = {
   get(req, res) {
     const {nino} = req.query;
 
-    if (isEmpty(nino)) {
+    if (nino === undefined) {
+      template.render({errors: false}, res);
+    } else if (nino === '') {
       const errors = {search: req.t('search:form.search.errors.presence')};
       template.render({errors}, res);
     } else {
