@@ -1,5 +1,5 @@
 {
-  "heading": "Setup a payment schedule",
+  "heading": "Set up a payment schedule",
   "form": {
     "nino": {
       "label": "National Insurance number",
@@ -48,7 +48,7 @@
       }
     },
     "dateOfDeath": {
-      "legend": "Partner date of death",
+      "legend": "Partner's date of death",
       "hint": "For example, 20 3 2016",
       "errors": {
         "presence": "Need a date of death",
@@ -57,7 +57,7 @@
       }
     },
     "dateOfBirth": {
-      "legend": "Claimant date of birth",
+      "legend": "Claimant's date of birth",
       "hint": "For example, 20 3 2016",
       "errors": {
         "presence": "Need a date of birth",
@@ -66,7 +66,7 @@
       }
     },
     "sex": {
-      "legend": "What is the sex of the claimant?",
+      "legend": "What is the claimant's gender?",
       "labelFemale": "Female",
       "labelMale": "Male",
       "errors": {
