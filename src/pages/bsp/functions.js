@@ -1,14 +1,13 @@
 'use strict';
 
 const rp = require('request-promise');
-const tomorrow = require('../../lib/tomorrow');
 const isEmpty = require('../../utils/is-empty');
 const isValidNino = require('../../utils/is-valid-nino');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidDateObject = require('../../utils/is-valid-date-object');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
 const getDateFromDateObject = require('../../utils/get-date-from-date-object');
-const generateBSPSchedule = require('../../lib/generate-bsp-schedule');
+const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const template = require('./template.marko');
 
@@ -104,7 +103,7 @@ module.exports = {
         const claimDate = getDateFromDateObject(dateOfClaim);
         const deathDate = getDateFromDateObject(dateOfDeath);
         const higherRate = rate === 'higher';
-        const startDate = tomorrow();
+        const startDate = new Date();
         const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
         const data = {
           nationalInsuranceNumber,

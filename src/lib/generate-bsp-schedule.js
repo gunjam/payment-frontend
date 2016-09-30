@@ -11,21 +11,26 @@ const initial = 'initial';
 const backDated = 'backDated';
 const monthly = 'monthly';
 
-function getPaymentSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, higherRate, startDate = dateOfClaim) {
+function generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, higherRate, processingDate = dateOfClaim) {
   const initialAmount = higherRate ? initialHigher : initialStandard;
   const monthlyAmount = higherRate ? monthlyHigher : monthlyStandard;
 
-  const firstPayDate = nextClosestPayDate(startDate, dateOfDeath.getDate());
+  const initialPayDate = dayAfter(processingDate);
+  const firstPayDate = nextClosestPayDate(processingDate, dateOfDeath.getDate());
   const monthsSinceDeath = monthsBetween(dateOfDeath, dateOfClaim);
 
   return [
-    ...getInitialPayment(monthsSinceDeath, initialAmount, startDate),
-    ...getBackDatedPayments(monthsSinceDeath, monthlyAmount, startDate),
+    ...getInitialPayment(monthsSinceDeath, initialAmount, initialPayDate),
+    ...getBackDatedPayments(monthsSinceDeath, monthlyAmount, initialPayDate),
     ...getMonthlyPayments(
         firstPayDate, monthlyAmount,
         getNumberOfPayments(dateOfDeath, dateOfPensionAge, monthsSinceDeath)
       )
   ];
+}
+
+function dayAfter(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
 }
 
 function getNumberOfPayments(dateOfDeath, dateOfPensionAge, monthsSinceDeath) {
@@ -54,4 +59,13 @@ function nextClosestPayDate(date, payDay = date.getDate()) {
   return nextMonth.getDate() === payDay ? nextMonth : nextClosestPayDate(new Date(Date.UTC(date.getFullYear(), date.getMonth(), payDay - 1)));
 }
 
-module.exports = getPaymentSchedule;
+module.exports = {
+  generateBSPSchedule,
+  dayAfter,
+  getNumberOfPayments,
+  getInitialPayment,
+  getBackDatedPayments,
+  getMonthlyPayments,
+  monthsBetween,
+  nextClosestPayDate
+};
