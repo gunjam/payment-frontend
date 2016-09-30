@@ -30,7 +30,7 @@ function generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, higherR
 }
 
 function dayAfter(date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate() + 1));
 }
 
 function getNumberOfPayments(dateOfDeath, dateOfPensionAge, monthsSinceDeath) {
