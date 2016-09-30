@@ -1,7 +1,7 @@
 'use strict';
 
 const {expect} = require('chai');
-const {generateBSPSchedule, dayAfter} = require('../lib/generate-bsp-schedule');
+const {generateBSPSchedule} = require('../lib/generate-bsp-schedule');
 
 const dateOfDeath = new Date('2017-04-08');
 const dateOfPensionAge = new Date('2024-04-07');
@@ -12,7 +12,7 @@ describe('generateBSPSchedule()', () => {
     const startDate = new Date('2018-04-26');
     const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false, startDate);
     expect(schedule).to.deep.equal([
-      {amount: 2500, type: 'initial', date: dayAfter(startDate)},
+      {amount: 2500, type: 'initial', date: new Date('2018-04-27')},
       {amount: 100, type: 'monthly', date: new Date('2018-05-08')},
       {amount: 100, type: 'monthly', date: new Date('2018-06-08')},
       {amount: 100, type: 'monthly', date: new Date('2018-07-08')},
@@ -38,7 +38,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-04-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -63,8 +63,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-05-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 100, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-05-26')},
+        {amount: 100, type: 'backDated', date: new Date('2017-05-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-08-08')},
@@ -88,8 +88,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-06-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 200, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-06-26')},
+        {amount: 200, type: 'backDated', date: new Date('2017-06-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-08-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-09-08')},
@@ -112,8 +112,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-07-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-07-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-07-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-08-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-09-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-10-08')},
@@ -135,8 +135,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-08-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-08-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-08-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-09-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-10-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-11-08')},
@@ -157,8 +157,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-09-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-09-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-09-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-10-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-11-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-12-08')},
@@ -178,8 +178,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-10-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-10-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-10-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-11-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-12-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-01-08')},
@@ -198,8 +198,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-11-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-11-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-11-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-12-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-01-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-02-08')},
@@ -217,8 +217,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-12-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-12-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-12-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-01-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-02-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-03-08')},
@@ -235,8 +235,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-01-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2018-01-26')},
+        {amount: 300, type: 'backDated', date: new Date('2018-01-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-02-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-03-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-04-08')},
@@ -252,8 +252,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-02-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2018-02-26')},
+        {amount: 300, type: 'backDated', date: new Date('2018-02-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-03-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-04-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-05-08')},
@@ -268,8 +268,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-03-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2018-03-26')},
+        {amount: 300, type: 'backDated', date: new Date('2018-03-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-04-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-06-08')},
@@ -283,7 +283,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-04-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 300, type: 'backDated', date: new Date('2018-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-07-08')},
@@ -296,7 +296,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-05-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 300, type: 'backDated', date: new Date('2018-05-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-07-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-08-08')},
@@ -308,7 +308,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-06-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 300, type: 'backDated', date: new Date('2018-06-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-07-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-08-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-09-08')},
@@ -319,7 +319,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-07-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 300, type: 'backDated', date: new Date('2018-07-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-08-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-09-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-10-08')}
@@ -329,7 +329,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-08-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 300, type: 'backDated', date: new Date('2018-08-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-09-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-10-08')}
       ]);
@@ -338,7 +338,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-09-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 300, type: 'backDated', date: new Date('2018-09-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-10-08')}
       ]);
     });
@@ -346,21 +346,21 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-10-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)}
+        {amount: 300, type: 'backDated', date: new Date('2018-10-26')}
       ]);
     });
     it('should backdate 2 months of payments and pay no monthly payments if the claim is 19 months after death, no inital payment', () => {
       const dateOfClaim = new Date('2018-11-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 200, type: 'backDated', date: dayAfter(dateOfClaim)}
+        {amount: 200, type: 'backDated', date: new Date('2018-11-26')}
       ]);
     });
     it('should backdate 1 monthly payment and pay no further payments if the claim is 20 months after death, no inital payment', () => {
       const dateOfClaim = new Date('2018-12-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 100, type: 'backDated', date: dayAfter(dateOfClaim)}
+        {amount: 100, type: 'backDated', date: new Date('2018-12-26')}
       ]);
     });
     it('should schedule no payments if the claim is 21 or more months after death, no inital payment', () => {
@@ -374,7 +374,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-04-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-07-08')},
@@ -399,8 +399,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-05-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 350, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-05-26')},
+        {amount: 350, type: 'backDated', date: new Date('2017-05-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-07-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-08-08')},
@@ -424,8 +424,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-06-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 700, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-06-26')},
+        {amount: 700, type: 'backDated', date: new Date('2017-06-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-07-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-08-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-09-08')},
@@ -448,8 +448,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-07-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-07-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2017-07-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-08-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-09-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-10-08')},
@@ -471,8 +471,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-08-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-08-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2017-08-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-09-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-10-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-11-08')},
@@ -493,8 +493,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-09-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-09-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2017-09-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-10-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-11-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-12-08')},
@@ -514,8 +514,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-10-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-10-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2017-10-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-11-08')},
         {amount: 350, type: 'monthly', date: new Date('2017-12-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-01-08')},
@@ -534,8 +534,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-11-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-11-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2017-11-26')},
         {amount: 350, type: 'monthly', date: new Date('2017-12-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-01-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-02-08')},
@@ -553,8 +553,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-12-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2017-12-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2017-12-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-01-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-02-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-03-08')},
@@ -571,8 +571,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-01-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2018-01-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2018-01-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-02-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-03-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-04-08')},
@@ -588,8 +588,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-02-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2018-02-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2018-02-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-03-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-04-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-05-08')},
@@ -604,8 +604,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-03-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 3500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 3500, type: 'initial', date: new Date('2018-03-26')},
+        {amount: 1050, type: 'backDated', date: new Date('2018-03-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-04-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-05-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-06-08')},
@@ -619,7 +619,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-04-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 1050, type: 'backDated', date: new Date('2018-04-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-05-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-06-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-07-08')},
@@ -632,7 +632,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-05-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 1050, type: 'backDated', date: new Date('2018-05-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-06-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-07-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-08-08')},
@@ -644,7 +644,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-06-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 1050, type: 'backDated', date: new Date('2018-06-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-07-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-08-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-09-08')},
@@ -655,7 +655,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-07-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 1050, type: 'backDated', date: new Date('2018-07-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-08-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-09-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-10-08')}
@@ -665,7 +665,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-08-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 1050, type: 'backDated', date: new Date('2018-08-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-09-08')},
         {amount: 350, type: 'monthly', date: new Date('2018-10-08')}
       ]);
@@ -674,7 +674,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-09-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 1050, type: 'backDated', date: new Date('2018-09-26')},
         {amount: 350, type: 'monthly', date: new Date('2018-10-08')}
       ]);
     });
@@ -682,21 +682,21 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2018-10-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 1050, type: 'backDated', date: dayAfter(dateOfClaim)}
+        {amount: 1050, type: 'backDated', date: new Date('2018-10-26')}
       ]);
     });
     it('should backdate 2 months of payments and pay no monthly payments if the claim is 19 months after death, no inital payment', () => {
       const dateOfClaim = new Date('2018-11-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 700, type: 'backDated', date: dayAfter(dateOfClaim)}
+        {amount: 700, type: 'backDated', date: new Date('2018-11-26')}
       ]);
     });
     it('should backdate 1 monthly payment and pay no further payments if the claim is 20 months after death, no inital payment', () => {
       const dateOfClaim = new Date('2018-12-25');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, true);
       expect(schedule).to.deep.equal([
-        {amount: 350, type: 'backDated', date: dayAfter(dateOfClaim)}
+        {amount: 350, type: 'backDated', date: new Date('2018-12-26')}
       ]);
     });
     it('should schedule no payments if the claim is 21 or more months after death, no inital payment', () => {
@@ -711,7 +711,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-10-09');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -737,7 +737,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-10-08');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -762,7 +762,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-10-07');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -787,7 +787,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-09-07');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -811,7 +811,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-08-07');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -834,7 +834,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-07-07');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-04-26')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
@@ -856,8 +856,8 @@ describe('generateBSPSchedule()', () => {
       const dateOfPensionAge = new Date('2018-07-07');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
-        {amount: 300, type: 'backDated', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-12-26')},
+        {amount: 300, type: 'backDated', date: new Date('2017-12-26')},
         {amount: 100, type: 'monthly', date: new Date('2018-01-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-02-08')},
         {amount: 100, type: 'monthly', date: new Date('2018-03-08')},
@@ -873,7 +873,7 @@ describe('generateBSPSchedule()', () => {
       const dateOfClaim = new Date('2017-04-30');
       const schedule = generateBSPSchedule(dateOfClaim, dateOfDeath, dateOfPensionAge, false);
       expect(schedule).to.deep.equal([
-        {amount: 2500, type: 'initial', date: dayAfter(dateOfClaim)},
+        {amount: 2500, type: 'initial', date: new Date('2017-05-01')},
         {amount: 100, type: 'monthly', date: new Date('2017-05-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-06-08')},
         {amount: 100, type: 'monthly', date: new Date('2017-07-08')},
