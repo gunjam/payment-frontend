@@ -91,7 +91,8 @@
           <pay-schedule-detail if(hasMultipleBankAccounts) schedule=paymentsPaid
             is-empty-message-key="schedule:noPaymentsMade"
             bank-label-message-key="schedule:inBank"/>
-          <pay-schedule else schedule=paymentsPaid/>
+          <pay-schedule else schedule=paymentsPaid
+            is-empty-message-key="schedule:noPaymentsMade"/>
         </div>
 
         <div class="column-one-half">
@@ -113,9 +114,10 @@
               <i18n-message key="schedule:futurePayments"/>
             </h2>
             <pay-schedule-detail if(hasMultipleBankAccounts) schedule=paymentsDue
-              is-empty-message-key="schedule:noPaymentsMade"
+              is-empty-message-key="schedule:allPaymentsMade"
               bank-label-message-key="schedule:toBank"/>
-            <pay-schedule else schedule=paymentsDue/>
+            <pay-schedule else schedule=paymentsDue
+              is-empty-message-key="schedule:allPaymentsMade"/>
           </else>
         </div>
 
