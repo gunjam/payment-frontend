@@ -1,7 +1,7 @@
 <i18n-var/>
 <script marko-init>
   const numberOfBankAccounts = require("../../lib/number-of-bank-accounts");
-  const splitSchedule = require("../../lib/split-schedule");
+  const splitScheduleByDate = require("../../lib/split-schedule-by-date");
   const formatDate = require("../../lib/format-date");
 </script>
 
@@ -27,7 +27,7 @@
 
       <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
       <var hasMultipleBankAccounts=(numberOfBankAccounts(schedule.paymentSchedule) > 1)/>
-      <var split=splitSchedule(schedule.paymentSchedule)/>
+      <var split=splitScheduleByDate(schedule.paymentSchedule)/>
       <var paymentsPaid=split[0]/>
       <var paymentsDue=split[1]/>
       <var lastPayment=schedule.paymentSchedule[schedule.paymentSchedule.length - 1]/>
