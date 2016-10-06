@@ -1,26 +1,18 @@
 'use strict';
 
-const rp = require('request-promise');
 const isEmpty = require('../../utils/is-empty');
 const isValidNino = require('../../utils/is-valid-nino');
-const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidDateObject = require('../../utils/is-valid-date-object');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
-const getDateFromDateObject = require('../../utils/get-date-from-date-object');
-const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
-const sanitiseNino = require('../../utils/sanitise-nino');
 const sanitiseSortCode = require('../../utils/sanitise-sort-code');
+const renderForm = require('../../lib/render-form');
 const template = require('./template.marko');
 
-const pensionDate = /You’ll reach State Pension age on +(\d{1,2} \w{3,9} \d{4})/;
-
 module.exports = {
-  get(req, res) {
-    template.render({errors: false, values: false}, res);
-  },
+  get: renderForm('bsp'),
 
-  post(req, res, next) {
+  post(req, res) {
     const values = req.body;
     const {nino, nameOnAccount, accountNumber, sortCode, rate, sex} = values;
     const errors = {};
@@ -92,29 +84,7 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({errors, values}, res);
     } else {
-      const birthDate = getDateFromDateObject(dateOfBirth);
-      rp({
-        method: 'GET',
-        uri: `https://www.gov.uk/state-pension-age/y/age/${birthDate}/${sex}`,
-        headers: {'user-agent': 'Mozilla/5.0'}
-      })
-      .then(body => {
-        const formattedSortCode = dashUpSortCode(sortCode);
-        const nationalInsuranceNumber = sanitiseNino(nino);
-        const dateOfPensionAge = new Date(body.match(pensionDate)[1]);
-        const claimDate = getDateFromDateObject(dateOfClaim);
-        const deathDate = getDateFromDateObject(dateOfDeath);
-        const higherRate = rate === 'higher';
-        const startDate = new Date();
-        const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
-        const data = {
-          nationalInsuranceNumber,
-          account: {nameOnAccount, sortCode: formattedSortCode, accountNumber},
-          paymentSchedule
-        };
-        res.setSessionAndRedirect('confirmation', data, '/confirmation');
-      })
-      .catch(err => next(err));
+      res.setSessionAndRedirect('bsp', values, '/confirmation');
     }
   }
 };
