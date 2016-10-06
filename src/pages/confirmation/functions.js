@@ -49,10 +49,7 @@ module.exports = {
         const data = {nationalInsuranceNumber, paymentSchedule: linkedSchedule};
 
         rp({method: POST, uri: schedulesFullApi, json, body: data})
-          .then(() => {
-            req.session.destroy();
-            res.redirect('/done');
-          })
+          .then(body => res.setSessionAndRedirect('done', {scheduleId: body.id}, '/done'))
           .catch(err => next(err));
       })
       .catch(err => next(err));

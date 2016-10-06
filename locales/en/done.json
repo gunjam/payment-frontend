@@ -1,4 +1,7 @@
 {
   "heading": "Payment scheduled",
-  "scheduleAnother": "Schedule another payment"
+  "viewSchedule": "View this schedule",
+  "otherOptions": "Other options",
+  "scheduleAnother": "Set up a new schedule for a customer",
+  "findASchedule": "Find a different payment schedule"
 }

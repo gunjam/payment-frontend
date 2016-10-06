@@ -6,15 +6,39 @@
 
   <layout-put into="content">
 
-    <h1 class="heading-xlarge">
-      <i18n-message key="done:heading"/>
-    </h1>
+    <div class="grid-row">
+      <div class="column-two-thirds">
 
-    <p>
-      <a href="/make-a-bsp-payment">
-        <i18n-message key="done:scheduleAnother"/>
-      </a>
-    </p>
+        <div class="govuk-box-highlight">
+          <h1 class="heading-xlarge">
+            <i18n-message key="done:heading"/>
+          </h1>
+        </div>
+
+        <p>
+          <a href="/schedule/${data.scheduleId}">
+            <i18n-message key="done:viewSchedule"/>
+          </a>
+        </p>
+
+        <h2 class="heading-medium">
+          <i18n-message key="done:otherOptions"/>
+        </h2>
+        <ul>
+          <li>
+            <a href="/make-a-bsp-payment">
+              <i18n-message key="done:scheduleAnother"/>
+            </a>
+          </li>
+          <li>
+            <a href="/search">
+              <i18n-message key="done:findASchedule"/>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
 
   </layout-put>
 
