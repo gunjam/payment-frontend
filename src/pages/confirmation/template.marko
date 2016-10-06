@@ -1,5 +1,6 @@
 <i18n-var/>
 <script marko-init>
+  const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
   const splitScheduleByDate = require("../../lib/split-schedule-by-date");
   const tomorrow = require("../../lib/tomorrow")();
 </script>
@@ -37,15 +38,15 @@
             </tr>
             <tr>
               <td><i18n-message key="confirmation:nameOnAccount"/></td>
-              <td>${data.account.nameOnAccount}</td>
+              <td>${data.nameOnAccount}</td>
             </tr>
             <tr>
               <td><i18n-message key="confirmation:sortCode"/></td>
-              <td>${data.account.sortCode}</td>
+              <td>${data.sortCode}</td>
             </tr>
             <tr>
               <td><i18n-message key="confirmation:accountNumber"/></td>
-              <td>${data.account.accountNumber}</td>
+              <td>${data.accountNumber}</td>
             </tr>
           </tbody>
         </table>
@@ -54,37 +55,57 @@
           <i18n-message key="confirmation:paymentSchedule"/>
         </h2>
 
-        <var splitSchedule=splitScheduleByDate(data.paymentSchedule, tomorrow)/>
+        <await(spaDate from data.dateOfPensionAge)>
+          <await-error>
+            <p class="lede">
+              Error requesting date of state pension age.
+            </p>
+          </await-error>
+          <await-timeout>
+            <p class="lede">
+              Request for date of state pension age timed out.
+            </p>
+          </await-timeout>
 
-        <div class="form-group">
-          <pay-schedule schedule=splitSchedule[0]/>
+          <var paymentSchedule=generateBSPSchedule(data.claimDate, data.deathDate, spaDate, data.higherRate, data.startDate)/>
+          <var splitSchedule=splitScheduleByDate(paymentSchedule, tomorrow)/>
 
-          <p class="payment">
-            <pay-date date=splitSchedule[1][0].date/> -
-            <pay-date date=splitSchedule[1][splitSchedule[1].length - 1].date/>
-            <strong class="amount">
-              <i18n-message key="confirmation:monthlyPaymentSummary"
-                number=splitSchedule[1].length value=splitSchedule[1][0].amount/>
-            </strong>
-            <span class="type ${splitSchedule[1][0].type}">
-              <i18n-message key="confirmation:monthlyPayments"/>
-            </span>
-          </p>
+          <div class="form-group">
+            <pay-schedule schedule=splitSchedule[0]/>
 
-          <gov-prog-disclosure summary=i18n('confirmation:showSchedule')>
-            <div class="panel panel-border-narrow">
-              <pay-schedule schedule=data.paymentSchedule/>
-            </div>
-          </gov-prog-disclosure>
-        </div>
+            <p class="payment">
+              <pay-date date=splitSchedule[1][0].date/> -
+              <pay-date date=splitSchedule[1][splitSchedule[1].length - 1].date/>
+              <strong class="amount">
+                <i18n-message key="confirmation:monthlyPaymentSummary"
+                  number=splitSchedule[1].length value=splitSchedule[1][0].amount/>
+              </strong>
+              <span class="type ${splitSchedule[1][0].type}">
+                <i18n-message key="confirmation:monthlyPayments"/>
+              </span>
+            </p>
 
-        <form action="/confirmation" method="post">
-          <pay-csrf-token/>
+            <gov-prog-disclosure summary=i18n('confirmation:showSchedule')>
+              <div class="panel panel-border-narrow">
+                <pay-schedule schedule=paymentSchedule/>
+              </div>
+            </gov-prog-disclosure>
+          </div>
 
-          <button type="submit" class="button">
-            <i18n-message key="confirmation:confirm"/>
-          </button>
-        </form>
+          <form action="/confirmation" method="post">
+            <input type="hidden" name="nationalInsuranceNumber" value=data.nationalInsuranceNumber/>
+            <input type="hidden" name="nameOnAccount" value=data.nameOnAccount/>
+            <input type="hidden" name="sortCode" value=data.sortCode/>
+            <input type="hidden" name="accountNumber" value=data.accountNumber/>
+            <input type="hidden" name="paymentSchedule" value=JSON.stringify(paymentSchedule)/>
+
+            <pay-csrf-token/>
+
+            <button type="submit" class="button">
+              <i18n-message key="confirmation:confirm"/>
+            </button>
+          </form>
+        </await>
 
       </div>
     </div>

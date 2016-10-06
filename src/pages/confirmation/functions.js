@@ -3,20 +3,17 @@
 const rp = require('request-promise');
 const {bankAccountsApi, schedulesFullApi} = require('../../../config/app');
 const getDateFromDateObject = require('../../utils/get-date-from-date-object');
-const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
+const promiseDateOfPensionAge = require('../../lib/promise-date-of-pension-age');
 const template = require('./template');
 
-const pensionDate = /You’ll reach State Pension age on +(\d{1,2} \w{3,9} \d{4})/;
-
 const json = true;
-const PUT = 'PUT';
-const GET = 'GET';
 const POST = 'POST';
+const PUT = 'PUT';
 
 module.exports = {
-  get(req, res, next) {
+  get(req, res) {
     const formData = req.getSession('bsp');
 
     if (Object.keys(formData).length > 0) {
@@ -24,29 +21,17 @@ module.exports = {
       const {sex, dateOfClaim, dateOfDeath, dateOfBirth} = formData;
       const birthDate = getDateFromDateObject(dateOfBirth);
 
-      rp({
-        method: GET,
-        uri: `https://www.gov.uk/state-pension-age/y/age/${birthDate}/${sex}`,
-        headers: {'user-agent': 'Mozilla/5.0'}
-      })
-      .then(body => {
-        const formattedSortCode = dashUpSortCode(sortCode);
-        const nationalInsuranceNumber = sanitiseNino(nino);
-        const dateOfPensionAge = new Date(body.match(pensionDate)[1]);
-        const claimDate = getDateFromDateObject(dateOfClaim);
-        const deathDate = getDateFromDateObject(dateOfDeath);
-        const higherRate = rate === 'higher';
-        const startDate = new Date();
-        const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
-        const data = {
-          nationalInsuranceNumber,
-          account: {nameOnAccount, sortCode: formattedSortCode, accountNumber},
-          paymentSchedule
-        };
-        req.session.confirmation = data;
-        template.render(data, res);
-      })
-      .catch(err => next(err));
+      template.render({
+        nationalInsuranceNumber: sanitiseNino(nino),
+        claimDate: getDateFromDateObject(dateOfClaim),
+        deathDate: getDateFromDateObject(dateOfDeath),
+        startDate: new Date(),
+        higherRate: (rate === 'higher'),
+        nameOnAccount,
+        sortCode: dashUpSortCode(sortCode),
+        accountNumber,
+        dateOfPensionAge: promiseDateOfPensionAge(birthDate, sex)
+      }, res);
     } else {
       req.session.destroy();
       res.redirect('/');
@@ -54,11 +39,12 @@ module.exports = {
   },
 
   post(req, res, next) {
-    const session = req.getSession('confirmation');
-    const {account, nationalInsuranceNumber, paymentSchedule} = session;
+    const {nameOnAccount, accountNumber, sortCode, nationalInsuranceNumber} = req.body;
+    const account = {nameOnAccount, sortCode, accountNumber};
 
     rp({method: PUT, uri: bankAccountsApi, json, body: account})
       .then(body => {
+        const paymentSchedule = JSON.parse(req.body.paymentSchedule);
         const linkedSchedule = paymentSchedule.map(i => Object.assign(i, {bankAccountId: body.id}));
         const data = {nationalInsuranceNumber, paymentSchedule: linkedSchedule};
 
