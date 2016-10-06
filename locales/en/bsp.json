@@ -1,5 +1,7 @@
 {
   "heading": "Set up a payment schedule",
+  "claimantDetails": "Claimant details",
+  "paymentDetails": "Payment details",
   "form": {
     "nino": {
       "label": "National Insurance number",
@@ -16,10 +18,7 @@
       }
     },
     "sortCode": {
-      "legend": "Sort code",
-      "label1": "First two digits of sort code",
-      "label2": "Second two digits of sort code",
-      "label3": "Third two digits of sort code",
+      "label": "Sort code",
       "errors": {
         "presence": "Must include a sort code",
         "format": "Must be 6 digits in the format 11 22 33"
@@ -30,12 +29,6 @@
       "errors": {
         "presence": "Must include an account number",
         "format": "Account number must be 8 digits"
-      }
-    },
-    "initialAmount": {
-      "label": "Initial amount",
-      "errors": {
-        "presence": "Must include an initial amount"
       }
     },
     "dateOfClaim": {
@@ -66,7 +59,8 @@
       }
     },
     "sex": {
-      "legend": "What is the claimant's gender?",
+      "legend": "Sex",
+      "hint": "Required to calculate state pension age",
       "labelFemale": "Female",
       "labelMale": "Male",
       "errors": {

@@ -3,12 +3,14 @@
 const rp = require('request-promise');
 const isEmpty = require('../../utils/is-empty');
 const isValidNino = require('../../utils/is-valid-nino');
+const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidDateObject = require('../../utils/is-valid-date-object');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
 const getDateFromDateObject = require('../../utils/get-date-from-date-object');
 const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
 const sanitiseNino = require('../../utils/sanitise-nino');
+const sanitiseSortCode = require('../../utils/sanitise-sort-code');
 const template = require('./template.marko');
 
 const pensionDate = /You’ll reach State Pension age on +(\d{1,2} \w{3,9} \d{4})/;
@@ -20,9 +22,8 @@ module.exports = {
 
   post(req, res, next) {
     const values = req.body;
-    const {nino, nameOnAccount, accountNumber, sortCode1, sortCode2, sortCode3, rate, sex} = values;
+    const {nino, nameOnAccount, accountNumber, sortCode, rate, sex} = values;
     const errors = {};
-    const sortCode = `${sortCode1}-${sortCode2}-${sortCode3}`;
     const dateOfClaim = values.dateOfClaim || {};
     const dateOfDeath = values.dateOfDeath || {};
     const dateOfBirth = values.dateOfBirth || {};
@@ -40,9 +41,9 @@ module.exports = {
     }
 
     // Validate sortCode
-    if (isEmpty(sortCode1) && isEmpty(sortCode2) && isEmpty(sortCode3)) {
+    if (isEmpty(sortCode)) {
       errors.sortCode = req.t('bsp:form.sortCode.errors.presence');
-    } else if (!isValidSortCode(sortCode)) {
+    } else if (!isValidSortCode(sanitiseSortCode(sortCode))) {
       errors.sortCode = req.t('bsp:form.sortCode.errors.format');
     }
 
@@ -98,6 +99,7 @@ module.exports = {
         headers: {'user-agent': 'Mozilla/5.0'}
       })
       .then(body => {
+        const formattedSortCode = dashUpSortCode(sortCode);
         const nationalInsuranceNumber = sanitiseNino(nino);
         const dateOfPensionAge = new Date(body.match(pensionDate)[1]);
         const claimDate = getDateFromDateObject(dateOfClaim);
@@ -107,7 +109,7 @@ module.exports = {
         const paymentSchedule = generateBSPSchedule(claimDate, deathDate, dateOfPensionAge, higherRate, startDate);
         const data = {
           nationalInsuranceNumber,
-          account: {nameOnAccount, sortCode, accountNumber},
+          account: {nameOnAccount, sortCode: formattedSortCode, accountNumber},
           paymentSchedule
         };
         res.setSessionAndRedirect('confirmation', data, '/confirmation');
