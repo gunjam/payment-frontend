@@ -2,6 +2,7 @@
 <script marko-init>
   const numberOfBankAccounts = require("../../lib/number-of-bank-accounts");
   const splitScheduleByDate = require("../../lib/split-schedule-by-date");
+  const maskAccountNumber = require("../../utils/mask-account-number");
   const formatDate = require("../../lib/format-date");
 </script>
 
@@ -73,7 +74,7 @@
               </tr>
               <tr>
                 <td><i18n-message key="schedule:accountNumber"/></td>
-                <td>${lastPayment.bankAccount.accountNumber}</td>
+                <td>${maskAccountNumber(lastPayment.bankAccount.accountNumber)}</td>
               </tr>
               <tr>
                 <td><i18n-message key="schedule:sortCode"/></td>
