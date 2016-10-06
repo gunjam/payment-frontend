@@ -8,34 +8,36 @@
 
   <layout-put into="content">
 
-    <a href="/schedule/${data.scheduleId}" class="link-back">
-      <i18n-message key="stop:backLink"/>
-    </a>
+    <div class="grid-row">
+      <div class="column-two-thirds">
 
-    <h1 class="heading-xlarge">
-      <i18n-message key="stop:heading"/>
-    </h1>
+        <a href="/schedule/${data.scheduleId}" class="link-back">
+          <i18n-message key="stop:backLink"/>
+        </a>
 
-    <form method="post" action="/stop-schedule/${data.scheduleId}">
-      <div class="form-group${(data.errors.reason ? ' error' : '')}">
-        <label for="textarea-reason">
-          <span class="form-label" class="visuallyhidden">
-            <i18n-message key="stop:heading"/>
-          </span>
-          <span if(data.errors.reason) id="error-message-reason"
-            class="error-message">
-            ${data.errors.reason}
-          </span>
-        </label>
-        <textarea class="form-control" id="textarea-reason" rows="8"
-          name="reason" maxlength="400">${data.values.reason}</textarea>
+        <h1 class="heading-xlarge">
+          <i18n-message key="stop:heading"/>
+        </h1>
+
+        <form method="post" action="/stop-schedule/${data.scheduleId}">
+
+          <gov-radios legend=i18n('bsp:form.sex.heading') name="reason"
+            error=data.errors.reason value=data.values.reason hide-legend=true>
+            <gov-radios:radio label=i18n('stop:form.reason.labelClaimantDied') value="death"/>
+            <gov-radios:radio label=i18n('stop:form.reason.labelClaimantImprisoned') value="prison"/>
+            <gov-radios:radio label=i18n('stop:form.reason.labelFraudulentClaim') value="fraud"/>
+            <gov-radios:radio label=i18n('stop:form.reason.labelClaimSetUpInError') value="error"/>
+          </gov-radios>
+
+          <pay-csrf-token/>
+
+          <button type="submit" class="button">
+            <i18n-message key="stop:form.submit"/>
+          </button>
+        </form>
+
       </div>
-      <pay-csrf-token/>
-
-      <button type="submit" class="button">
-        <i18n-message key="stop:form.submit"/>
-      </button>
-    </form>
+    </div>
 
   </layout-put>
 

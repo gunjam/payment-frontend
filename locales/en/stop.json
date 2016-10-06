@@ -1,10 +1,14 @@
 {
-  "heading": "Why are you stopping this payment schedule?",
+  "heading": "Why are you stopping this schedule?",
   "backLink": "Payment schedule",
   "form": {
     "reason": {
+      "labelClaimantDied": "Claimant died",
+      "labelClaimantImprisoned": "Claimant imprisoned",
+      "labelFraudulentClaim": "Fraudulent claim",
+      "labelClaimSetUpInError": "Claim set up in error",
       "errors": {
-        "presence": "Provide a reason for stopping the schedule"
+        "presence": "Pick a reason for stopping the schedule"
       }
     },
     "submit": "Stop payments"
