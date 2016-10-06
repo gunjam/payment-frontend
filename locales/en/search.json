@@ -14,8 +14,12 @@
     "error": "An error occurred while requesting search results.",
     "timeout": "Request for search results timed out.",
     "results": "Results",
-    "resultLink": "Schedule {{number}} ({{status}})",
-    "resultMeta": "From {{start}} till {{end}}",
+    "resultLink": {
+      "started": "Active schedule",
+      "stopped": "Stopped schedule"
+    },
+    "resultAccount": "{{name}}, {{account-number}}",
+    "resultDate": "From {{start}} till {{end}}",
     "noResults": "No results!"
   }
 }

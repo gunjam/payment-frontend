@@ -6,7 +6,7 @@ const sanitiseNino = require('../../utils/sanitise-nino');
 const isValidNino = require('../../utils/is-valid-nino');
 const template = require('./template.marko');
 
-const apiFilter = '?filter[include][paymentSchedule]&filter[where][nationalInsuranceNumber]=';
+const apiFilter = '?filter[include][paymentSchedule][bankAccount]&filter[where][nationalInsuranceNumber]=';
 
 module.exports = {
   get(req, res) {
