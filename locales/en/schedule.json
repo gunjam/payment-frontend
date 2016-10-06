@@ -1,13 +1,15 @@
 {
   "heading": "View payment schedule",
   "backLink": "Search",
-  "paymentSchedule": "Payment schedule ({{status}})",
+  "startedPaymentSchedule": "Active payment schedule",
+  "stoppedPaymentSchedule": "Stopped payment schedule",
   "status": {
     "started": "active",
     "stopped": "stopped"
   },
   "stop": "Stop payments",
   "editBankDetails": "Edit bank details",
+  "nameOnAccount": "Name on account",
   "bankAccount": "Bank account",
   "accountNumber": "Account number",
   "sortCode": "Sort code",
