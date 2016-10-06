@@ -1,13 +1,16 @@
 {
-  "backLink": "Back to edit",
-  "heading": "Confirm payment",
+  "backLink": "Edit",
+  "heading": "Confirm and schedule payments",
   "customerDetails": "Customer details",
   "nino": "National Insurance number",
   "nameOnAccount": "Name on account",
   "sortCode": "Sort code",
   "accountNumber": "Account number",
   "paymentSchedule": "Payment schedule",
+  "monthlyPayments": "Monthly Payments",
+  "monthlyPaymentSummary": "{{number}} payments of £{{value}}",
   "date": "Date",
   "amount": "Amount",
-  "confirm": "Confirm payments"
+  "showSchedule": "Show entire schedule",
+  "confirm": "Set up payment"
 }

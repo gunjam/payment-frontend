@@ -1,4 +1,8 @@
 <i18n-var/>
+<script marko-init>
+  const splitScheduleByDate = require("../../lib/split-schedule-by-date");
+  const tomorrow = require("../../lib/tomorrow")();
+</script>
 <layout-use("../../common/layout.marko")>
 
   <layout-put into="page-title">
@@ -21,7 +25,7 @@
         <table>
           <thead>
             <tr>
-              <th colspan="2">
+              <th colspan="2" class="heading-medium">
                 <i18n-message key="confirmation:customerDetails"/>
               </th>
             </tr>
@@ -50,8 +54,28 @@
           <i18n-message key="confirmation:paymentSchedule"/>
         </h2>
 
+        <var splitSchedule=splitScheduleByDate(data.paymentSchedule, tomorrow)/>
+
         <div class="form-group">
-          <pay-schedule schedule=data.paymentSchedule/>
+          <pay-schedule schedule=splitSchedule[0]/>
+
+          <p class="payment">
+            <pay-date date=splitSchedule[1][0].date/> -
+            <pay-date date=splitSchedule[1][splitSchedule[1].length - 1].date/>
+            <strong class="amount">
+              <i18n-message key="confirmation:monthlyPaymentSummary"
+                number=splitSchedule[1].length value=splitSchedule[1][0].amount/>
+            </strong>
+            <span class="type ${splitSchedule[1][0].type}">
+              <i18n-message key="confirmation:monthlyPayments"/>
+            </span>
+          </p>
+
+          <gov-prog-disclosure summary=i18n('confirmation:showSchedule')>
+            <div class="panel panel-border-narrow">
+              <pay-schedule schedule=data.paymentSchedule/>
+            </div>
+          </gov-prog-disclosure>
         </div>
 
         <form action="/confirmation" method="post">
