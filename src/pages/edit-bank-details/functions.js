@@ -5,6 +5,8 @@ const isEmpty = require('../../utils/is-empty');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
 const {bankAccountsApi, updatePaymentsApi} = require('../../../config/app');
+const sanitiseSortCode = require('../../utils/sanitise-sort-code');
+const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const template = require('./template.marko');
 
 const PUT = 'PUT';
@@ -20,17 +22,16 @@ module.exports = {
   post(req, res, next) {
     const scheduleId = req.params.id;
     const values = req.body;
-    const {nameOnAccount, accountNumber, sortCode1, sortCode2, sortCode3} = values;
+    const {nameOnAccount, accountNumber, sortCode} = values;
     const errors = {};
-    const sortCode = `${sortCode1}-${sortCode2}-${sortCode3}`;
 
     if (isEmpty(nameOnAccount)) {
       errors.nameOnAccount = req.t('bsp:form.nameOnAccount.errors.presence');
     }
 
-    if (isEmpty(sortCode1) && isEmpty(sortCode2) && isEmpty(sortCode3)) {
+    if (isEmpty(sortCode)) {
       errors.sortCode = req.t('bsp:form.sortCode.errors.presence');
-    } else if (!isValidSortCode(sortCode)) {
+    } else if (!isValidSortCode(sanitiseSortCode(sortCode))) {
       errors.sortCode = req.t('bsp:form.sortCode.errors.format');
     }
 
@@ -43,7 +44,7 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({scheduleId, errors, values}, res);
     } else {
-      const bankAccount = {nameOnAccount, accountNumber, sortCode};
+      const bankAccount = {nameOnAccount, accountNumber, sortCode: dashUpSortCode(sortCode)};
 
       rp({method: PUT, uri: bankAccountsApi, json, body: bankAccount})
         .then(body => {
