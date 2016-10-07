@@ -1,11 +1,21 @@
+<script marko-init>
+  const maskAccountNumber = require("../../utils/mask-account-number");
+  const sortCodeToBankName = require("../../lib/sort-code-to-bank-name");
+</script>
+
 <ul if(data.schedule.length) class="schedule">
   <li for(payment in data.schedule) class="payment">
     <pay-date date=payment.date/>
     <strong class="amount">
       £${payment.amount}
     </strong>
-    <span if(payment.type && payment.type !== 'monthly') class="type ${payment.type}">
-      <i18n-message key="schedule:type.${payment.type}"/>
+    <span class="type ${payment.type}">
+      <i18n-message if(payment.type && payment.type !== 'monthly')
+        key="schedule:type.${payment.type}"/><br/>
+      <if(data.mulitpleAccounts && payment.bankAccount)>
+        ${sortCodeToBankName(payment.bankAccount.sortCode)},
+        ${maskAccountNumber(payment.bankAccount.accountNumber)}
+      </if>
     </span>
   </li>
 </ul>

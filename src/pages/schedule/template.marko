@@ -2,6 +2,7 @@
 <script marko-init>
   const numberOfBankAccounts = require("../../lib/number-of-bank-accounts");
   const splitScheduleByDate = require("../../lib/split-schedule-by-date");
+  const sortCodeToBankName = require("../../lib/sort-code-to-bank-name");
   const maskAccountNumber = require("../../utils/mask-account-number");
   const formatDate = require("../../lib/format-date");
 </script>
@@ -80,6 +81,10 @@
                 <td><i18n-message key="schedule:sortCode"/></td>
                 <td>${lastPayment.bankAccount.sortCode}</td>
               </tr>
+              <tr>
+                <td><i18n-message key="schedule:bankName"/></td>
+                <td>${sortCodeToBankName(lastPayment.bankAccount.sortCode)}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -91,12 +96,9 @@
           <h2 class="heading-medium">
             <i18n-message key="schedule:pastPayments"/>
           </h2>
-
-          <pay-schedule-detail if(hasMultipleBankAccounts) schedule=paymentsPaid
+          <pay-schedule schedule=paymentsPaid
             is-empty-message-key="schedule:noPaymentsMade"
-            bank-label-message-key="schedule:inBank"/>
-          <pay-schedule else schedule=paymentsPaid
-            is-empty-message-key="schedule:noPaymentsMade"/>
+            mulitple-accounts=hasMultipleBankAccounts/>
         </div>
 
         <div class="column-one-half">
@@ -117,11 +119,9 @@
             <h2 class="heading-medium">
               <i18n-message key="schedule:futurePayments"/>
             </h2>
-            <pay-schedule-detail if(hasMultipleBankAccounts) schedule=paymentsDue
-              is-empty-message-key="schedule:allPaymentsMade"
-              bank-label-message-key="schedule:toBank"/>
-            <pay-schedule else schedule=paymentsDue
-              is-empty-message-key="schedule:allPaymentsMade"/>
+            <pay-schedule schedule=paymentsDue
+              is-empty-message-key="schedule:noPaymentsMade"
+              mulitple-accounts=hasMultipleBankAccounts/>
           </else>
         </div>
 

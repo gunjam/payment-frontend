@@ -91,12 +91,16 @@ input[type="search"] {
 	position: absolute;
 	right: 0;
 	top: 50%;
-	margin-top: -0.5em;
+  text-align: right;
+  height: 50px;
+  margin-top:-25px;
 
   @media(max-width: 400px) {
+    text-align: left;
     position: static;
     display: block;
     margin-top: 5px;
+    height: auto;
   }
 }
 .schedule-label {

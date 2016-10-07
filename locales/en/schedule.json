@@ -13,6 +13,7 @@
   "bankAccount": "Bank account",
   "accountNumber": "Account number",
   "sortCode": "Sort code",
+  "bankName": "Bank name",
   "inBank": "Payments were paid to account number {{accountNumber}}",
   "toBank": "Payments will be paid to account number {{accountNumber}}",
   "pastPayments": "Payments made",
