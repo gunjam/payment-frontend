@@ -3,6 +3,7 @@
 const rp = require('request-promise');
 const {bankAccountsApi, schedulesFullApi} = require('../../../config/app');
 const getDateFromDateObject = require('../../utils/get-date-from-date-object');
+const sanitiseSortCode = require('../../utils/sanitise-sort-code');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const promiseDateOfPensionAge = require('../../lib/promise-date-of-pension-age');
@@ -28,7 +29,7 @@ module.exports = {
         startDate: new Date(),
         higherRate: (rate === 'higher'),
         nameOnAccount,
-        sortCode: dashUpSortCode(sortCode),
+        sortCode: dashUpSortCode(sanitiseSortCode(sortCode)),
         accountNumber,
         dateOfPensionAge: promiseDateOfPensionAge(birthDate, sex)
       }, res);
