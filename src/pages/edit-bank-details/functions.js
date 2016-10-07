@@ -44,7 +44,8 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({scheduleId, errors, values}, res);
     } else {
-      const bankAccount = {nameOnAccount, accountNumber, sortCode: dashUpSortCode(sortCode)};
+      const sanitisedSortCode = dashUpSortCode(sanitiseSortCode(sortCode));
+      const bankAccount = {nameOnAccount, accountNumber, sortCode: sanitisedSortCode};
 
       rp({method: PUT, uri: bankAccountsApi, json, body: bankAccount})
         .then(body => {
