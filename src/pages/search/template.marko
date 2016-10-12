@@ -1,7 +1,6 @@
 <i18n-var/>
 <script marko-init>
   const formatDate = require("../../lib/format-date");
-  const maskAccountNumber = require("../../utils/mask-account-number");
 </script>
 
 <layout-use("../../common/layout.marko") errors=data.errors page="search">
@@ -62,7 +61,7 @@
                 <span class="result-meta">
                   <i18n-message key="search:await.resultAccount"
                     name=schedule.paymentSchedule[0].bankAccount.nameOnAccount
-                    account-number=maskAccountNumber(schedule.paymentSchedule[0].bankAccount.accountNumber)/>
+                    account-number=schedule.paymentSchedule[0].bankAccount.accountNumber/>
                 </span>
                 <span class="result-meta">
                   <i18n-message key="search:await.resultDate"
