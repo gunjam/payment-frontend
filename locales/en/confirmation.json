@@ -1,7 +1,7 @@
 {
   "backLink": "Edit",
-  "heading": "Confirm and schedule payments",
-  "customerDetails": "Customer details",
+  "heading": "Confirm details and issue payment",
+  "customerDetails": "Claimant details",
   "nino": "National Insurance number",
   "nameOnAccount": "Name on account",
   "sortCode": "Sort code",
@@ -12,5 +12,5 @@
   "date": "Date",
   "amount": "Amount",
   "showSchedule": "Show entire schedule",
-  "confirm": "Set up payment"
+  "confirm": "Issue payment"
 }
