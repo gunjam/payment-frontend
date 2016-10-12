@@ -24,10 +24,11 @@ module.exports = {
 
       template.render({
         nationalInsuranceNumber: sanitiseNino(nino),
-        claimDate: getDateFromDateObject(dateOfClaim),
+        birthDate,
+        sex,
         deathDate: getDateFromDateObject(dateOfDeath),
-        startDate: new Date(),
-        higherRate: (rate === 'higher'),
+        claimDate: getDateFromDateObject(dateOfClaim),
+        rate,
         nameOnAccount,
         sortCode: dashUpSortCode(sanitiseSortCode(sortCode)),
         accountNumber,

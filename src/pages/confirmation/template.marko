@@ -2,6 +2,7 @@
 <script marko-init>
   const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
   const tomorrow = require("../../lib/tomorrow")();
+  const slashUpDate = require("../../utils/slash-up-date");
 </script>
 <layout-use("../../common/layout.marko")>
 
@@ -36,6 +37,26 @@
               <td>${data.nationalInsuranceNumber}</td>
             </tr>
             <tr>
+              <td><i18n-message key="confirmation:dateOfBirth"/></td>
+              <td>${slashUpDate(data.birthDate)}</td>
+            </tr>
+            <tr>
+              <td><i18n-message key="confirmation:sex"/></td>
+              <td><i18n-message key="confirmation:${data.sex}"/></td>
+            </tr>
+            <tr>
+              <td><i18n-message key="confirmation:dateOfDeath"/></td>
+              <td>${slashUpDate(data.deathDate)}</td>
+            </tr>
+            <tr>
+              <td><i18n-message key="confirmation:dateOfClaim"/></td>
+              <td>${slashUpDate(data.claimDate)}</td>
+            </tr>
+            <tr>
+              <td><i18n-message key="confirmation:rateOfPay"/></td>
+              <td><i18n-message key="confirmation:${data.rate}"/></td>
+            </tr>
+            <tr>
               <td><i18n-message key="confirmation:nameOnAccount"/></td>
               <td>${data.nameOnAccount}</td>
             </tr>
@@ -53,11 +74,13 @@
         <await(spaDate from data.dateOfPensionAge)>
           <await-error>
             <p class="lede">
-              Unable to calculate date of state pension age, please try again.
+              <i18n-message key="confirmation:awaitError"/>
             </p>
           </await-error>
 
-          <var paymentSchedule=generateBSPSchedule(data.claimDate, data.deathDate, spaDate, data.higherRate, data.startDate)/>
+          <var higherRate=(data.rate === 'higher')/>
+          <var startDate=(new Date())/>
+          <var paymentSchedule=generateBSPSchedule(data.claimDate, data.deathDate, spaDate, higherRate, startDate)/>
 
           <form action="/confirmation" method="post">
             <input type="hidden" name="nationalInsuranceNumber" value=data.nationalInsuranceNumber/>
