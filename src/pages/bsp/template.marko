@@ -18,12 +18,10 @@
       </h2>
       <div class="form-section">
         <gov-input name="nino" label=i18n('bsp:form.nino.label')
-          hint=i18n('bsp:form.nino.hint') error=data.errors.nino
-          value=data.values.nino/>
+          error=data.errors.nino value=data.values.nino/>
 
         <gov-date-input name="dateOfBirth" legend=i18n('bsp:form.dateOfBirth.legend')
-          hint=i18n('bsp:form.dateOfBirth.hint') error=data.errors.dateOfBirth
-          value=data.values.dateOfBirth/>
+          error=data.errors.dateOfBirth value=data.values.dateOfBirth/>
 
         <gov-radios legend=i18n('bsp:form.sex.legend') name="sex"
           hint=i18n('bsp:form.sex.hint') error=data.errors.sex
@@ -33,8 +31,7 @@
         </gov-radios>
 
         <gov-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
-          hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
-          value=data.values.dateOfDeath/>
+          error=data.errors.dateOfDeath value=data.values.dateOfDeath/>
       </div>
 
       <h2 class="heading-large">
@@ -42,8 +39,7 @@
       </h2>
       <div class="form-section">
         <gov-date-input name="dateOfClaim" legend=i18n('bsp:form.dateOfClaim.legend')
-          hint=i18n('bsp:form.dateOfClaim.hint') error=data.errors.dateOfClaim
-          value=data.values.dateOfClaim/>
+          error=data.errors.dateOfClaim value=data.values.dateOfClaim/>
 
         <gov-radios legend=i18n('bsp:form.rate.legend') name="rate"
           error=data.errors.rate value=data.values.rate>
