@@ -1,5 +1,4 @@
 <script marko-init>
-  const maskAccountNumber = require("../../utils/mask-account-number");
   const sortCodeToBankName = require("../../lib/sort-code-to-bank-name");
 </script>
 
@@ -14,7 +13,7 @@
         key="schedule:type.${payment.type}"/><br/>
       <if(data.mulitpleAccounts && payment.bankAccount)>
         ${sortCodeToBankName(payment.bankAccount.sortCode)},
-        ${maskAccountNumber(payment.bankAccount.accountNumber)}
+        ${payment.bankAccount.accountNumber}
       </if>
     </span>
   </li>
