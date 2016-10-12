@@ -7,7 +7,7 @@ const sanitiseSortCode = require('../../utils/sanitise-sort-code');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const promiseDateOfPensionAge = require('../../lib/promise-date-of-pension-age');
-const template = require('./template');
+const template = require('./template.marko');
 
 const json = true;
 const POST = 'POST';
