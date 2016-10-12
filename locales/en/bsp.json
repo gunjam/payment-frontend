@@ -41,7 +41,7 @@
       }
     },
     "dateOfDeath": {
-      "legend": "Partner's date of death",
+      "legend": "Partner’s date of death",
       "hint": "For example, 20 3 2016",
       "errors": {
         "presence": "Need a date of death",
@@ -50,7 +50,7 @@
       }
     },
     "dateOfBirth": {
-      "legend": "Claimant's date of birth",
+      "legend": "Claimant’s date of birth",
       "hint": "For example, 20 3 2016",
       "errors": {
         "presence": "Need a date of birth",
