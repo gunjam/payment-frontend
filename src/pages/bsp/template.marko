@@ -25,16 +25,16 @@
           hint=i18n('bsp:form.dateOfBirth.hint') error=data.errors.dateOfBirth
           value=data.values.dateOfBirth/>
 
-        <gov-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
-          hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
-          value=data.values.dateOfDeath/>
-
         <gov-radios legend=i18n('bsp:form.sex.legend') name="sex"
           hint=i18n('bsp:form.sex.hint') error=data.errors.sex
           value=data.values.sex>
           <gov-radios:radio label=i18n('bsp:form.sex.labelFemale') value="female"/>
           <gov-radios:radio label=i18n('bsp:form.sex.labelMale') value="male"/>
         </gov-radios>
+
+        <gov-date-input name="dateOfDeath" legend=i18n('bsp:form.dateOfDeath.legend')
+          hint=i18n('bsp:form.dateOfDeath.hint') error=data.errors.dateOfDeath
+          value=data.values.dateOfDeath/>
       </div>
 
       <h2 class="heading-large">
