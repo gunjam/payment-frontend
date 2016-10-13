@@ -9,6 +9,16 @@
   },
   "stop": "Stop payments",
   "editBankDetails": "Edit bank details",
+  "log": {
+    "heading": "Log",
+    "stopped": {
+      "summary": "Payment schedule stopped on {{date}}",
+      "death": "Reason: Claiment died on {{date}}.",
+      "prison": "Reason: Claiment imprisoned on {{date}}.",
+      "fraud": "Reason: Claim was fraudulant.",
+      "error": "Reason: Schedule set up in error."
+    }
+  },
   "nameOnAccount": "Name on account",
   "bankAccount": "Bank account",
   "accountNumber": "Account number",

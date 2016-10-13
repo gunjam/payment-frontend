@@ -27,6 +27,7 @@
       </await-timeout>
 
       <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
+      <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
       <var hasMultipleBankAccounts=(numberOfBankAccounts(schedule.paymentSchedule) > 1)/>
       <var split=splitScheduleByDate(schedule.paymentSchedule)/>
       <var paymentsPaid=split[0]/>
@@ -43,6 +44,18 @@
           <i18n-message key="schedule:${currentStatus.name}PaymentSchedule"/>
         </span>
       </h1>
+
+      <div if(hasMultipleStatuses) class="schedule-log">
+        <h2 class="heading-medium">
+          <i18n-message key="schedule:log.heading"/>
+        </h2>
+        <gov-prog-disclosure summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(new Date(currentStatus.startDate))})>
+          <div class="panel panel-border-narrow">
+            <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
+              date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
+          </div>
+        </gov-prog-disclosure>
+      </div>
 
       <ul if(currentStatus.name !== 'stopped') class="schedule-controls">
         <li>
@@ -105,13 +118,6 @@
             <h2 class="heading-medium">
               <i18n-message key="schedule:paymentsStopped"/>
             </h2>
-            <p class="schedule-label">
-              <var stoppedDate=(new Date(currentStatus.startDate))/>
-              <i18n-message key="schedule:paymentsStoppedMsg"
-                timeStart='<time datetime="${stoppedDate.toISOString()}">'
-                date=formatDate(stoppedDate)
-                timeStop="</time>"/>
-            </p>
             <pay-schedule schedule=paymentsDue/>
           </if>
           <else>
