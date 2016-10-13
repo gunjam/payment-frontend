@@ -4,7 +4,7 @@ const rp = require('request-promise');
 const isEmpty = require('../../utils/is-empty');
 const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
-const {bankAccountsApi, updatePaymentsApi} = require('../../../config/app');
+const {bankAccountsApi, updateBankAccountApi} = require('../../../config/app');
 const sanitiseSortCode = require('../../utils/sanitise-sort-code');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const template = require('./template.marko');
@@ -50,11 +50,10 @@ module.exports = {
       rp({method: PUT, uri: bankAccountsApi, json, body: bankAccount})
         .then(body => {
           const bankAccountId = body.id;
-          const uri = `${updatePaymentsApi}?where={"and": [` +
-            `{"scheduleId": "${scheduleId}"},` +
-            `{"date": {"gt": "${new Date()}"}}]}`;
+          const date = new Date();
+          const data = {scheduleId, bankAccountId, date};
 
-          rp({method: POST, uri, json, body: {bankAccountId}})
+          rp({method: POST, uri: updateBankAccountApi, json, body: data})
             .then(() => res.redirect('/schedule/' + req.params.id))
             .catch(err => next(err));
         })

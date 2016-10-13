@@ -46,9 +46,9 @@ module.exports = {
 
     rp({method: PUT, uri: bankAccountsApi, json, body: account})
       .then(body => {
+        const bankAccountId = body.id;
         const paymentSchedule = JSON.parse(req.body.paymentSchedule);
-        const linkedSchedule = paymentSchedule.map(i => Object.assign(i, {bankAccountId: body.id}));
-        const data = {nationalInsuranceNumber, paymentSchedule: linkedSchedule};
+        const data = {nationalInsuranceNumber, paymentSchedule, bankAccountId};
 
         rp({method: POST, uri: schedulesFullApi, json, body: data})
           .then(body => res.setSessionAndRedirect('done', {scheduleId: body.id}, '/done'))

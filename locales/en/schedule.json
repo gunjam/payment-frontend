@@ -17,6 +17,11 @@
       "prison": "Reason: Claiment imprisoned on {{date}}.",
       "fraud": "Reason: Claim was fraudulant.",
       "error": "Reason: Schedule set up in error."
+    },
+    "bank": {
+      "summary": "Bank account details changed on {{date}}",
+      "old": "Old account: {{accountNumber}}, {{sortCode}}, {{bankName}}",
+      "new": "New account: {{accountNumber}}, {{sortCode}}, {{bankName}}"
     }
   },
   "nameOnAccount": "Name on account",

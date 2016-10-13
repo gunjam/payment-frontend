@@ -1,6 +1,5 @@
 <i18n-var/>
 <script marko-init>
-  const numberOfBankAccounts = require("../../lib/number-of-bank-accounts");
   const splitScheduleByDate = require("../../lib/split-schedule-by-date");
   const sortCodeToBankName = require("../../lib/sort-code-to-bank-name");
   const formatDate = require("../../lib/format-date");
@@ -28,7 +27,7 @@
 
       <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
       <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
-      <var hasMultipleBankAccounts=(numberOfBankAccounts(schedule.paymentSchedule) > 1)/>
+      <var hasMultipleBankAccounts=(schedule.bankAccounts.length > 1)/>
       <var split=splitScheduleByDate(schedule.paymentSchedule)/>
       <var paymentsPaid=split[0]/>
       <var paymentsDue=split[1]/>
@@ -45,11 +44,25 @@
         </span>
       </h1>
 
-      <div if(hasMultipleStatuses) class="schedule-log">
+      <div if(hasMultipleStatuses || hasMultipleBankAccounts) class="schedule-log">
         <h2 class="heading-medium">
           <i18n-message key="schedule:log.heading"/>
         </h2>
-        <gov-prog-disclosure summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(new Date(currentStatus.startDate))})>
+        <gov-prog-disclosure for(account in schedule.bankAccounts.slice(1) | status-var=loop)
+          summary=i18n('schedule:log.bank.summary', {date: formatDate(new Date(account.created))})>
+          <div class="panel panel-border-narrow">
+            <p class="text">
+              <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
+              <i18n-message key='schedule:log.bank.old' accountNumber=oldAccount.accountNumber
+                sortCode=oldAccount.sortCode bankName=sortCodeToBankName(oldAccount.sortCode)/>
+            </p>
+            <p class="text">
+              <i18n-message key='schedule:log.bank.new' accountNumber=account.accountNumber
+                sortCode=account.sortCode bankName=sortCodeToBankName(account.sortCode)/>
+            </p>
+          </div>
+        </gov-prog-disclosure>
+        <gov-prog-disclosure if(hasMultipleStatuses) summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(new Date(currentStatus.startDate))})>
           <div class="panel panel-border-narrow">
             <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
               date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
