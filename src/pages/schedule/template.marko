@@ -29,8 +29,11 @@
       <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
       <var hasMultipleBankAccounts=(schedule.bankAccounts.length > 1)/>
       <var split=splitScheduleByDate(schedule.paymentSchedule)/>
-      <var paymentsPaid=split[0]/>
-      <var paymentsDue=split[1]/>
+      <var paidPayments=(currentStatus.name === 'stopped' ? splitScheduleByDate(split[0], new Date(currentStatus.effectiveDate)) : [split[0], []])/>
+      <var validPayments=paidPayments[0]/>
+      <var overpayments=paidPayments[1]/>
+      <var hasOverpayments=(overpayments.length > 0)/>
+      <var duePayments=split[1]/>
       <var lastPayment=schedule.paymentSchedule[schedule.paymentSchedule.length - 1]/>
 
       <a href="/search?nino=${schedule.nationalInsuranceNumber}" class="link-back">
@@ -43,6 +46,16 @@
           <i18n-message key="schedule:${currentStatus.name}PaymentSchedule"/>
         </span>
       </h1>
+
+      <div if(hasOverpayments) class="warning notification">
+        <h2 class="heading-small">
+          <i18n-message key="schedule:hasOverpayments.heading"/>
+        </h2>
+        <p>
+          <i18n-message key='schedule:hasOverpayments.${currentStatus.reason}'
+            date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
+        </p>
+      </div>
 
       <div if(hasMultipleStatuses || hasMultipleBankAccounts) class="schedule-log">
         <h2 class="heading-medium">
@@ -118,12 +131,28 @@
       <div class="grid-row">
 
         <div class="column-one-half">
-          <h2 class="heading-medium">
-            <i18n-message key="schedule:pastPayments"/>
-          </h2>
-          <pay-schedule schedule=paymentsPaid
-            is-empty-message-key="schedule:noPaymentsMade"
-            mulitple-accounts=hasMultipleBankAccounts/>
+          <if(hasOverpayments)>
+            <h2 class="heading-medium">
+              <i18n-message key="schedule:pastPayments"/>
+            </h2>
+            <pay-schedule if(validPayments.length) schedule=validPayments
+              mulitple-accounts=hasMultipleBankAccounts/>
+            <h3 class="heading-medium visually-hidden">
+              <i18n-message key="schedule:overpayments"/>
+            </h3>
+            <pay-schedule schedule=overpayments
+              is-empty-message-key="schedule:noPaymentsMade"
+              mulitple-accounts=hasMultipleBankAccounts
+              overpayments=true/>
+          </if>
+          <else>
+            <h2 class="heading-medium">
+              <i18n-message key="schedule:pastPayments"/>
+            </h2>
+            <pay-schedule schedule=validPayments
+              is-empty-message-key="schedule:noPaymentsMade"
+              mulitple-accounts=hasMultipleBankAccounts/>
+          </else>
         </div>
 
         <div class="column-one-half">
@@ -131,13 +160,13 @@
             <h2 class="heading-medium">
               <i18n-message key="schedule:paymentsStopped"/>
             </h2>
-            <pay-schedule schedule=paymentsDue/>
+            <pay-schedule schedule=duePayments/>
           </if>
           <else>
             <h2 class="heading-medium">
               <i18n-message key="schedule:futurePayments"/>
             </h2>
-            <pay-schedule schedule=paymentsDue
+            <pay-schedule schedule=duePayments
               is-empty-message-key="schedule:noPaymentsMade"
               mulitple-accounts=hasMultipleBankAccounts/>
           </else>

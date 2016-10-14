@@ -147,3 +147,25 @@ input[type="search"] {
     background-color: #666;
   }
 }
+
+.visually-hidden + .schedule {
+  border-top: 0;
+}
+
+.notification {
+  padding: 0.526315789473684em;
+  max-width: 30em;
+
+  h2 {
+    margin-top: 0;
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.warning {
+  border-left: 0.526315789473684em solid $red;
+  padding-left: 0.526315789473684em;
+  background-color: mix(white, $mellow-red, 90%);
+}

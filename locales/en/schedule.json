@@ -3,6 +3,13 @@
   "backLink": "Search",
   "startedPaymentSchedule": "Active payment schedule",
   "stoppedPaymentSchedule": "Stopped payment schedule",
+  "hasOverpayments": {
+    "heading": "There may be an overpayment on this schedule",
+    "death": "Claimant died on {{date}}.",
+    "prison": "Claimant imprisoned on {{date}}.",
+    "fraud": "Claim was fraudulant.",
+    "error": "Schedule set up in error."
+  },
   "status": {
     "started": "active",
     "stopped": "stopped"
@@ -13,8 +20,8 @@
     "heading": "Log",
     "stopped": {
       "summary": "Payment schedule stopped on {{date}}",
-      "death": "Reason: Claiment died on {{date}}.",
-      "prison": "Reason: Claiment imprisoned on {{date}}.",
+      "death": "Reason: Claimant died on {{date}}.",
+      "prison": "Reason: Claimant imprisoned on {{date}}.",
       "fraud": "Reason: Claim was fraudulant.",
       "error": "Reason: Schedule set up in error."
     },
@@ -32,6 +39,7 @@
   "inBank": "Payments were paid to account number {{accountNumber}}",
   "toBank": "Payments will be paid to account number {{accountNumber}}",
   "pastPayments": "Payments made",
+  "overpayments": "Overpayments",
   "futurePayments": "Payments due",
   "paymentsStopped": "Payments prevented",
   "paymentsStoppedMsg": "Payments stopped {{-timeStart}}{{date}}{{-timeStop}}",

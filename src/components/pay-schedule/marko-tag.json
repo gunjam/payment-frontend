@@ -8,5 +8,8 @@
   },
   "@mulitple-accounts": {
     "type": "boolean"
+  },
+  "@overpayments": {
+    "type": "boolean"
   }
 }

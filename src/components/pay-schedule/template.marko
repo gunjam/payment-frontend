@@ -3,7 +3,7 @@
 </script>
 
 <ul if(data.schedule.length) class="schedule">
-  <li for(payment in data.schedule) class="payment">
+  <li for(payment in data.schedule) class="${data.overpayments ? 'warning ': ''}payment">
     <pay-date date=payment.date/>
     <strong class="amount">
       £${payment.amount}
