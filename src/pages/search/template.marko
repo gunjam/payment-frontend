@@ -54,7 +54,7 @@
               <i18n-message key="search:await.results"/>
             </h2>
             <ul class="search-results">
-              <li for(schedule in searchResults | status-var=loop) class="result">
+              <li for(schedule in searchResults) class="result">
                 <a href="/schedule/${schedule.id}" class="result-link">
                   <i18n-message key="search:await.resultLink.${schedule.statuses[schedule.statuses.length - 1].name}"/>
                 </a>
@@ -65,8 +65,8 @@
                 </span>
                 <span class="result-meta">
                   <i18n-message key="search:await.resultDate"
-                    start=formatDate(new Date(schedule.paymentSchedule[0].date))
-                    end=formatDate(new Date(schedule.paymentSchedule[schedule.paymentSchedule.length - 1].date))/>
+                    start=formatDate(schedule.paymentSchedule[0].date)
+                    end=formatDate(schedule.paymentSchedule[schedule.paymentSchedule.length - 1].date)/>
                 </span>
               </li>
             </ul>
