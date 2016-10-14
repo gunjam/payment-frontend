@@ -16,6 +16,7 @@ const PUT = 'PUT';
 module.exports = {
   get(req, res) {
     const formData = req.getSession('bsp');
+    const {thePast} = req.query;
 
     if (Object.keys(formData).length > 0) {
       const {nino, nameOnAccount, accountNumber, sortCode, rate} = formData;
@@ -32,7 +33,8 @@ module.exports = {
         nameOnAccount,
         sortCode: dashUpSortCode(sanitiseSortCode(sortCode)),
         accountNumber,
-        dateOfPensionAge: promiseDateOfPensionAge(birthDate, sex)
+        dateOfPensionAge: promiseDateOfPensionAge(birthDate, sex),
+        thePast: thePast === ''
       }, res);
     } else {
       req.session.destroy();

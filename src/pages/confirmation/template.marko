@@ -1,7 +1,6 @@
 <i18n-var/>
 <script marko-init>
   const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
-  const tomorrow = require("../../lib/tomorrow")();
   const slashUpDate = require("../../utils/slash-up-date");
 </script>
 <layout-use("../../common/layout.marko")>
@@ -79,7 +78,7 @@
           </await-error>
 
           <var higherRate=(data.rate === 'higher')/>
-          <var startDate=(new Date())/>
+          <var startDate=(data.thePast ? data.claimDate : new Date())/>
           <var paymentSchedule=generateBSPSchedule(data.claimDate, data.deathDate, spaDate, higherRate, startDate)/>
 
           <form action="/confirmation" method="post">
