@@ -11,6 +11,7 @@ const months = {
   ]
 };
 
-module.exports = function (date, lang = 'en') {
+module.exports = function (input, lang = 'en') {
+  const date = typeof input === 'string' ? new Date(input) : input;
   return `${date.getDate()} ${months[lang][date.getMonth()]} ${date.getFullYear()}`;
 };

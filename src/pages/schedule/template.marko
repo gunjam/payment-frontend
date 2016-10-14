@@ -49,7 +49,7 @@
           <i18n-message key="schedule:log.heading"/>
         </h2>
         <gov-prog-disclosure for(account in schedule.bankAccounts.slice(1) | status-var=loop)
-          summary=i18n('schedule:log.bank.summary', {date: formatDate(new Date(account.created))})>
+          summary=i18n('schedule:log.bank.summary', {date: formatDate(account.created)})>
           <div class="panel panel-border-narrow">
             <p class="text">
               <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
@@ -62,7 +62,7 @@
             </p>
           </div>
         </gov-prog-disclosure>
-        <gov-prog-disclosure if(hasMultipleStatuses) summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(new Date(currentStatus.startDate))})>
+        <gov-prog-disclosure if(hasMultipleStatuses) summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(currentStatus.startDate)})>
           <div class="panel panel-border-narrow">
             <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
               date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>

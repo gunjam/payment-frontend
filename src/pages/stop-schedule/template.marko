@@ -21,13 +21,50 @@
 
         <form method="post" action="/stop-schedule/${data.scheduleId}">
 
-          <gov-radios legend=i18n('bsp:form.sex.heading') name="reason"
-            error=data.errors.reason value=data.values.reason hide-legend=true>
-            <gov-radios:radio label=i18n('stop:form.reason.labelClaimantDied') value="death"/>
-            <gov-radios:radio label=i18n('stop:form.reason.labelClaimantImprisoned') value="prison"/>
-            <gov-radios:radio label=i18n('stop:form.reason.labelFraudulentClaim') value="fraud"/>
-            <gov-radios:radio label=i18n('stop:form.reason.labelClaimSetUpInError') value="error"/>
-          </gov-radios>
+          <div class="form-group${data.errors.reason ? ' error' : ''}">
+            <fieldset>
+              <legend>
+                <span class="visuallyhidden">
+                  <i18n-message key="stop:heading"/>
+                </span>
+                <span if(data.errors.reason) id="error-message-reason" class="error-message">
+                  ${data.errors.reason}
+                </span>
+              </legend>
+
+              <label for="radio-reason-0" class="block-label selection-button-radio" data-target="death-date">
+                <input id="radio-reason-0" name="reason" value="death" type="radio"
+                  checked=(data.values.reason === 'death')>
+                <i18n-message key="stop:form.reason.labelClaimantDied"/>
+              </label>
+              <div class="panel panel-border-narrow js-hidden" id="death-date">
+                <gov-date-input name="deathDate" legend=i18n('stop:form.deathDate.legend')
+                  error=data.errors.deathDate value=data.values.deathDate/>
+              </div>
+
+              <label for="radio-reason-1" class="block-label selection-button-radio" data-target="prison-date">
+                <input id="radio-reason-1" name="reason" value="prison" type="radio"
+                  checked=(data.values.reason === 'prison')>
+                <i18n-message key="stop:form.reason.labelClaimantImprisoned"/>
+              </label>
+              <div class="panel panel-border-narrow js-hidden" id="prison-date">
+                <gov-date-input name="prisonDate" legend=i18n('stop:form.prisonDate.legend')
+                  error=data.errors.prisonDate value=data.values.prisonDate/>
+              </div>
+
+              <label for="radio-reason-2" class="block-label selection-button-radio">
+                <input id="radio-reason-2" name="reason" value="fraud" type="radio"
+                  checked=(data.values.reason === 'fraud')>
+                <i18n-message key="stop:form.reason.labelFraudulentClaim"/>
+              </label>
+
+              <label for="radio-reason-3" class="block-label selection-button-radio">
+                <input id="radio-reason-3" name="reason" value="error" type="radio"
+                  checked=(data.values.reason === 'error')>
+                <i18n-message key="stop:form.reason.labelClaimSetUpInError"/>
+              </label>
+            </fieldset>
+          </div>
 
           <pay-csrf-token/>
 

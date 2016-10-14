@@ -11,6 +11,20 @@
         "presence": "Pick a reason for stopping the schedule"
       }
     },
+    "deathDate": {
+      "legend": "What date did they die?",
+      "errors": {
+        "presence": "Enter the date the claimant died",
+        "format": "Enter a valid date"
+      }
+    },
+    "prisonDate": {
+      "legend": "What date were they imprisoned?",
+      "errors": {
+        "presence": "Enter the date the claimant was imprisoned",
+        "format": "Enter a valid date"
+      }
+    },
     "submit": "Stop payments"
   }
 }
