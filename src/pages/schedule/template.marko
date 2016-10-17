@@ -64,23 +64,19 @@
         </h2>
         <gov-prog-disclosure for(account in schedule.bankAccounts.slice(1) | status-var=loop)
           summary=i18n('schedule:log.bank.summary', {date: formatDate(account.created)})>
-          <div class="panel panel-border-narrow">
-            <p class="text">
-              <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
-              <i18n-message key='schedule:log.bank.old' accountNumber=oldAccount.accountNumber
-                sortCode=oldAccount.sortCode bankName=sortCodeToBankName(oldAccount.sortCode)/>
-            </p>
-            <p class="text">
-              <i18n-message key='schedule:log.bank.new' accountNumber=account.accountNumber
-                sortCode=account.sortCode bankName=sortCodeToBankName(account.sortCode)/>
-            </p>
-          </div>
+          <p class="text">
+            <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
+            <i18n-message key='schedule:log.bank.old' accountNumber=oldAccount.accountNumber
+              sortCode=oldAccount.sortCode bankName=sortCodeToBankName(oldAccount.sortCode)/>
+          </p>
+          <p class="text">
+            <i18n-message key='schedule:log.bank.new' accountNumber=account.accountNumber
+              sortCode=account.sortCode bankName=sortCodeToBankName(account.sortCode)/>
+          </p>
         </gov-prog-disclosure>
         <gov-prog-disclosure if(hasMultipleStatuses) summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(currentStatus.startDate)})>
-          <div class="panel panel-border-narrow">
-            <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
-              date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
-          </div>
+          <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
+            date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
         </gov-prog-disclosure>
       </div>
 
