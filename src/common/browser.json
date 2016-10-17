@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "./application.scss",
+    "../components/pay-summary",
     { "type": "js", "url": "https://code.jquery.com/jquery-1.12.4.min.js", "external": false },
     "govuk_frontend_toolkit/javascripts/vendor/polyfills/bind.js",
     "govuk_frontend_toolkit/javascripts/govuk/selection-buttons.js",

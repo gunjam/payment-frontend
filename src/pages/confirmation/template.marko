@@ -22,53 +22,21 @@
           <i18n-message key="confirmation:heading"/>
         </h1>
 
-        <table class="form-group">
-          <thead>
-            <tr>
-              <th colspan="2" class="heading-medium">
-                <i18n-message key="confirmation:customerDetails"/>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><i18n-message key="confirmation:nino"/></td>
-              <td>${data.nationalInsuranceNumber}</td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:dateOfBirth"/></td>
-              <td>${slashUpDate(data.birthDate)}</td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:sex"/></td>
-              <td><i18n-message key="confirmation:${data.sex}"/></td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:dateOfDeath"/></td>
-              <td>${slashUpDate(data.deathDate)}</td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:dateOfClaim"/></td>
-              <td>${slashUpDate(data.claimDate)}</td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:rateOfPay"/></td>
-              <td><i18n-message key="confirmation:${data.rate}"/></td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:nameOnAccount"/></td>
-              <td>${data.nameOnAccount}</td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:sortCode"/></td>
-              <td>${data.sortCode}</td>
-            </tr>
-            <tr>
-              <td><i18n-message key="confirmation:accountNumber"/></td>
-              <td>${data.accountNumber}</td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 class="heading-medium">
+          <i18n-message key="confirmation:customerDetails"/>
+        </h2>
+
+        <pay-summary>
+          <pay-summary:item key=i18n('confirmation:nino') value=data.nationalInsuranceNumber/>
+          <pay-summary:item key=i18n('confirmation:dateOfBirth') value=slashUpDate(data.birthDate)/>
+          <pay-summary:item key=i18n('confirmation:sex') value=i18n('confirmation:${data.sex}')/>
+          <pay-summary:item key=i18n('confirmation:dateOfDeath') value=slashUpDate(data.deathDate)/>
+          <pay-summary:item key=i18n('confirmation:dateOfClaim') value=slashUpDate(data.claimDate)/>
+          <pay-summary:item key=i18n('confirmation:rateOfPay') value=i18n('confirmation:${data.rate}')/>
+          <pay-summary:item key=i18n('confirmation:nameOnAccount') value=data.nameOnAccount/>
+          <pay-summary:item key=i18n('confirmation:sortCode') value=data.sortCode/>
+          <pay-summary:item key=i18n('confirmation:accountNumber') value=data.accountNumber/>
+        </pay-summary>
 
         <await(spaDate from data.dateOfPensionAge)>
           <await-error>
