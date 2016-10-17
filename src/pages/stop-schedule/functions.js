@@ -41,9 +41,9 @@ module.exports = {
       const addStatus = schedulesApi + '/' + req.params.id + '/addStatus';
       const schedulePage = '/schedule/' + req.params.id;
       const status = {name: 'stopped', reason};
+      const effectiveDate = getDateFromDateObject(values[reason + 'Date']);
       const body = (reason === 'death' || reason === 'prison') ?
-        Object.assign(status, {effectiveDate: getDateFromDateObject(values[reason + 'Date'])}) :
-        status;
+        Object.assign(status, {effectiveDate}) : status;
 
       rp({method: 'PUT', uri: addStatus, json: true, body})
         .then(() => res.redirect(schedulePage))
