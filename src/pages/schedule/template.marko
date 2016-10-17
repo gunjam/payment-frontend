@@ -97,37 +97,20 @@
         </li>
       </ul>
 
-      <div class="grid-row">
-        <div class="column-two-thirds">
-          <table>
-            <thead>
-              <tr>
-                <th colspan="2">
-                  <i18n-message key="schedule:bankAccount"/>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><i18n-message key="schedule:nameOnAccount"/></td>
-                <td>${lastPayment.bankAccount.nameOnAccount}</td>
-              </tr>
-              <tr>
-                <td><i18n-message key="schedule:sortCode"/></td>
-                <td>${lastPayment.bankAccount.sortCode}</td>
-              </tr>
-              <tr>
-                <td><i18n-message key="schedule:accountNumber"/></td>
-                <td>${lastPayment.bankAccount.accountNumber}</td>
-              </tr>
-              <tr>
-                <td><i18n-message key="schedule:bankName"/></td>
-                <td>${sortCodeToBankName(lastPayment.bankAccount.sortCode)}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <h2 class="heading-medium">
+        <i18n-message key="schedule:bankAccount"/>
+      </h2>
+
+      <pay-summary>
+        <pay-summary:item key=i18n('schedule:nameOnAccount')
+          value=lastPayment.bankAccount.nameOnAccount/>
+        <pay-summary:item key=i18n('schedule:sortCode')
+          value=lastPayment.bankAccount.sortCode/>
+        <pay-summary:item key=i18n('schedule:accountNumber')
+          value=lastPayment.bankAccount.accountNumber/>
+        <pay-summary:item key=i18n('schedule:bankName')
+          value=sortCodeToBankName(lastPayment.bankAccount.sortCode)/>
+      </pay-summary>
 
       <div class="grid-row">
 
