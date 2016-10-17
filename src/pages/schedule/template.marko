@@ -28,8 +28,9 @@
       <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
       <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
       <var hasMultipleBankAccounts=(schedule.bankAccounts.length > 1)/>
-      <var split=splitScheduleByDate(schedule.paymentSchedule)/>
-      <var paidPayments=(currentStatus.name === 'stopped' ? splitScheduleByDate(split[0], new Date(currentStatus.effectiveDate)) : [split[0], []])/>
+      <var hasStopped=(currentStatus.name === 'stopped')/>
+      <var split=splitScheduleByDate(schedule.paymentSchedule, hasStopped ? new Date(currentStatus.startDate) : new Date())/>
+      <var paidPayments=(hasStopped ? splitScheduleByDate(split[0], new Date(currentStatus.effectiveDate)) : [split[0], []])/>
       <var validPayments=paidPayments[0]/>
       <var overpayments=paidPayments[1]/>
       <var hasOverpayments=(overpayments.length > 0)/>
@@ -83,7 +84,7 @@
         </gov-prog-disclosure>
       </div>
 
-      <ul if(currentStatus.name !== 'stopped') class="schedule-controls">
+      <ul if(hasStopped) class="schedule-controls">
         <li>
           <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
             <i18n-message key="schedule:editBankDetails"/>
@@ -156,7 +157,7 @@
         </div>
 
         <div class="column-one-half">
-          <if(currentStatus.name === 'stopped')>
+          <if(hasStopped)>
             <h2 class="heading-medium">
               <i18n-message key="schedule:paymentsStopped"/>
             </h2>
