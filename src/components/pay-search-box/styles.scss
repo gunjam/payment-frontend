@@ -27,4 +27,7 @@ input[type="search"] {
   &:hover, &:focus {
     background-color: $link-hover-colour;
   }
+  &:active {
+    border-top: 2px solid $link-hover-colour;
+  }
 }
