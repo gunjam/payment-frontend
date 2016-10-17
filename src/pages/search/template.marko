@@ -13,28 +13,15 @@
 
     <div class="grid-row">
       <div class="column-two-thirds">
+
         <h1 class="heading-xlarge">
           <i18n-message key="search:heading"/>
         </h1>
 
         <form action="/search" method="get">
-
-          <div class="form-group search ${(data.errors ? 'error' : '')}">
-            <label for="search-box" class="form-label">
-              <span>
-                <i18n-message key="search:form.search.label"/>
-              </span>
-              <span if(data.errors) class="error-message">
-                ${data.errors.search}
-              </span>
-            </label>
-            <input type="search" class="form-control search-box" id="search-box"
-              name="nino" value=data.nino autocomplete="off"/>
-            <button class="button search-button" type="submit">
-              <i18n-message key="search:form.submit"/>
-            </button>
-          </div>
-
+          <pay-search-box name="nino" label=i18n('search:form.search.label')
+            error=data.errors.search value=data.nino
+            button-text=i18n('search:form.submit')/>
         </form>
 
         <await(searchResults from data.searchResultsPromise) if(data.searchResultsPromise)>
@@ -53,6 +40,7 @@
             <h2 class="heading-medium">
               <i18n-message key="search:await.results"/>
             </h2>
+
             <ul class="search-results">
               <li for(schedule in searchResults) class="result">
                 <a href="/schedule/${schedule.id}" class="result-link">
@@ -75,6 +63,7 @@
             <i18n-message key="search:await.noResults"/>
           </p>
         </await>
+
       </div>
     </div>
 

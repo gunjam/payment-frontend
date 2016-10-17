@@ -23,7 +23,7 @@ module.exports = {
       if (isValidNino(sanitisedNino)) {
         const uri = schedulesApi + apiFilter + encodeURIComponent(sanitisedNino);
         const searchResultsPromise = rp({uri, transform: JSON.parse}).promise();
-        template.render({nino, searchResultsPromise}, res);
+        template.render({nino, searchResultsPromise, errors: false}, res);
       } else {
         const errors = {search: req.t('search:form.search.errors.format')};
         template.render({nino, errors}, res);

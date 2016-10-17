@@ -3,45 +3,6 @@ $path: "/node_modules/govuk_frontend_toolkit/images/";
 
 @import 'govuk-elements';
 
-// Search Box
-input[type="search"] {
-  box-sizing: border-box;
-}
-.search {
-  position: relative;
-
-  .search-box {
-    height: 2.632em;
-    width: 100%;
-    padding-right: 2.632em;
-  }
-}
-.search-button {
-  background: #005ea5 url('./search.png') no-repeat center center;
-  text-indent: -99999em;
-  height: 2.632em;
-  width: 2.632em;
-  border: none;
-  position: absolute;
-  margin: 0;
-  bottom: 0;
-  right: 0;
-  box-shadow: none;
-  overflow: hidden;
-
-  &:hover, &:focus {
-    background-color: #2e8aca;
-  }
-  &:active {
-    top: auto;
-    bottom: 0;
-  }
-}
-.error .search-button {
-  border-left: 4px solid #B10E1E;
-  box-sizing: padding-box;
-}
-
 // Search results
 .search-results {
   margin: 0 0 2em;
