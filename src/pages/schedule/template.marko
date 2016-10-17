@@ -84,7 +84,7 @@
         </gov-prog-disclosure>
       </div>
 
-      <ul if(hasStopped) class="schedule-controls">
+      <ul if(!hasStopped) class="schedule-controls">
         <li>
           <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
             <i18n-message key="schedule:editBankDetails"/>
