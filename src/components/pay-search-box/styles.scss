@@ -1,0 +1,30 @@
+@import "colours";
+@import "css3";
+
+input[type="search"] {
+  @include box-sizing(border-box);
+}
+
+.search-group {
+  padding-right: 2.632em;
+}
+
+.form-control-search {
+  width: 100%;
+  height: 2.632em;
+  border-right: 0;
+}
+
+.button-search {
+  background: $govuk-blue url('./search.png') no-repeat center center;
+  border: none;
+  width: 2.632em;
+  height: 2.632em;
+  font-size: 1em;
+  margin-right: -2.632em;
+  float: right;
+
+  &:hover, &:focus {
+    background-color: $link-hover-colour;
+  }
+}

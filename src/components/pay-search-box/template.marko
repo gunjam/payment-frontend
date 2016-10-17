@@ -1,0 +1,15 @@
+<div class="form-group search-group ${(data.error ? 'error' : '')}">
+  <label for="search-box" class="form-label">
+    <span>
+      ${data.label}
+    </span>
+    <span if(data.error) class="error-message">
+      ${data.error}
+    </span>
+  </label>
+  <input type="search" name=data.name class="form-control form-control-search"
+    id=(data.id || "search-box") value=data.value autocomplete="off"/>
+  <button class="button-search" type="submit">
+    <span class="visually-hidden">${data.buttonText}</span>
+  </button>
+</div>
