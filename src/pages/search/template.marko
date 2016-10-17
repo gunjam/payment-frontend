@@ -43,18 +43,21 @@
 
             <ul class="search-results">
               <li for(schedule in searchResults) class="result">
+                <var currentStatus=schedule.statuses[schedule.statuses.length - 1].name/>
+                <var payments=schedule.paymentSchedule/>
+
                 <a href="/schedule/${schedule.id}" class="result-link">
-                  <i18n-message key="search:await.resultLink.${schedule.statuses[schedule.statuses.length - 1].name}"/>
+                  <i18n-message key="search:await.resultLink.${currentStatus}"/>
                 </a>
                 <span class="result-meta">
                   <i18n-message key="search:await.resultAccount"
-                    name=schedule.paymentSchedule[0].bankAccount.nameOnAccount
-                    account-number=schedule.paymentSchedule[0].bankAccount.accountNumber/>
+                    name=payments[0].bankAccount.nameOnAccount
+                    account-number=payments[0].bankAccount.accountNumber/>
                 </span>
                 <span class="result-meta">
                   <i18n-message key="search:await.resultDate"
-                    start=formatDate(schedule.paymentSchedule[0].date)
-                    end=formatDate(schedule.paymentSchedule[schedule.paymentSchedule.length - 1].date)/>
+                    start=formatDate(payments[0].date)
+                    end=formatDate(payments[payments.length - 1].date)/>
                 </span>
               </li>
             </ul>
