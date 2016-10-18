@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function (input, out) {
-  out.write(
-    `<input type="hidden" name="_csrf" value="${out.stream.req.csrfToken()}"/>`
-  );
+  const csrfToken = out.global.events.req.csrfToken();
+  out.write(`<input type="hidden" name="_csrf" value="${csrfToken}"/>`);
 };
