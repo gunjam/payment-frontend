@@ -1,0 +1,6 @@
+{
+  "@title": {
+    "required": true,
+    "type": "string"
+  }
+}
