@@ -59,11 +59,11 @@
       </div>
 
       <div if(hasMultipleStatuses || hasMultipleBankAccounts) class="schedule-log">
-        <h2 class="heading-medium">
+        <h2 class="heading-large">
           <i18n-message key="schedule:log.heading"/>
         </h2>
-        <gov-prog-disclosure for(account in schedule.bankAccounts.slice(1) | status-var=loop)
-          summary=i18n('schedule:log.bank.summary', {date: formatDate(account.created)})>
+        <pay-log for(account in schedule.bankAccounts.slice(1) | status-var=loop)
+          title=i18n('schedule:log.bank.summary', {date: formatDate(account.created)})>
           <p class="text">
             <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
             <i18n-message key='schedule:log.bank.old' accountNumber=oldAccount.accountNumber
@@ -73,11 +73,11 @@
             <i18n-message key='schedule:log.bank.new' accountNumber=account.accountNumber
               sortCode=account.sortCode bankName=sortCodeToBankName(account.sortCode)/>
           </p>
-        </gov-prog-disclosure>
-        <gov-prog-disclosure if(hasMultipleStatuses) summary=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(currentStatus.startDate)})>
+        </pay-log>
+        <pay-log if(hasMultipleStatuses) title=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(currentStatus.startDate)})>
           <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
             date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
-        </gov-prog-disclosure>
+        </pay-log>
       </div>
 
       <ul if(!hasStopped) class="schedule-controls">
