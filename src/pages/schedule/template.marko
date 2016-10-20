@@ -58,6 +58,19 @@
         </p>
       </div>
 
+      <ul if(!hasStopped) class="schedule-controls">
+        <li>
+          <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
+            <i18n-message key="schedule:editBankDetails"/>
+          </a>
+        </li>
+        <li>
+          <a href="/stop-schedule/${schedule.id}" class="button button-red">
+            <i18n-message key="schedule:stop"/>
+          </a>
+        </li>
+      </ul>
+
       <div if(hasMultipleStatuses || hasMultipleBankAccounts) class="schedule-log">
         <h2 class="heading-large">
           <i18n-message key="schedule:log.heading"/>
@@ -79,19 +92,6 @@
             date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
         </pay-log>
       </div>
-
-      <ul if(!hasStopped) class="schedule-controls">
-        <li>
-          <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
-            <i18n-message key="schedule:editBankDetails"/>
-          </a>
-        </li>
-        <li>
-          <a href="/stop-schedule/${schedule.id}" class="button button-red">
-            <i18n-message key="schedule:stop"/>
-          </a>
-        </li>
-      </ul>
 
       <h2 class="heading-medium">
         <i18n-message key="schedule:bankAccount"/>
