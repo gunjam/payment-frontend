@@ -16,7 +16,7 @@ module.exports = {
   post(req, res, next) {
     const scheduleId = req.params.id;
     const values = req.body;
-    const {reason, deathDate, prisonDate} = values;
+    const {reason = '', deathDate = {}, prisonDate = {}} = values;
     const errors = {};
 
     if (reason === 'death') {
