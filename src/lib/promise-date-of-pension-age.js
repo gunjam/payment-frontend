@@ -2,7 +2,7 @@
 
 const rp = require('request-promise');
 
-const pensionDate = /You’ll reach State Pension age on +(\d{1,2} \w{3,9} \d{4})/;
+const pensionDate = /State Pension age on +(\d{1,2} \w{3,9} \d{4})/;
 
 module.exports = function (birthDate, sex) {
   return rp({
