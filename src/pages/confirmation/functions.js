@@ -1,6 +1,6 @@
 'use strict';
 
-const rp = require('request-promise');
+const got = require('got');
 const {bankAccountsApi, schedulesFullApi} = require('../../../config/app');
 const getDateFromDateObject = require('../../utils/get-date-from-date-object');
 const sanitiseSortCode = require('../../utils/sanitise-sort-code');
@@ -8,10 +8,6 @@ const sanitiseNino = require('../../utils/sanitise-nino');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const promiseDateOfPensionAge = require('../../lib/promise-date-of-pension-age');
 const template = require('./template.marko');
-
-const json = true;
-const POST = 'POST';
-const PUT = 'PUT';
 
 module.exports = {
   get(req, res) {
@@ -44,18 +40,17 @@ module.exports = {
 
   post(req, res, next) {
     const {nameOnAccount, accountNumber, sortCode, nationalInsuranceNumber} = req.body;
-    const account = {nameOnAccount, sortCode, accountNumber};
+    const body = {nameOnAccount, sortCode, accountNumber};
 
-    rp({method: PUT, uri: bankAccountsApi, json, body: account})
-      .then(body => {
-        const bankAccountId = body.id;
-        const paymentSchedule = JSON.parse(req.body.paymentSchedule);
-        const data = {nationalInsuranceNumber, paymentSchedule, bankAccountId};
+    got.put(bankAccountsApi, {body})
+      .then(response => {
+        const bankAccountId = JSON.parse(response.body).id;
+        const paymentSchedule = req.body.paymentSchedule;
+        const body = {nationalInsuranceNumber, paymentSchedule, bankAccountId};
 
-        rp({method: POST, uri: schedulesFullApi, json, body: data})
-          .then(body => res.setSessionAndRedirect('done', {scheduleId: body.id}, '/done'))
-          .catch(err => next(err));
+        return got.post(schedulesFullApi, {body});
       })
+      .then(response => res.setSessionAndRedirect('done', {scheduleId: JSON.parse(response.body).id}, '/done'))
       .catch(err => next(err));
   }
 };
