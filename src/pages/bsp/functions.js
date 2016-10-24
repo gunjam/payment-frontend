@@ -27,6 +27,41 @@ module.exports = {
       errors.nino = req.t('bsp:form.nino.errors.format');
     }
 
+    // Validate dateOfBirth
+    if (isEmpty(dateOfBirth.day) && isEmpty(dateOfBirth.month) && isEmpty(dateOfBirth.year)) {
+      errors.dateOfBirth = req.t('bsp:form.dateOfBirth.errors.presence');
+    } else if (!isValidDateObject(dateOfBirth)) {
+      errors.dateOfBirth = req.t('bsp:form.dateOfBirth.errors.format');
+    }
+
+    // Validate sex
+    if (isEmpty(sex)) {
+      errors.sex = req.t('bsp:form.sex.errors.presence');
+    } else if (sex !== 'female' && sex !== 'male') {
+      errors.sex = req.t('bsp:form.sex.errors.format');
+    }
+
+    // Validate dateOfDeath
+    if (isEmpty(dateOfDeath.day) && isEmpty(dateOfDeath.month) && isEmpty(dateOfDeath.year)) {
+      errors.dateOfDeath = req.t('bsp:form.dateOfDeath.errors.presence');
+    } else if (!isValidDateObject(dateOfDeath)) {
+      errors.dateOfDeath = req.t('bsp:form.dateOfDeath.errors.format');
+    }
+
+    // Validate dateOfClaim
+    if (isEmpty(dateOfClaim.day) && isEmpty(dateOfClaim.month) && isEmpty(dateOfClaim.year)) {
+      errors.dateOfClaim = req.t('bsp:form.dateOfClaim.errors.presence');
+    } else if (!isValidDateObject(dateOfClaim)) {
+      errors.dateOfClaim = req.t('bsp:form.dateOfClaim.errors.format');
+    }
+
+    // Validate rate
+    if (isEmpty(rate)) {
+      errors.rate = req.t('bsp:form.rate.errors.presence');
+    } else if (rate !== 'higher' && rate !== 'standard') {
+      errors.rate = req.t('bsp:form.rate.errors.format');
+    }
+
     // Validate nameOnAccount
     if (isEmpty(nameOnAccount)) {
       errors.nameOnAccount = req.t('bsp:form.nameOnAccount.errors.presence');
@@ -44,41 +79,6 @@ module.exports = {
       errors.accountNumber = req.t('bsp:form.accountNumber.errors.presence');
     } else if (!isValidAccountNumber(accountNumber)) {
       errors.accountNumber = req.t('bsp:form.accountNumber.errors.format');
-    }
-
-    // Validate dateOfClaim
-    if (isEmpty(dateOfClaim.day) && isEmpty(dateOfClaim.month) && isEmpty(dateOfClaim.year)) {
-      errors.dateOfClaim = req.t('bsp:form.dateOfClaim.errors.presence');
-    } else if (!isValidDateObject(dateOfClaim)) {
-      errors.dateOfClaim = req.t('bsp:form.dateOfClaim.errors.format');
-    }
-
-    // Validate dateOfBirth
-    if (isEmpty(dateOfBirth.day) && isEmpty(dateOfBirth.month) && isEmpty(dateOfBirth.year)) {
-      errors.dateOfBirth = req.t('bsp:form.dateOfBirth.errors.presence');
-    } else if (!isValidDateObject(dateOfBirth)) {
-      errors.dateOfBirth = req.t('bsp:form.dateOfBirth.errors.format');
-    }
-
-    // Validate dateOfDeath
-    if (isEmpty(dateOfDeath.day) && isEmpty(dateOfDeath.month) && isEmpty(dateOfDeath.year)) {
-      errors.dateOfDeath = req.t('bsp:form.dateOfDeath.errors.presence');
-    } else if (!isValidDateObject(dateOfDeath)) {
-      errors.dateOfDeath = req.t('bsp:form.dateOfDeath.errors.format');
-    }
-
-    // Validate sex
-    if (isEmpty(sex)) {
-      errors.sex = req.t('bsp:form.sex.errors.presence');
-    } else if (sex !== 'female' && sex !== 'male') {
-      errors.sex = req.t('bsp:form.sex.errors.format');
-    }
-
-    // Validate rate
-    if (isEmpty(rate)) {
-      errors.rate = req.t('bsp:form.rate.errors.presence');
-    } else if (rate !== 'higher' && rate !== 'standard') {
-      errors.rate = req.t('bsp:form.rate.errors.format');
     }
 
     if (Object.keys(errors).length > 0) {
