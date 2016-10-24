@@ -1,6 +1,6 @@
 'use strict';
 
-const rp = require('request-promise');
+const got = require('got');
 const {schedulesApi} = require('../../../config/app');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const isValidNino = require('../../utils/is-valid-nino');
@@ -22,7 +22,7 @@ module.exports = {
 
       if (isValidNino(sanitisedNino)) {
         const uri = schedulesApi + apiFilter + encodeURIComponent(sanitisedNino);
-        const searchResultsPromise = rp({uri, transform: JSON.parse}).promise();
+        const searchResultsPromise = got(uri);
         template.render({nino, searchResultsPromise, errors: false}, res);
       } else {
         const errors = {search: req.t('search:form.search.errors.format')};

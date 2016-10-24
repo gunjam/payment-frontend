@@ -24,7 +24,7 @@
             button-text=i18n('search:form.submit')/>
         </form>
 
-        <await(searchResults from data.searchResultsPromise) if(data.searchResultsPromise)>
+        <await(response from data.searchResultsPromise) if(data.searchResultsPromise)>
           <await-error>
             <p class="lede">
               <i18n-message key="search:await.error"/>
@@ -35,6 +35,8 @@
               <i18n-message key="search:await.timeout"/>
             </p>
           </await-timeout>
+
+          <var searchResults=JSON.parse(response.body)/>
 
           <if(searchResults.length > 0)>
             <h2 class="heading-medium">
