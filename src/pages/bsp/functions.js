@@ -15,10 +15,8 @@ module.exports = {
   post(req, res) {
     const values = req.body;
     const {nino, nameOnAccount, accountNumber, sortCode, rate, sex} = values;
+    const {dateOfClaim = {}, dateOfDeath = {}, dateOfBirth = {}} = values;
     const errors = {};
-    const dateOfClaim = values.dateOfClaim || {};
-    const dateOfDeath = values.dateOfDeath || {};
-    const dateOfBirth = values.dateOfBirth || {};
 
     // Validate nino
     if (isEmpty(nino)) {
