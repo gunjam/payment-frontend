@@ -1,6 +1,6 @@
 'use strict';
 
-const rp = require('request-promise');
+const got = require('got');
 const {schedulesApi} = require('../../../config/app');
 const isEmpty = require('../../utils/is-empty');
 const isValidDateObject = require('../../utils/is-valid-date-object');
@@ -41,11 +41,11 @@ module.exports = {
       const addStatus = schedulesApi + '/' + req.params.id + '/addStatus';
       const schedulePage = '/schedule/' + req.params.id;
       const status = {name: 'stopped', reason};
-      const effectiveDate = getDateFromDateObject(values[reason + 'Date']);
+      const effectiveDate = getDateFromDateObject(values[reason + 'Date']).toISOString();
       const body = (reason === 'death' || reason === 'prison') ?
         Object.assign(status, {effectiveDate}) : status;
 
-      rp({method: 'PUT', uri: addStatus, json: true, body})
+      got.put(addStatus, {body})
         .then(() => res.redirect(schedulePage))
         .catch(err => next(err));
     }
