@@ -6,8 +6,9 @@ const getDateFromDateObject = require('../../utils/get-date-from-date-object');
 const sanitiseSortCode = require('../../utils/sanitise-sort-code');
 const sanitiseNino = require('../../utils/sanitise-nino');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
-const promiseDateOfPensionAge = require('../../lib/promise-date-of-pension-age');
 const template = require('./template.marko');
+
+const pensionAgeUri = 'https://www.gov.uk/state-pension-age/y/age/';
 
 module.exports = {
   get(req, res) {
@@ -29,7 +30,7 @@ module.exports = {
         nameOnAccount,
         sortCode: dashUpSortCode(sanitiseSortCode(sortCode)),
         accountNumber,
-        dateOfPensionAge: promiseDateOfPensionAge(birthDate, sex),
+        dateOfPensionAge: got(pensionAgeUri + birthDate + '/' + sex),
         thePast: thePast === ''
       }, res);
     } else {

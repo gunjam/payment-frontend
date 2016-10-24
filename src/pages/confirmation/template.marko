@@ -1,6 +1,7 @@
 <i18n-var/>
 <script marko-init>
   const {generateBSPSchedule} = require('../../lib/generate-bsp-schedule');
+  const parseDateOfPensionage = require('../../lib/parse-date-of-pension-age.js');
   const slashUpDate = require("../../utils/slash-up-date");
 </script>
 <layout-use("../../common/layout.marko")>
@@ -38,13 +39,14 @@
           <pay-summary:item key=i18n('confirmation:accountNumber') value=data.accountNumber/>
         </pay-summary>
 
-        <await(spaDate from data.dateOfPensionAge)>
+        <await(response from data.dateOfPensionAge)>
           <await-error>
             <p class="lede">
               <i18n-message key="confirmation:awaitError"/>
             </p>
           </await-error>
 
+          <var spaDate=parseDateOfPensionage(response.body)/>
           <var higherRate=(data.rate === 'higher')/>
           <var startDate=(data.thePast ? data.claimDate : new Date())/>
           <var paymentSchedule=generateBSPSchedule(data.claimDate, data.deathDate, spaDate, higherRate, startDate)/>
