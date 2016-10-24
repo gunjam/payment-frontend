@@ -27,16 +27,6 @@
 
       <var schedule=JSON.parse(response.body)/>
       <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
-      <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
-      <var hasMultipleBankAccounts=(schedule.bankAccounts.length > 1)/>
-      <var hasStopped=(currentStatus.name === 'stopped')/>
-      <var split=splitScheduleByDate(schedule.paymentSchedule, hasStopped ? new Date(currentStatus.startDate) : new Date())/>
-      <var paidPayments=(hasStopped ? splitScheduleByDate(split[0], new Date(currentStatus.effectiveDate)) : [split[0], []])/>
-      <var validPayments=paidPayments[0]/>
-      <var overpayments=paidPayments[1]/>
-      <var hasOverpayments=(overpayments.length > 0)/>
-      <var duePayments=split[1]/>
-      <var lastPayment=schedule.paymentSchedule[schedule.paymentSchedule.length - 1]/>
 
       <a href="/search?nino=${schedule.nationalInsuranceNumber}" class="link-back">
         <i18n-message key="schedule:backLink"/>
@@ -49,111 +39,127 @@
         </span>
       </h1>
 
-      <div if(hasOverpayments) class="warning notification">
-        <h2 class="heading-small">
-          <i18n-message key="schedule:hasOverpayments.heading"/>
-        </h2>
-        <p>
-          <i18n-message key='schedule:hasOverpayments.${currentStatus.reason}'
-            date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
-        </p>
-      </div>
+      <if(schedule.paymentSchedule.length)>
+        <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
+        <var hasMultipleBankAccounts=(schedule.bankAccounts.length > 1)/>
+        <var hasStopped=(currentStatus.name === 'stopped')/>
+        <var split=splitScheduleByDate(schedule.paymentSchedule, hasStopped ? new Date(currentStatus.startDate) : new Date())/>
+        <var paidPayments=(hasStopped ? splitScheduleByDate(split[0], new Date(currentStatus.effectiveDate)) : [split[0], []])/>
+        <var validPayments=paidPayments[0]/>
+        <var overpayments=paidPayments[1]/>
+        <var hasOverpayments=(overpayments.length > 0)/>
+        <var duePayments=split[1]/>
+        <var lastPayment=schedule.paymentSchedule[schedule.paymentSchedule.length - 1]/>
 
-      <ul if(!hasStopped) class="schedule-controls">
-        <li>
-          <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
-            <i18n-message key="schedule:editBankDetails"/>
-          </a>
-        </li>
-        <li>
-          <a href="/stop-schedule/${schedule.id}" class="button button-red">
-            <i18n-message key="schedule:stop"/>
-          </a>
-        </li>
-      </ul>
-
-      <div if(hasMultipleStatuses || hasMultipleBankAccounts) class="schedule-log">
-        <h2 class="heading-large">
-          <i18n-message key="schedule:log.heading"/>
-        </h2>
-        <pay-log for(account in schedule.bankAccounts.slice(1) | status-var=loop)
-          title=i18n('schedule:log.bank.summary', {date: formatDate(account.created)})>
-          <p class="text">
-            <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
-            <i18n-message key='schedule:log.bank.old' accountNumber=oldAccount.accountNumber
-              sortCode=oldAccount.sortCode bankName=sortCodeToBankName(oldAccount.sortCode)/>
+        <div if(hasOverpayments) class="warning notification">
+          <h2 class="heading-small">
+            <i18n-message key="schedule:hasOverpayments.heading"/>
+          </h2>
+          <p>
+            <i18n-message key='schedule:hasOverpayments.${currentStatus.reason}'
+              date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
           </p>
-          <p class="text">
-            <i18n-message key='schedule:log.bank.new' accountNumber=account.accountNumber
-              sortCode=account.sortCode bankName=sortCodeToBankName(account.sortCode)/>
-          </p>
-        </pay-log>
-        <pay-log if(hasMultipleStatuses) title=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(currentStatus.startDate)})>
-          <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
-            date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
-        </pay-log>
-      </div>
-
-      <h2 class="heading-medium">
-        <i18n-message key="schedule:bankAccount"/>
-      </h2>
-
-      <pay-summary>
-        <pay-summary:item key=i18n('schedule:nameOnAccount')
-          value=lastPayment.bankAccount.nameOnAccount/>
-        <pay-summary:item key=i18n('schedule:sortCode')
-          value=lastPayment.bankAccount.sortCode/>
-        <pay-summary:item key=i18n('schedule:accountNumber')
-          value=lastPayment.bankAccount.accountNumber/>
-        <pay-summary:item key=i18n('schedule:bankName')
-          value=sortCodeToBankName(lastPayment.bankAccount.sortCode)/>
-      </pay-summary>
-
-      <div class="grid-row">
-
-        <div class="column-one-half">
-          <if(hasOverpayments)>
-            <h2 class="heading-medium">
-              <i18n-message key="schedule:pastPayments"/>
-            </h2>
-            <pay-schedule if(validPayments.length) schedule=validPayments
-              mulitple-accounts=hasMultipleBankAccounts/>
-            <h3 class="heading-medium visually-hidden">
-              <i18n-message key="schedule:overpayments"/>
-            </h3>
-            <pay-schedule schedule=overpayments
-              is-empty-message-key="schedule:noPaymentsMade"
-              mulitple-accounts=hasMultipleBankAccounts
-              overpayments=true/>
-          </if>
-          <else>
-            <h2 class="heading-medium">
-              <i18n-message key="schedule:pastPayments"/>
-            </h2>
-            <pay-schedule schedule=validPayments
-              is-empty-message-key="schedule:noPaymentsMade"
-              mulitple-accounts=hasMultipleBankAccounts/>
-          </else>
         </div>
 
-        <div class="column-one-half">
-          <if(hasStopped)>
-            <h2 class="heading-medium">
-              <i18n-message key="schedule:paymentsStopped"/>
-            </h2>
-            <pay-schedule schedule=duePayments/>
-          </if>
-          <else>
-            <h2 class="heading-medium">
-              <i18n-message key="schedule:futurePayments"/>
-            </h2>
-            <pay-schedule schedule=duePayments
-              is-empty-message-key="schedule:noPaymentsMade"
-              mulitple-accounts=hasMultipleBankAccounts/>
-          </else>
+        <ul if(!hasStopped) class="schedule-controls">
+          <li>
+            <a href="/edit-bank-details/${schedule.id}" class="button button-grey">
+              <i18n-message key="schedule:editBankDetails"/>
+            </a>
+          </li>
+          <li>
+            <a href="/stop-schedule/${schedule.id}" class="button button-red">
+              <i18n-message key="schedule:stop"/>
+            </a>
+          </li>
+        </ul>
+
+        <div if(hasMultipleStatuses || hasMultipleBankAccounts) class="schedule-log">
+          <h2 class="heading-large">
+            <i18n-message key="schedule:log.heading"/>
+          </h2>
+          <pay-log for(account in schedule.bankAccounts.slice(1) | status-var=loop)
+            title=i18n('schedule:log.bank.summary', {date: formatDate(account.created)})>
+            <p class="text">
+              <var oldAccount=schedule.bankAccounts[loop.getIndex()]/>
+              <i18n-message key='schedule:log.bank.old' accountNumber=oldAccount.accountNumber
+                sortCode=oldAccount.sortCode bankName=sortCodeToBankName(oldAccount.sortCode)/>
+            </p>
+            <p class="text">
+              <i18n-message key='schedule:log.bank.new' accountNumber=account.accountNumber
+                sortCode=account.sortCode bankName=sortCodeToBankName(account.sortCode)/>
+            </p>
+          </pay-log>
+          <pay-log if(hasMultipleStatuses) title=i18n('schedule:log.${currentStatus.name}.summary', {date: formatDate(currentStatus.startDate)})>
+            <i18n-message key='schedule:log.${currentStatus.name}.${currentStatus.reason}'
+              date=(currentStatus.effectiveDate ? formatDate(currentStatus.effectiveDate) : '')/>
+          </pay-log>
         </div>
 
-      </div>
+        <h2 class="heading-medium">
+          <i18n-message key="schedule:bankAccount"/>
+        </h2>
+
+        <pay-summary>
+          <pay-summary:item key=i18n('schedule:nameOnAccount')
+            value=lastPayment.bankAccount.nameOnAccount/>
+          <pay-summary:item key=i18n('schedule:sortCode')
+            value=lastPayment.bankAccount.sortCode/>
+          <pay-summary:item key=i18n('schedule:accountNumber')
+            value=lastPayment.bankAccount.accountNumber/>
+          <pay-summary:item key=i18n('schedule:bankName')
+            value=sortCodeToBankName(lastPayment.bankAccount.sortCode)/>
+        </pay-summary>
+
+        <div class="grid-row">
+
+          <div class="column-one-half">
+            <if(hasOverpayments)>
+              <h2 class="heading-medium">
+                <i18n-message key="schedule:pastPayments"/>
+              </h2>
+              <pay-schedule if(validPayments.length) schedule=validPayments
+                mulitple-accounts=hasMultipleBankAccounts/>
+              <h3 class="heading-medium visually-hidden">
+                <i18n-message key="schedule:overpayments"/>
+              </h3>
+              <pay-schedule schedule=overpayments
+                is-empty-message-key="schedule:noPaymentsMade"
+                mulitple-accounts=hasMultipleBankAccounts
+                overpayments=true/>
+            </if>
+            <else>
+              <h2 class="heading-medium">
+                <i18n-message key="schedule:pastPayments"/>
+              </h2>
+              <pay-schedule schedule=validPayments
+                is-empty-message-key="schedule:noPaymentsMade"
+                mulitple-accounts=hasMultipleBankAccounts/>
+            </else>
+          </div>
+
+          <div class="column-one-half">
+            <if(hasStopped)>
+              <h2 class="heading-medium">
+                <i18n-message key="schedule:paymentsStopped"/>
+              </h2>
+              <pay-schedule schedule=duePayments/>
+            </if>
+            <else>
+              <h2 class="heading-medium">
+                <i18n-message key="schedule:futurePayments"/>
+              </h2>
+              <pay-schedule schedule=duePayments
+                is-empty-message-key="schedule:noPaymentsMade"
+                mulitple-accounts=hasMultipleBankAccounts/>
+            </else>
+          </div>
+
+        </div>
+      </if>
+      <p else class="lede">
+        <i18n-message key="schedule:noPayments"/>
+      </p>
     </await>
 
   </layout-put>

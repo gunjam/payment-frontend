@@ -3,6 +3,7 @@
   "backLink": "Search",
   "startedPaymentSchedule": "Active payment schedule",
   "stoppedPaymentSchedule": "Stopped payment schedule",
+  "noPayments": "Schedule contatins no payments.",
   "hasOverpayments": {
     "heading": "There may be an overpayment on this schedule",
     "death": "Claimant died on {{date}}.",
