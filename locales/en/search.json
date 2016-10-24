@@ -20,6 +20,7 @@
     },
     "resultAccount": "{{name}}, {{account-number}}",
     "resultDate": "From {{start}} till {{end}}",
+    "empty": "Schedule is empty",
     "noResults": "No results!"
   }
 }

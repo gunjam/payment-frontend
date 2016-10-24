@@ -51,15 +51,20 @@
                 <a href="/schedule/${schedule.id}" class="result-link">
                   <i18n-message key="search:await.resultLink.${currentStatus}"/>
                 </a>
-                <span class="result-meta">
-                  <i18n-message key="search:await.resultAccount"
-                    name=payments[0].bankAccount.nameOnAccount
-                    account-number=payments[0].bankAccount.accountNumber/>
-                </span>
-                <span class="result-meta">
-                  <i18n-message key="search:await.resultDate"
-                    start=formatDate(payments[0].date)
-                    end=formatDate(payments[payments.length - 1].date)/>
+                <if(payments.length)>
+                  <span class="result-meta">
+                    <i18n-message key="search:await.resultAccount"
+                      name=payments[0].bankAccount.nameOnAccount
+                      account-number=payments[0].bankAccount.accountNumber/>
+                  </span>
+                  <span class="result-meta">
+                    <i18n-message key="search:await.resultDate"
+                      start=formatDate(payments[0].date)
+                      end=formatDate(payments[payments.length - 1].date)/>
+                  </span>
+                </if>
+                <span else class="result-meta">
+                  <i18n-message key="search:await.empty"/>
                 </span>
               </li>
             </ul>
