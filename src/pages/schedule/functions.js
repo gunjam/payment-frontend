@@ -1,6 +1,6 @@
 'use strict';
 
-const rp = require('request-promise');
+const got = require('got');
 const {schedulesApi} = require('../../../config/app');
 const template = require('./template.marko');
 
@@ -8,8 +8,7 @@ const apiFilter = '?filter[include]=bankAccounts&filter[include][paymentSchedule
 
 module.exports = {
   get(req, res) {
-    const uri = schedulesApi + '/' + req.params.id + apiFilter;
-    const schedulePromise = rp({uri, transform: JSON.parse}).promise();
+    const schedulePromise = got(schedulesApi + '/' + req.params.id + apiFilter);
     template.render({schedulePromise}, res);
   }
 };

@@ -13,7 +13,7 @@
 
   <layout-put into="content">
 
-    <await(schedule from data.schedulePromise)>
+    <await(response from data.schedulePromise)>
       <await-error>
         <p class="lede">
           <i18n-message key="schedule:await.error"/>
@@ -25,6 +25,7 @@
         </p>
       </await-timeout>
 
+      <var schedule=JSON.parse(response.body)/>
       <var currentStatus=schedule.statuses[schedule.statuses.length - 1]/>
       <var hasMultipleStatuses=(schedule.statuses.length > 1)/>
       <var hasMultipleBankAccounts=(schedule.bankAccounts.length > 1)/>
