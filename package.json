@@ -30,7 +30,6 @@
     "marko-i18next": "gunjam/marko-i18next",
     "marko-layout": "^2.0.2",
     "mocha": "^3.1.2",
-    "moment": "^2.15.1",
     "request": "^2.75.0",
     "request-promise": "^4.1.1"
   },
