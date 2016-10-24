@@ -61,7 +61,7 @@ app.use((req, res, next) => {
 });
 
 // Page routes
-app.get('/', (req, res) => res.redirect('/make-a-bsp-payment'));
+app.use('/', require('./src/pages/start'));
 app.use('/make-a-bsp-payment', require('./src/pages/bsp'));
 app.use('/confirmation', require('./src/pages/confirmation'));
 app.use('/done', require('./src/pages/done'));
