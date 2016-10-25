@@ -46,7 +46,7 @@ module.exports = {
       got.put(bankAccountsApi, {body})
         .then(response => {
           const bankAccountId = JSON.parse(response.body).id;
-          const date = new Date();
+          const date = (new Date()).toISOString();
           const body = {scheduleId, bankAccountId, date};
 
           return got.post(updateBankAccountApi, {body});
