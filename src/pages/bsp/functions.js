@@ -6,16 +6,22 @@ const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidDateObject = require('../../utils/is-valid-date-object');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
 const sanitiseSortCode = require('../../utils/sanitise-sort-code');
+const whiteListObject = require('../../utils/white-list-object');
 const renderForm = require('../../lib/render-form');
 const template = require('./template.marko');
+
+const formFields = [
+  'nino', 'nameOnAccount', 'accountNumber', 'sortCode', 'rate', 'sex',
+  'dateOfClaim', 'dateOfDeath', 'dateOfBirth'
+];
 
 module.exports = {
   get: renderForm('bsp'),
 
   post(req, res) {
-    const values = req.body;
-    const {nino, nameOnAccount, accountNumber, sortCode, rate, sex} = values;
-    const {dateOfClaim = {}, dateOfDeath = {}, dateOfBirth = {}} = values;
+    const values = whiteListObject(req.body, formFields);
+    const {nino, nameOnAccount, accountNumber, sortCode, rate, sex, dateOfClaim,
+           dateOfDeath, dateOfBirth} = values;
     const errors = {};
 
     if (isEmpty(nino)) {
