@@ -9,6 +9,8 @@ const sanitiseSortCode = require('../../utils/sanitise-sort-code');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const template = require('./template.marko');
 
+const json = true;
+
 module.exports = {
   get(req, res) {
     const scheduleId = req.params.id;
@@ -40,19 +42,16 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({scheduleId, errors, values}, res);
     } else {
-      const sanitisedSortCode = dashUpSortCode(sanitiseSortCode(sortCode));
-      const body = {nameOnAccount, accountNumber, sortCode: sanitisedSortCode};
+      const formattedSortCode = dashUpSortCode(sanitiseSortCode(sortCode));
 
-      got.put(bankAccountsApi, {body})
-        .then(response => {
-          const bankAccountId = JSON.parse(response.body).id;
-          const date = (new Date()).toISOString();
-          const body = {scheduleId, bankAccountId, date};
-
-          return got.post(updateBankAccountApi, {body});
-        })
-        .then(() => res.redirect('/schedule/' + req.params.id))
-        .catch(err => next(err));
+      got.put(bankAccountsApi, {
+        json, body: {nameOnAccount, accountNumber, sortCode: formattedSortCode}
+      })
+      .then(response => got.post(updateBankAccountApi, {
+        json, body: {scheduleId, bankAccountId: response.body.id, date: new Date().toISOString()}
+      }))
+      .then(() => res.redirect('/schedule/' + scheduleId))
+      .catch(err => next(err));
     }
   }
 };
