@@ -6,9 +6,11 @@ const isValidSortCode = require('../../utils/is-valid-sort-code');
 const isValidAccountNumber = require('../../utils/is-valid-account-number');
 const {bankAccountsApi, updateBankAccountApi} = require('../../../config/app');
 const sanitiseSortCode = require('../../utils/sanitise-sort-code');
+const whiteListObject = require('../../utils/white-list-object');
 const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const template = require('./template.marko');
 
+const formFields = ['nameOnAccount', 'accountNumber', 'sortCode'];
 const json = true;
 
 module.exports = {
@@ -19,7 +21,7 @@ module.exports = {
 
   post(req, res, next) {
     const scheduleId = req.params.id;
-    const values = req.body;
+    const values = whiteListObject(req.body, formFields);
     const {nameOnAccount, accountNumber, sortCode} = values;
     const errors = {};
 
