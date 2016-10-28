@@ -9,6 +9,7 @@ const dashUpSortCode = require('../../utils/dash-up-sort-code');
 const template = require('./template.marko');
 
 const pensionAgeUri = 'https://www.gov.uk/state-pension-age/y/age/';
+const json = true;
 
 module.exports = {
   get(req, res) {
@@ -40,18 +41,17 @@ module.exports = {
   },
 
   post(req, res, next) {
-    const {nameOnAccount, accountNumber, sortCode, nationalInsuranceNumber} = req.body;
+    const {nameOnAccount, accountNumber, sortCode, nationalInsuranceNumber, paymentSchedule} = req.body;
     const body = {nameOnAccount, sortCode, accountNumber};
 
-    got.put(bankAccountsApi, {body})
+    got.put(bankAccountsApi, {body, json})
       .then(response => {
-        const bankAccountId = JSON.parse(response.body).id;
-        const paymentSchedule = req.body.paymentSchedule;
+        const bankAccountId = response.body.id;
         const body = {nationalInsuranceNumber, paymentSchedule, bankAccountId};
 
-        return got.post(schedulesFullApi, {body});
+        return got.post(schedulesFullApi, {body, json});
       })
-      .then(response => res.setSessionAndRedirect('done', {scheduleId: JSON.parse(response.body).id}, '/done'))
+      .then(response => res.setSessionAndRedirect('done', {scheduleId: response.body.id}, '/done'))
       .catch(err => next(err));
   }
 };
