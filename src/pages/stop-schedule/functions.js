@@ -38,14 +38,15 @@ module.exports = {
     if (Object.keys(errors).length > 0) {
       template.render({scheduleId, errors, values}, res);
     } else {
-      const addStatus = schedulesApi + '/' + req.params.id + '/addStatus';
-      const schedulePage = '/schedule/' + req.params.id;
+      const addStatusApi = schedulesApi + '/' + scheduleId + '/addStatus';
+      const schedulePage = '/schedule/' + scheduleId;
       const status = {name: 'stopped', reason};
-      const effectiveDate = getDateFromDateObject(values[reason + 'Date']).toISOString();
       const body = (reason === 'death' || reason === 'prison') ?
-        Object.assign(status, {effectiveDate}) : status;
+        Object.assign(status, {
+          effectiveDate: getDateFromDateObject(values[reason + 'Date']).toISOString()
+        }) : status;
 
-      got.put(addStatus, {body})
+      got.put(addStatusApi, {body})
         .then(() => res.redirect(schedulePage))
         .catch(err => next(err));
     }
