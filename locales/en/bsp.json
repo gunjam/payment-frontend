@@ -5,57 +5,59 @@
   "form": {
     "nino": {
       "label": "National Insurance number",
-      "hint": "For example, QQ 12 34 56 C",
+      "hint": "For example, AB196953B",
       "errors": {
-        "presence": "Must include National Insurance number",
-        "format": "Not recognised, please double check"
+        "presence": "Enter a National Insurance number.",
+        "format": "Enter a valid National Insurance number - for example, AB196953B."
       }
     },
     "nameOnAccount": {
       "label": "Name on account",
       "errors": {
-        "presence": "Must include name on account"
+        "presence": "Enter a name"
       }
     },
     "sortCode": {
       "label": "Sort code",
       "errors": {
-        "presence": "Must include a sort code",
-        "format": "Must be 6 digits in the format 11 22 33"
+        "presence": "Enter a sort code.",
+        "format": "Enter a valid sort code - for example, 07 03 12."
       }
     },
     "accountNumber": {
       "label": "Account number",
       "errors": {
-        "presence": "Must include an account number",
-        "format": "Account number must be 8 digits"
+        "presence": "Enter an account number.",
+        "format": "Enter a valid account number - this must contain 8 to 10 digits."
       }
     },
     "dateOfClaim": {
       "legend": "Date of claim",
       "hint": "For example, 20 3 2016",
       "errors": {
-        "presence": "Need a date of claim",
-        "format": "Date needs to be in the format 20 3 2016",
-        "custom": "Date cannot be in the future"
+        "presence": "Enter a claim date.",
+        "format": "Enter a valid claim date - for example, 16 11 2016.",
+        "future": "You cannot enter a future claim date.",
+        "beforeDeath": "You cannot enter a claim date earlier than the date of death."
       }
     },
     "dateOfDeath": {
       "legend": "Partner’s date of death",
       "hint": "For example, 20 3 2016",
       "errors": {
-        "presence": "Need a date of death",
-        "format": "Date needs to be in the format 20 3 2016",
-        "custom": "Date cannot be in the future"
+        "presence": "Enter a date of death.",
+        "format": "Enter a valid date of death - for example, 16 08 2016.",
+        "future": "You cannot enter a future date of death.",
+        "afterClaim": "You cannot enter a date of death later than the claim date."
       }
     },
     "dateOfBirth": {
       "legend": "Claimant’s date of birth",
-      "hint": "For example, 20 3 2016",
+      "hint": "For example, 16 08 1975",
       "errors": {
-        "presence": "Need a date of birth",
-        "format": "Date needs to be in the format 20 3 2016",
-        "custom": "Date cannot be in the future"
+        "presence": "Enter a date of birth.",
+        "format": "Enter a valid date of birth - for example, 16 08 1975.",
+        "future": "You cannot enter a future date of birth."
       }
     },
     "sex": {
@@ -64,7 +66,7 @@
       "labelFemale": "Female",
       "labelMale": "Male",
       "errors": {
-        "presence": "You need to pick a sex"
+        "presence": "Choose ‘Male’ or ‘Female’."
       }
     },
     "rate": {
@@ -72,9 +74,9 @@
       "labelHigher": "Higher",
       "labelStandard": "Standard",
       "errors": {
-        "presence": "You need to pick a rate"
+        "presence": "Choose ‘Standard’ or ‘Higher’."
       }
-    }
-  },
-  "submit": "Set up payment"
+    },
+    "submit": "Set up payment"
+  }
 }
