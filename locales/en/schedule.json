@@ -51,7 +51,7 @@
     "timeout": "Request for schedule data timed out."
   },
   "type": {
-    "initial": "Initital payment",
+    "initial": "Initial payment",
     "backDated": "Backdated monthly payments"
   }
 }
