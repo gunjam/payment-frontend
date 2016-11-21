@@ -14,7 +14,7 @@
     "nameOnAccount": {
       "label": "Name on account",
       "errors": {
-        "presence": "Enter a name"
+        "presence": "Enter a name."
       }
     },
     "sortCode": {
