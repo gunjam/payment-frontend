@@ -47,16 +47,9 @@
           <gov-radios:radio label=i18n('bsp:form.rate.labelHigher') value="higher"/>
         </gov-radios>
 
-        <gov-input name="nameOnAccount" label=i18n('bsp:form.nameOnAccount.label')
-          error=data.errors.nameOnAccount value=data.values.nameOnAccount/>
-
-        <gov-input name="sortCode" label=i18n('bsp:form.sortCode.label')
-          error=data.errors.sortCode value=data.values.sortCode/>
-
-        <gov-input name="accountNumber" label=i18n('bsp:form.accountNumber.label')
-          error=data.errors.accountNumber value=data.values.accountNumber/>
-
         <pay-csrf-token/>
+
+        <bank-account-details/>
 
         <button type="submit" class="button">
           <i18n-message key="bsp:form.submit"/>

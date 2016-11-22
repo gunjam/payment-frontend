@@ -1,0 +1,7 @@
+{
+  "dependencies": [
+    "./typeahead.bundle.min.js",
+    "./bank-account-details.js",
+    "./styles.scss"
+  ]
+}

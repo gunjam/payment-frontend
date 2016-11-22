@@ -1,0 +1,45 @@
+<div class="panel panel-border-narrow bank-fields-wrapper" data-formId="bank-account-uk" id="bankAccount-uk">
+  <div class="form-group">
+    <fieldset>
+      <legend class="form-label-bold">Type of account</legend>
+
+      <label for="building-society" class="block-label selection-button-radio" data-target="roll-number">
+        <input disabled id="building-society" name="type-of-bank" value="building-society" type="radio">Building Society
+      </label>
+
+      <label for="bank-account" class="block-label selection-button-radio">
+        <input disabled id="bank-account" name="type-of-bank" value="bank-account" type="radio">Bank Account
+      </label>
+    </fieldset>
+  </div>
+
+  <div class="form-group">
+    <label for="input-nameOnAccount">
+      <span class="form-label">Name on account</span>
+    </label>
+    <input disabled class="form-control" type="text" id="input-nameOnAccount" name="nameOnAccount" autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <label for="input-sortCode">
+      <span class="form-label">Sort code</span>
+    </label>
+
+    <input disabled class="form-control" type="text" id="input-sortCode" name="sortCode" autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <label for="input-accountNumber">
+      <span class="form-label">Account number</span>
+    </label>
+
+    <input disabled class="form-control" type="text" id="input-accountNumber" name="accountNumber" autocomplete="off">
+  </div>
+
+  <div class="form-group js-hidden" id="roll-number">
+    <label for="input-rollNumber">
+      <span class="form-label">Roll Number</span>
+    </label>
+    <input disabled class="form-control" type="text" id="input-rollNumber" name="rollNumber" autocomplete="off">
+  </div>
+</div>

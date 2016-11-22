@@ -1,6 +1,7 @@
 'use strict';
 require('marko/node-require').install();
 
+const path = require('path');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const csrf = require('csurf');
@@ -15,6 +16,21 @@ const sessionHelpers = require('./src/lib/session-helpers');
 
 // Configure Lasso.js
 require('lasso').configure(require('./config/lasso'));
+
+// Reload template on changes
+if (process.env.NODE_ENV !== 'production') {
+  const viewsDir = path.join(__dirname, 'src');
+  require('marko/hot-reload').enable();
+  require('marko/browser-refresh').enable();
+  require('lasso/browser-refresh').enable();
+  require('fs').watch(viewsDir, {recursive: true}, (event, filename) => {
+    if (/\.marko$/.test(filename)) {
+      const templatePath = path.join(viewsDir, filename);
+      console.log('Marko template modified: ', templatePath);
+      require('marko/hot-reload').handleFileModified(templatePath);
+    }
+  });
+}
 
 // Setup i18next
 i18next
@@ -81,4 +97,8 @@ app.listen(port, err => {
   }
 
   console.log('Listening on port %d', port);
+
+  if (process.send) {
+    process.send('online');
+  }
 });

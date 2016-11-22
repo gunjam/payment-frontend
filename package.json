@@ -39,7 +39,9 @@
     "esnext": true,
     "env": [
       "node",
-      "mocha"
+      "mocha",
+      "jquery",
+      "browser"
     ],
     "ignores": [
       "static/**",
@@ -53,6 +55,12 @@
           "argsIgnorePattern": "^_"
         }
       ]
-    }
+    },
+    "overrides": [
+      {
+        "files": "src/components/bank-account-details/bank-account-details.js",
+        "esnext": false
+      }
+    ]
   }
 }
