@@ -66,18 +66,33 @@ var substringMatcher = function (strs) {
       }
     });
 
+    if (matches.length === 1) {
+      loadFields(matches[0]);
+    } else {
+      $('#countryFields').hide();
+    }
+
     cb(matches);
   };
 };
 
 function loadFields(text) {
   var $countryFields = $('#countryFields');
-  var $form = $(document).find(`[data-formId="${obj[text]}"]`);
+
+  // Hide and disable all bank fields
   $('.bank-fields-wrapper').hide();
-  $countryFields.show();
-  $form.find('input').attr('disabled', false);
-  $form.find('textarea').attr('disabled', false);
-  $form.show();
+  $countryFields.find('input').attr('disabled', true);
+  $countryFields.find('textarea').attr('disabled', true);
+
+  // Find the form for selected country and enable all of the fields
+  var $form = $(document).find('[data-formId="' + obj[text] + '"]');
+
+  if ($form.length > 0) {
+    $form.find('input').attr('disabled', false);
+    $form.find('textarea').attr('disabled', false);
+    $countryFields.show();
+    $form.show();
+  }
 }
 
 $('#input-accountCountry').typeahead(
@@ -92,7 +107,22 @@ $('#input-accountCountry').typeahead(
   }
 );
 
+$(document).ready(function () {
+  $('#input-accountCountry').val('United Kingdom');
+  loadFields('United Kingdom');
+});
+
 $(document).on('click', '.tt-suggestion', function (e) {
   var text = $(e.target).text();
   loadFields(text);
+});
+
+$(document).on('focus', '#input-accountCountry', function () {
+  $(this).select();
+});
+
+$(document).on('blur', '#input-accountCountry', function () {
+  if ($('#countryFields:hidden') && $('.tt-suggestion').length === 1) {
+    $('.tt-suggestion:first').trigger('click');
+  }
 });

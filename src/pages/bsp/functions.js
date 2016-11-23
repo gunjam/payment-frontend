@@ -19,6 +19,7 @@ module.exports = {
   get: renderForm('bsp'),
 
   post(req, res) {
+    console.log(req.body);
     const values = whiteListObject(req.body, formFields);
     const {nino, nameOnAccount, accountNumber, sortCode, rate, sex, dateOfClaim,
            dateOfDeath, dateOfBirth} = values;
