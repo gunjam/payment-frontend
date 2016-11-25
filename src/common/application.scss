@@ -1,79 +1,98 @@
-$path: "/node_modules/govuk_frontend_toolkit/images/";
+$path: '/node_modules/govuk_frontend_toolkit/images/';
 @function image-url() {}
 
 @import 'govuk-elements';
+
+$button-red-border: #790000;
+$grey333: #333;
+$grey666: #666;
+$grey999: #999;
 
 // Search results
 .search-results {
   margin: 0 0 2em;
 }
+
 .result {
-  border-bottom: 1px solid #BFC1C3;
-  padding: 1em 0;
+  border-bottom: 1px solid $grey-2;
   margin: 0;
+  padding: 1em 0;
 }
-.result-meta, .result-link {
+
+.result-meta,
+.result-link {
   display: block;
 }
+
 .result-link {
   font-size: 1.3em;
   font-weight: 700;
 }
+
 .result-meta {
-  font-size: 0.842105263157895em;
+  font-size: .842105263157895em;
 }
+
 .result:first-child {
   padding-top: 0;
 }
+
 .result:last-child {
+  border-bottom: 0;
   padding-bottom: 0;
-  border-bottom: none;
 }
 
 // Payment schedule
 .schedule-heading {
-  margin-bottom: 0.5em;
+  margin-bottom: .5em;
 }
+
 .schedule-log {
   margin-bottom: 1.578947368421053em;
 
   .text {
-  	margin: 0;
+    margin: 0;
   }
 }
+
 .schedule {
-	border-top: 1px solid #bfc1c3;
+  border-top: 1px solid $grey-2;
   margin-bottom: 0;
 }
+
 .payment {
-	padding: 0.6315789474em 1.0526315789em 0.4736842105em 0;
-	border-bottom: 1px solid #bfc1c3;
-	position: relative;
+  border-bottom: 1px solid $grey-2;
+  padding: .6315789474em 1.0526315789em .4736842105em 0;
+  position: relative;
 }
+
 .amount {
-	font-weight: 700;
   display: block;
+  font-weight: 700;
 }
+
 .type {
-	color: #999;
-	position: absolute;
-	right: 0;
-	top: 50%;
-  text-align: right;
+  color: $grey999;
   height: 50px;
-  margin-top:-25px;
+  margin-top: -25px;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 50%;
 
   @media(max-width: 400px) {
-    text-align: left;
-    position: static;
     display: block;
-    margin-top: 5px;
     height: auto;
+    margin-top: 5px;
+    position: static;
+    text-align: left;
   }
 }
+
 .schedule-label {
-	margin: 0.5em 0;
+  margin: .5em 0;
 }
+
 .schedule-controls {
   margin: 1.5em 0;
 
@@ -82,30 +101,38 @@ $path: "/node_modules/govuk_frontend_toolkit/images/";
     margin-right: 5px;
   }
 }
+
 .button-red {
-  background-color: #B10E1E;
-  box-shadow: 0 2px 0 #790000;
+  background-color: $error-colour;
+  box-shadow: 0 2px 0 $button-red-border;
+
   &:hover {
-    background-color: #B41020;
+    background-color: $button-red-border;
   }
+
   &:visited {
-    background-color: #B10E1E;
+    background-color: $error-colour;
   }
+
   &:active {
-    background-color: #B10E1E;
+    background-color: $error-colour;
   }
 }
+
 .button-grey {
-  background-color: #666;
-  box-shadow: 0 2px 0 #333;
+  background-color: $grey666;
+  box-shadow: 0 2px 0 $grey333;
+
   &:hover {
-    background-color: #666;
+    background-color: $grey666;
   }
+
   &:visited {
-    background-color: #666;
+    background-color: $grey666;
   }
+
   &:active {
-    background-color: #666;
+    background-color: $grey666;
   }
 }
 
@@ -114,21 +141,22 @@ $path: "/node_modules/govuk_frontend_toolkit/images/";
 }
 
 .notification {
-  padding: 0.526315789473684em;
   max-width: 30em;
+  padding: .526315789473684em;
 
   h2 {
     margin-top: 0;
   }
+
   p {
     margin-bottom: 0;
   }
 }
 
 .warning {
-  border-left: 0.526315789473684em solid $red;
-  padding-left: 0.526315789473684em;
-  background-color: mix(white, $mellow-red, 90%);
+  background-color: mix($page-colour, $mellow-red, 90%);
+  border-left: .526315789473684em solid $red;
+  padding-left: .526315789473684em;
 }
 
 // Big links on start page
@@ -137,31 +165,35 @@ $path: "/node_modules/govuk_frontend_toolkit/images/";
 }
 
 .big-link {
-	display: block;
-	background: $govuk-blue;
-  text-decoration: none;
+  background: $govuk-blue;
+  display: block;
   font-size: 1.895em;
   font-weight: 700;
-  padding: 0.694em 0.556em;
-  margin: 0.75em 0;
+  margin: .75em 0;
+  padding: .694em .556em;
+  text-decoration: none;
 
   &:link,
   &:visited {
     color: $white;
   }
+
   &:active,
   &:focus {
     color: $black;
   }
+
   &:hover {
     text-decoration: underline;
   }
 }
 
 // nav-bar
+// scss-lint:disable IdSelector
 #global-header-bar {
   display: none;
 }
+// scss-lint:enable IdSelector
 
 .nav-bar {
   background: $panel-colour;
