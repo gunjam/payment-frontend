@@ -1,11 +1,11 @@
 {
-  "serviceName": "Make a payment",
+  "serviceName": "BSP manager",
   "skipLink": "Skip to main content",
   "cookieMessage": "GOV.UK uses cookies to make the site simpler. {{-link-start}}Find out more about cookies{{-link-end}}",
   "logoLinkTitle": "Go to the GOV.UK homepage",
   "navigation": {
-    "bsp": "Set up a payment schedule",
-    "search": "Find a payment schedule"
+    "setUpSchedule": "Set up a payment schedule",
+    "findASchedule": "Find a payment schedule"
   },
   "phaseDescription": "This is a new service – your {{-link-start}}feedback{{-link-end}} will help us to improve it.",
   "errorSummaryHeading": "There’s been a problem",

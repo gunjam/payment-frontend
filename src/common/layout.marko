@@ -37,29 +37,31 @@
   <layout-put into="proposition-header">
     <div class="header-proposition">
       <div class="content">
-        <nav id="proposition-menu">
+        <div id="proposition-menu">
           <a href="/" id="proposition-name">
             <i18n-message key="app:serviceName"/>
           </a>
-          <ul id="proposition-links">
-            <li>
-              <a href="/make-a-bsp-payment" class=(data.page === 'bsp' ? 'active' : '')>
-                <i18n-message key="app:navigation.bsp"/>
-              </a>
-            </li>
-            <li>
-              <a href="/search" class=(data.page === 'search' ? 'active' : '')>
-                <i18n-message key="app:navigation.search"/>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        </div>
       </div>
     </div>
   </layout-put>
 
   <!-- Main body content -->
   <layout-put into="content">
+    <nav class="nav-bar">
+      <ul>
+        <li>
+          <a href="/make-a-bsp-payment" class=(data.page === 'bsp' ? 'active' : '')>
+            <i18n-message key="app:navigation.setUpSchedule"/>
+          </a>
+        </li>
+        <li>
+          <a href="/search" class=(data.page === 'search' ? 'active' : '')>
+            <i18n-message key="app:navigation.findASchedule"/>
+          </a>
+        </li>
+      </ul>
+    </nav>
     <main id="content" role="main" class="group" data-journey=data.journey>
 
       <gov-error-summary heading=i18n('app:errorSummaryHeading')
